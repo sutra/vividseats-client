@@ -21,4 +21,6 @@ public interface ListingService {
 
 	void update(BrokerListing brokerListing) throws IOException;
 
+	void delete(Long listingId, String internalTicketId) throws IOException;
+
 }

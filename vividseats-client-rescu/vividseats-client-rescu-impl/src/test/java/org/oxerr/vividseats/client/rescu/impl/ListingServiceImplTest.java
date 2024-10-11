@@ -36,6 +36,7 @@ class ListingServiceImplTest {
 		assertNotNull(created);
 	}
 
+	@Disabled("Update listing.")
 	@Test
 	void testUpdate() throws IOException {
 		var brokerListing = new BrokerListing();
@@ -49,6 +50,12 @@ class ListingServiceImplTest {
 		brokerListing.setPrice(BigDecimal.ONE);
 		brokerListing.setSplitType(SplitType.ANY);
 		client.getListingService().update(brokerListing);
+	}
+
+	@Disabled("Delete listing.")
+	@Test
+	void testDelete() throws IOException {
+		client.getListingService().delete(10845010354L, null);
 	}
 
 }

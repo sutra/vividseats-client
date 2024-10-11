@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.oxerr.vividseats.client.model.BrokerListing;
 
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.PUT;
@@ -86,5 +87,25 @@ public interface ListingResource {
 	@PUT
 	@Path("/update")
 	Response update(BrokerListing brokerListing) throws IOException, VividSeatsException;
+
+	/**
+	 * Deletes a listing.
+	 *
+	 * Either the ticketId or listingId is required.
+	 *
+	 * Rate limit: 50 requests per second.
+	 *
+	 * @param listingId The listing id.
+	 * @param internalTicketId The internal ticket id.
+	 * @return the response.
+	 * @throws IOException if an I/O error occurs.
+	 * @throws VividSeatsException if an error response is returned.
+	 */
+	@DELETE
+	@Path("/delete")
+	Response delete(
+		@QueryParam("listingId") Long listingId,
+		@QueryParam("internalTicketId") String internalTicketId
+	) throws IOException, VividSeatsException;
 
 }

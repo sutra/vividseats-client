@@ -31,4 +31,9 @@ public class ListingServiceImpl implements ListingService {
 		listingResource.update(brokerListing);
 	}
 
+	@Override
+	public void delete(Long listingId, String internalTicketId) throws IOException {
+		listingResource.delete(listingId, internalTicketId);
+	}
+
 }
