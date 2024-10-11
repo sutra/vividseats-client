@@ -2,6 +2,9 @@ package org.oxerr.vividseats.client.model;
 
 import java.io.Serializable;
 
+/**
+ * <a href="https://vividseats.stoplight.io/docs/broker-portal/b064ad41fe925-response">Response</a>.
+ */
 public class Response implements Serializable {
 
 	private static final long serialVersionUID = 2024092601L;

@@ -5,6 +5,11 @@ import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
 
+/**
+ * A listing from a broker.
+ *
+ * <a href="https://vividseats.stoplight.io/docs/broker-portal/decf5dae8afe5-broker-listing">Broker Listing</a>.
+ */
 public class BrokerListing implements Serializable {
 
 	private static final long serialVersionUID = 2024092601L;
