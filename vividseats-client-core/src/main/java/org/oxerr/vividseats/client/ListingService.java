@@ -1,10 +1,13 @@
 package org.oxerr.vividseats.client;
 
-import org.oxerr.vividseats.client.model.ListingsResponse;
+import java.io.IOException;
+import java.util.List;
+
+import org.oxerr.vividseats.client.model.BrokerListing;
 
 public interface ListingService {
 
-	ListingsResponse get(
+	List<BrokerListing> get(
 		String fromEventDate,
 		String toEventDate,
 		Long listingId,
@@ -12,6 +15,8 @@ public interface ListingService {
 		Integer productionId,
 		Integer headlinerId,
 		Boolean includeFiles
-	);
+	) throws IOException;
+
+	BrokerListing create(BrokerListing brokerListing) throws IOException;
 
 }

@@ -43,6 +43,14 @@
 			<artifactId>vividseats-client-model</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+
+		<!-- Java 8 Date/time -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-jsr310</artifactId>
+			<scope>test</scope>
+		</dependency>
+
 		<dependency>
 			<groupId>com.github.mmazi</groupId>
 			<artifactId>rescu</artifactId>

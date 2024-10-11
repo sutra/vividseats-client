@@ -1,0 +1,7 @@
+{
+	"success": false,
+	"message": "Create parameters failed validation, see errors.",
+	"errors": [
+		"Invalid split type. Must be one of: DEFAULT,ANY,CUSTOM,NEVERLEAVEONE."
+	]
+}

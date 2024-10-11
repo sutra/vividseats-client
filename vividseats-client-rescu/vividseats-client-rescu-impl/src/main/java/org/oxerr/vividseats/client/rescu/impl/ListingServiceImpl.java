@@ -1,7 +1,10 @@
 package org.oxerr.vividseats.client.rescu.impl;
 
+import java.io.IOException;
+import java.util.List;
+
 import org.oxerr.vividseats.client.ListingService;
-import org.oxerr.vividseats.client.model.ListingsResponse;
+import org.oxerr.vividseats.client.model.BrokerListing;
 import org.oxerr.vividseats.client.rescu.resource.ListingResource;
 
 public class ListingServiceImpl implements ListingService {
@@ -13,9 +16,14 @@ public class ListingServiceImpl implements ListingService {
 	}
 
 	@Override
-	public ListingsResponse get(String fromEventDate, String toEventDate, Long listingId, String internalTicketId,
-			Integer productionId, Integer headlinerId, Boolean includeFiles) {
-		return listingResource.get(fromEventDate, toEventDate, listingId, internalTicketId, productionId, headlinerId, includeFiles);
+	public List<BrokerListing> get(String fromEventDate, String toEventDate, Long listingId, String internalTicketId,
+			Integer productionId, Integer headlinerId, Boolean includeFiles) throws IOException {
+		return listingResource.get(fromEventDate, toEventDate, listingId, internalTicketId, productionId, headlinerId, includeFiles).getListings();
+	}
+
+	@Override
+	public BrokerListing create(BrokerListing brokerListing) throws IOException {
+		return listingResource.create(brokerListing).getListing();
 	}
 
 }

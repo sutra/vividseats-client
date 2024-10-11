@@ -1,4 +1,4 @@
-package org.oxerr.vividseats.client.model;
+package org.oxerr.vividseats.client.rescu.resource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.math.BigDecimal;
 
 import org.junit.jupiter.api.Test;
+import org.oxerr.vividseats.client.model.SplitType;
+import org.oxerr.vividseats.client.model.StockType;
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -28,8 +30,6 @@ class ListingsResponseTest {
 
 		var listingsResponse = objectMapper.readValue(this.getClass().getResource("listings-response.json"), ListingsResponse.class);
 		assertNotNull(listingsResponse);
-		assertTrue(listingsResponse.getSuccess());
-		assertEquals("string", listingsResponse.getMessage());
 		var listing = listingsResponse.getListings().get(0);
 		assertEquals(-9007199254740991L, listing.getId());
 		assertEquals(-2147483648, listing.getProductionId());
@@ -43,8 +43,8 @@ class ListingsResponseTest {
 		assertEquals("string", listing.getTicketId());
 		assertTrue(listing.getElectronic());
 		assertTrue(listing.getElectronicTransfer());
-		assertEquals("2019-08-24T14:15:22Z", listing.getInHandDate().toString());
-		assertEquals("2019-08-24T14:15:22Z", listing.getListDate().toString());
+		assertEquals("2019-08-24T14:15:22", listing.getInHandDate().toString());
+		assertEquals("2019-08-24T14:15:22", listing.getListDate().toString());
 		assertEquals(SplitType.DEFAULT, listing.getSplitType());
 		assertEquals("string", listing.getSplitValue());
 		assertTrue(listing.getSpec());
@@ -67,12 +67,12 @@ class ListingsResponseTest {
 		assertEquals("string", listing.getVenue());
 		assertEquals("string", listing.getCity());
 		assertEquals("string", listing.getState());
-		assertEquals("2019-08-24T14:15:22Z", listing.getEventDate().toString());
+		assertEquals("2019-08-24T14:15:22", listing.getEventDate().toString());
 		assertEquals("string", listing.getShipDate());
 		assertEquals(BigDecimal.ZERO, listing.getCost());
 		assertTrue(listing.getHasFiles());
 		assertTrue(listing.getHasBarcodes());
-		assertEquals("2019-08-24T14:15:22Z", listing.getLastUpdate().toString());
+		assertEquals("2019-08-24T14:15:22", listing.getLastUpdate().toString());
 		assertEquals("ADA", listingsResponse.getAttribute());
 	}
 

@@ -1,12 +1,20 @@
 package org.oxerr.vividseats.client.rescu.resource;
 
-import org.oxerr.vividseats.client.model.ListingsResponse;
+import java.io.IOException;
 
+import org.oxerr.vividseats.client.model.BrokerListing;
+
+import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.core.MediaType;
 
 @Path("/listings/v2")
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 public interface ListingResource {
 
 	/**
@@ -14,14 +22,15 @@ public interface ListingResource {
 	 *
 	 * Rate limit: 10 requests per second.
 	 *
-	 * @param fromEventDate
-	 * @param toEventDate
-	 * @param listingId
-	 * @param internalTicketId
-	 * @param productionId
-	 * @param headlinerId
-	 * @param includeFiles
-	 * @return
+	 * @param fromEventDate The start date of the event.
+	 * @param toEventDate The end date of the event.
+	 * @param listingId The listing id.
+	 * @param internalTicketId The internal ticket id.
+	 * @param productionId The production id.
+	 * @param headlinerId The headliner id.
+	 * @param includeFiles Whether to include files.
+	 * @return listings.
+	 * @throws IOException if an I/O error occurs.
 	 */
 	@GET
 	@Path("/get")
@@ -33,6 +42,24 @@ public interface ListingResource {
 		@QueryParam("productionId") Integer productionId,
 		@QueryParam("headlinerId") Integer headlinerId,
 		@QueryParam("includeFiles") Boolean includeFiles
-	);
+	) throws IOException, VividSeatsException;
+
+	/**
+	 * Either productionId or eventName, venue, eventDate is required. If the
+	 * eventName|venue|eventDate parameters are used, the create request may be sent
+	 * to mapping. If the productionId is included in the request or our system can
+	 * determine the productionId from the eventName|venue|eventDate parameters, the
+	 * listing will be returned in the response. This method will only work if the
+	 * Content-Type header is set to application/json.
+	 *
+	 * Rate limit: 50 requests per second.
+	 *
+	 * @param brokerListing The broker listing to create.
+	 * @return the created listing.
+	 * @throws IOException if an I/O error occurs.
+	 */
+	@POST
+	@Path("/create")
+	ListingResponse create(BrokerListing brokerListing) throws IOException, VividSeatsException;
 
 }

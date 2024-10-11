@@ -1,6 +1,10 @@
-package org.oxerr.vividseats.client.model;
+package org.oxerr.vividseats.client.rescu.resource;
 
 import java.util.List;
+
+import org.oxerr.vividseats.client.model.BrokerListing;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ListingsResponse extends Response {
 
@@ -9,6 +13,13 @@ public class ListingsResponse extends Response {
 	private List<BrokerListing> listings;
 
 	private String attribute;
+
+	public ListingsResponse(
+		@JsonProperty("success") Boolean success,
+		@JsonProperty("message") String message
+	) {
+		super(success, message);
+	}
 
 	public List<BrokerListing> getListings() {
 		return listings;
