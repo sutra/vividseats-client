@@ -26,4 +26,9 @@ public class ListingServiceImpl implements ListingService {
 		return listingResource.create(brokerListing).getListing();
 	}
 
+	@Override
+	public void update(BrokerListing brokerListing) throws IOException {
+		listingResource.update(brokerListing);
+	}
+
 }

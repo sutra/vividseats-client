@@ -36,4 +36,19 @@ class ListingServiceImplTest {
 		assertNotNull(created);
 	}
 
+	@Test
+	void testUpdate() throws IOException {
+		var brokerListing = new BrokerListing();
+		brokerListing.setId(10845010354L);
+		brokerListing.setProductionId(1361816);
+		brokerListing.setQuantity(1);
+		brokerListing.setSection("335");
+		brokerListing.setRow("F");
+		brokerListing.setSeatFrom("1");
+		brokerListing.setSeatThru("1");
+		brokerListing.setPrice(BigDecimal.ONE);
+		brokerListing.setSplitType(SplitType.ANY);
+		client.getListingService().update(brokerListing);
+	}
+
 }

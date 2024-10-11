@@ -19,4 +19,6 @@ public interface ListingService {
 
 	BrokerListing create(BrokerListing brokerListing) throws IOException;
 
+	void update(BrokerListing brokerListing) throws IOException;
+
 }

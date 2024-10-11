@@ -7,6 +7,7 @@ import org.oxerr.vividseats.client.model.BrokerListing;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
+import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
@@ -31,6 +32,7 @@ public interface ListingResource {
 	 * @param includeFiles Whether to include files.
 	 * @return listings.
 	 * @throws IOException if an I/O error occurs.
+	 * @throws VividSeatsException if an error response is returned.
 	 */
 	@GET
 	@Path("/get")
@@ -45,6 +47,8 @@ public interface ListingResource {
 	) throws IOException, VividSeatsException;
 
 	/**
+	 * Creates a listing.
+	 *
 	 * Either productionId or eventName, venue, eventDate is required. If the
 	 * eventName|venue|eventDate parameters are used, the create request may be sent
 	 * to mapping. If the productionId is included in the request or our system can
@@ -57,9 +61,30 @@ public interface ListingResource {
 	 * @param brokerListing The broker listing to create.
 	 * @return the created listing.
 	 * @throws IOException if an I/O error occurs.
+	 * @throws VividSeatsException if an error response is returned.
 	 */
 	@POST
 	@Path("/create")
 	ListingResponse create(BrokerListing brokerListing) throws IOException, VividSeatsException;
+
+	/**
+	 * Updates a listing.
+	 *
+	 * All the fields including attributes and tickets will be updated with the
+	 * object passed in. This method will only work if the Content-Type header is
+	 * set to application/json. An alternative version is /listings/v1/updateListing
+	 * as it only requires you to supply your internal ticketID. If you want to use
+	 * v2 and you only have a ticketId then you need to get the listing by ticket id
+	 * first.
+	 *
+	 * Rate limit: 50 requests per second.
+	 *
+	 * @param brokerListing The broker listing to update.
+	 * @throws IOException if an I/O error occurs.
+	 * @throws VividSeatsException if an error response is returned.
+	 */
+	@PUT
+	@Path("/update")
+	Response update(BrokerListing brokerListing) throws IOException, VividSeatsException;
 
 }
