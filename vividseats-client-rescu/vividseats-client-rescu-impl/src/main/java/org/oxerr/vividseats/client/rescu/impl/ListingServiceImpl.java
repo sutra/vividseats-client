@@ -16,8 +16,15 @@ public class ListingServiceImpl implements ListingService {
 	}
 
 	@Override
-	public List<BrokerListing> get(String fromEventDate, String toEventDate, Long listingId, String internalTicketId,
-			Integer productionId, Integer headlinerId, Boolean includeFiles) throws IOException {
+	public List<BrokerListing> get(
+		Long listingId,
+		String internalTicketId,
+		Integer productionId,
+		String fromEventDate,
+		String toEventDate,
+		Integer headlinerId,
+		Boolean includeFiles
+	) throws IOException {
 		return listingResource.get(fromEventDate, toEventDate, listingId, internalTicketId, productionId, headlinerId, includeFiles).getListings();
 	}
 

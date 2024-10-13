@@ -8,11 +8,11 @@ import org.oxerr.vividseats.client.model.BrokerListing;
 public interface ListingService {
 
 	List<BrokerListing> get(
-		String fromEventDate,
-		String toEventDate,
 		Long listingId,
 		String internalTicketId,
 		Integer productionId,
+		String fromEventDate,
+		String toEventDate,
 		Integer headlinerId,
 		Boolean includeFiles
 	) throws IOException;

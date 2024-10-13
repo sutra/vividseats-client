@@ -1,10 +1,13 @@
 package org.oxerr.vividseats.client.rescu.impl;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.oxerr.rescu.ext.singleton.RestProxyFactorySingletonImpl;
 import org.oxerr.vividseats.client.rescu.resource.ListingsResponse;
@@ -23,6 +26,7 @@ import si.mazi.rescu.ClientConfig;
 import si.mazi.rescu.IRestProxyFactory;
 import si.mazi.rescu.RestProxyFactoryImpl;
 
+@Disabled("Token is required")
 class RateLimiterInterceptorTest {
 
 	private final Logger log = LogManager.getLogger();
@@ -69,10 +73,10 @@ class RateLimiterInterceptorTest {
 		}
 
 		log.info("Invocation {} of 2 should wait", i);
-		listingResource.get(null, null, null, null, null, null, null);
+		assertNotNull(listingResource.get(null, null, null, null, null, null, null));
 
 		log.info("Another method invocation {} should not wait", i);
-		listingResource.get();
+		assertNotNull(listingResource.get());
 	}
 
 }

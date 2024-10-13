@@ -6,8 +6,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+@Disabled("Token is required")
 class ResCUVividSeatsClientTest {
 
 	public static ResCUVividSeatsClient getClient() {

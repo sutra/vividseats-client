@@ -1,6 +1,8 @@
 package org.oxerr.vividseats.client.rescu.impl;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -10,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.oxerr.vividseats.client.model.BrokerListing;
 import org.oxerr.vividseats.client.model.SplitType;
 
+@Disabled("Token is required")
 class ListingServiceImplTest {
 
 	private static final ResCUVividSeatsClient client = ResCUVividSeatsClientTest.getClient();
@@ -50,12 +53,17 @@ class ListingServiceImplTest {
 		brokerListing.setPrice(BigDecimal.ONE);
 		brokerListing.setSplitType(SplitType.ANY);
 		client.getListingService().update(brokerListing);
+
+		var listing = client.getListingService().get(10845010354L, null, null, null, null, null, null);
+		assertEquals(BigDecimal.ONE, listing.get(0).getPrice());
 	}
 
 	@Disabled("Delete listing.")
 	@Test
 	void testDelete() throws IOException {
 		client.getListingService().delete(10845010354L, null);
+
+		assertTrue(client.getListingService().get(10845010354L, null, null, null, null, null, null).isEmpty());
 	}
 
 }
