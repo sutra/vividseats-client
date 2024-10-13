@@ -39,6 +39,10 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
+			<groupId>org.oxerr.rescu.ext</groupId>
+			<artifactId>rescu-ext-rate-limiter-core</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>org.oxerr.vividseats.client</groupId>
 			<artifactId>vividseats-client-model</artifactId>
 			<version>${project.version}</version>
@@ -54,6 +58,10 @@
 		<dependency>
 			<groupId>com.github.mmazi</groupId>
 			<artifactId>rescu</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.github.poshjosh</groupId>
+			<artifactId>rate-limiter-annotation</artifactId>
 		</dependency>
 	</dependencies>
 </project>

@@ -16,7 +16,7 @@ class ResCUVividSeatsClientTest {
 		return new ResCUVividSeatsClient(token);
 	}
 
-	private static Properties getProps() {
+	public static Properties getProps() {
 		Properties props = new Properties();
 		String name = "/vividseats.properties";
 		try (InputStream in = ResCUVividSeatsClientTest.class.getResourceAsStream(name)) {

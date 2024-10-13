@@ -2,6 +2,7 @@ package org.oxerr.vividseats.client.rescu.impl;
 
 import java.util.function.Supplier;
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.oxerr.rescu.ext.singleton.RestProxyFactorySingletonImpl;
 import org.oxerr.vividseats.client.ListingService;
 import org.oxerr.vividseats.client.VividSeatsClient;
@@ -13,6 +14,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
+import io.github.poshjosh.ratelimiter.store.BandwidthsStore;
 import jakarta.ws.rs.HeaderParam;
 import si.mazi.rescu.ClientConfig;
 import si.mazi.rescu.IRestProxyFactory;
@@ -33,19 +35,57 @@ public class ResCUVividSeatsClient implements VividSeatsClient {
 
 	private final ListingService listingService;
 
+	/**
+	 * Constructs a client with the specified token.
+	 *
+	 * @param token the token to access the API.
+	 * @param interceptors the interceptors to intercept the requests.
+	 */
 	public ResCUVividSeatsClient(String token, Interceptor... interceptors) {
 		this(DEFAULT_BASE_URL, token, interceptors);
 	}
 
+	/**
+	 * Constructs a client with the specified base URL and token.
+	 *
+	 * @param baseUrl the base URL of the API.
+	 * @param token the token to access the API.
+	 * @param interceptors the interceptors to intercept the requests.
+	 */
 	public ResCUVividSeatsClient(String baseUrl, String token, Interceptor... interceptors) {
 		this(baseUrl, () -> token, interceptors);
 	}
 
+	/**
+	 * Constructs a client with the specified token.
+	 *
+	 * @param token the token to access the API.
+	 * @param interceptors the interceptors to intercept the requests.
+	 */
 	public ResCUVividSeatsClient(Supplier<String> token, Interceptor... interceptors) {
 		this(DEFAULT_BASE_URL, token, interceptors);
 	}
 
+	/**
+	 * Constructs a client with the specified base URL and token.
+	 *
+	 * @param baseUrl the base URL of the API.
+	 * @param tokenSupplier the token supplier to access the API.
+	 * @param interceptors the interceptors to intercept the requests.
+	 */
 	public ResCUVividSeatsClient(String baseUrl, Supplier<String> tokenSupplier, Interceptor... interceptors) {
+		this(baseUrl, tokenSupplier, BandwidthsStore.ofDefaults(), interceptors);
+	}
+
+	/**
+	 * Constructs a client with the specified base URL, token supplier, bandwidths store and interceptors.
+	 *
+	 * @param baseUrl the base URL of the API.
+	 * @param tokenSupplier the token supplier to access the API.
+	 * @param bandwidthsStore the bandwidths store to store the bandwidth.
+	 * @param interceptors the interceptors to intercept the requests.
+	 */
+	public ResCUVividSeatsClient(String baseUrl, Supplier<String> tokenSupplier, BandwidthsStore<String> bandwidthsStore, Interceptor... interceptors) {
 		this.baseUrl = baseUrl;
 
 		JacksonObjectMapperFactory jacksonObjectMapperFactory = new DefaultJacksonObjectMapperFactory() {
@@ -75,12 +115,17 @@ public class ResCUVividSeatsClient implements VividSeatsClient {
 
 		this.restProxyFactory = new RestProxyFactorySingletonImpl(new RestProxyFactoryImpl());
 
-		this.listingService = new ListingServiceImpl(createProxy(ListingResource.class, interceptors));
+		this.listingService = new ListingServiceImpl(createProxy(ListingResource.class, bandwidthsStore, interceptors));
 	}
 
 	@Override
 	public ListingService getListingService() {
 		return this.listingService;
+	}
+
+	protected <I> I createProxy(Class<I> restInterface, BandwidthsStore<String> bandwidthsStore, Interceptor... interceptors) {
+		var rateLimiterInterceptor = new RateLimiterInterceptor(bandwidthsStore);
+		return createProxy(restInterface, ArrayUtils.add(interceptors, rateLimiterInterceptor));
 	}
 
 	protected <I> I createProxy(Class<I> restInterface, Interceptor... interceptors) {

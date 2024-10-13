@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import org.oxerr.vividseats.client.model.BrokerListing;
 
+import io.github.poshjosh.ratelimiter.annotations.Rate;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
@@ -37,6 +38,7 @@ public interface ListingResource {
 	 */
 	@GET
 	@Path("/get")
+	@Rate(10)
 	ListingsResponse get(
 		@QueryParam("fromEventDate") String fromEventDate,
 		@QueryParam("toEventDate") String toEventDate,
@@ -66,6 +68,7 @@ public interface ListingResource {
 	 */
 	@POST
 	@Path("/create")
+	@Rate(50)
 	ListingResponse create(BrokerListing brokerListing) throws IOException, VividSeatsException;
 
 	/**
@@ -86,6 +89,7 @@ public interface ListingResource {
 	 */
 	@PUT
 	@Path("/update")
+	@Rate(50)
 	Response update(BrokerListing brokerListing) throws IOException, VividSeatsException;
 
 	/**
@@ -103,6 +107,7 @@ public interface ListingResource {
 	 */
 	@DELETE
 	@Path("/delete")
+	@Rate(50)
 	Response delete(
 		@QueryParam("listingId") Long listingId,
 		@QueryParam("internalTicketId") String internalTicketId
