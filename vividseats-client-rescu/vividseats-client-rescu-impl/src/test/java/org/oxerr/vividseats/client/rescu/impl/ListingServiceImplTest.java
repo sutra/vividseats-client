@@ -7,6 +7,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.io.IOException;
 import java.math.BigDecimal;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.oxerr.vividseats.client.model.BrokerListing;
@@ -17,10 +20,15 @@ class ListingServiceImplTest {
 
 	private static final ResCUVividSeatsClient client = ResCUVividSeatsClientTest.getClient();
 
+	private final Logger log = LogManager.getLogger();
+
+	@Disabled("Token is required.")
 	@Test
 	void testGet() throws IOException {
-		var listingsResponse = client.getListingService().get(null, null, null, null, null, null, null);
-		assertNotNull(listingsResponse);
+		var listings = client.getListingService().get(null, null, null, null, null, null, null);
+		assertNotNull(listings);
+		log.info("Listings: {}", listings.size());
+		listings.forEach(listing -> log.info("{}", ToStringBuilder.reflectionToString(listing)));
 	}
 
 	@Disabled("Create listing.")
