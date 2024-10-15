@@ -2,7 +2,7 @@ package org.oxerr.vividseats.client.rescu.resource.v1;
 
 import java.io.IOException;
 
-import org.oxerr.vividseats.client.model.v1.UpdateListingRequest;
+import org.oxerr.vividseats.client.model.v1.Update;
 import org.oxerr.vividseats.client.rescu.resource.Response;
 import org.oxerr.vividseats.client.rescu.resource.VividSeatsException;
 
@@ -19,6 +19,6 @@ public interface ListingResource {
 
 	@POST
 	@Path("/updateListing")
-	Response update(UpdateListingRequest updateListingRequest) throws IOException, VividSeatsException;
+	Response update(Update updateListingRequest) throws IOException, VividSeatsException;
 
 }

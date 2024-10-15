@@ -13,7 +13,7 @@ import org.oxerr.vividseats.client.model.SplitType;
  * /listings/v1/updateListing
  * </a>
  */
-public class UpdateListingRequest implements Serializable {
+public class Update implements Serializable {
 
 	private static final long serialVersionUID = 2024101501L;
 
