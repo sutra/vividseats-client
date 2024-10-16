@@ -29,8 +29,6 @@ public class ResCUVividSeatsClient implements VividSeatsClient {
 
 	private final String baseUrl;
 
-	private final ClientConfig clientConfig;
-
 	private final IRestProxyFactory restProxyFactory;
 
 	private final ListingService listingService;
@@ -87,8 +85,53 @@ public class ResCUVividSeatsClient implements VividSeatsClient {
 	 */
 	public ResCUVividSeatsClient(String baseUrl, Supplier<String> tokenSupplier, BandwidthsStore<String> bandwidthsStore, Interceptor... interceptors) {
 		this.baseUrl = baseUrl;
+		JacksonObjectMapperFactory jacksonObjectMapperFactory = createJacksonObjectMapperFactory();
+		var clientConfigV1 = createClientConfigV1(jacksonObjectMapperFactory);
+		var clientConfig = createClientConfig(jacksonObjectMapperFactory, tokenSupplier);
+		this.restProxyFactory = new RestProxyFactorySingletonImpl(new RestProxyFactoryImpl());
+		this.listingService = new ListingServiceImpl(
+			tokenSupplier,
+			this.restProxyFactory.createProxy(org.oxerr.vividseats.client.rescu.resource.v1.ListingResource.class, baseUrl, clientConfigV1, interceptors),
+			createProxy(ListingResource.class, clientConfig, bandwidthsStore, interceptors)
+		);
+	}
 
-		JacksonObjectMapperFactory jacksonObjectMapperFactory = new DefaultJacksonObjectMapperFactory() {
+	@Override
+	public ListingService getListingService() {
+		return this.listingService;
+	}
+
+	protected <I> I createProxy(Class<I> restInterface, ClientConfig clientConfig, BandwidthsStore<String> bandwidthsStore, Interceptor... interceptors) {
+		var rateLimiterInterceptor = new RateLimiterInterceptor(bandwidthsStore);
+		return createProxy(restInterface, clientConfig, ArrayUtils.add(interceptors, rateLimiterInterceptor));
+	}
+
+	protected <I> I createProxy(Class<I> restInterface, ClientConfig clientConfig, Interceptor... interceptors) {
+		return this.restProxyFactory.createProxy(restInterface, baseUrl, clientConfig, interceptors);
+	}
+
+	protected ClientConfig createClientConfigV1(JacksonObjectMapperFactory jacksonObjectMapperFactory) {
+		var clientConfig = new ClientConfig();
+		clientConfig.setJacksonObjectMapperFactory(jacksonObjectMapperFactory);
+		return clientConfig;
+	}
+
+	protected ClientConfig createClientConfig(JacksonObjectMapperFactory jacksonObjectMapperFactory, Supplier<String> tokenSupplier) {
+		var clientConfig = new ClientConfig();
+		clientConfig.addDefaultParam(HeaderParam.class, "Api-token", new Object() {
+
+			@Override
+			public String toString() {
+				return tokenSupplier.get();
+			}
+
+		});
+		clientConfig.setJacksonObjectMapperFactory(jacksonObjectMapperFactory);
+		return clientConfig;
+	}
+
+	protected JacksonObjectMapperFactory createJacksonObjectMapperFactory() {
+		return new DefaultJacksonObjectMapperFactory() {
 
 			@Override
 			public void configureObjectMapper(ObjectMapper objectMapper) {
@@ -101,35 +144,6 @@ public class ResCUVividSeatsClient implements VividSeatsClient {
 			}
 
 		};
-
-		this.clientConfig = new ClientConfig();
-		clientConfig.addDefaultParam(HeaderParam.class, "Api-token", new Object() {
-
-			@Override
-			public String toString() {
-				return tokenSupplier.get();
-			}
-
-		});
-		clientConfig.setJacksonObjectMapperFactory(jacksonObjectMapperFactory);
-
-		this.restProxyFactory = new RestProxyFactorySingletonImpl(new RestProxyFactoryImpl());
-
-		this.listingService = new ListingServiceImpl(createProxy(ListingResource.class, bandwidthsStore, interceptors));
-	}
-
-	@Override
-	public ListingService getListingService() {
-		return this.listingService;
-	}
-
-	protected <I> I createProxy(Class<I> restInterface, BandwidthsStore<String> bandwidthsStore, Interceptor... interceptors) {
-		var rateLimiterInterceptor = new RateLimiterInterceptor(bandwidthsStore);
-		return createProxy(restInterface, ArrayUtils.add(interceptors, rateLimiterInterceptor));
-	}
-
-	protected <I> I createProxy(Class<I> restInterface, Interceptor... interceptors) {
-		return this.restProxyFactory.createProxy(restInterface, baseUrl, this.clientConfig, interceptors);
 	}
 
 }
