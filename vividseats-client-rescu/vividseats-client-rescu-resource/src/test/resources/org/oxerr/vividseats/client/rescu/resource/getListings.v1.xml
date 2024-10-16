@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<brokerListings>
+	<brokerListing>
+		<electronic>false</electronic>
+		<electronicTransfer>false</electronicTransfer>
+		<faceValue>0.0</faceValue>
+		<id>10865298969</id>
+		<instantDownload>false</instantDownload>
+		<instantTransfer>false</instantTransfer>
+		<notes></notes>
+		<passThrough></passThrough>
+		<price>2.00</price>
+		<productionId>1361816</productionId>
+		<quantity>1</quantity>
+		<row>F</row>
+		<seatFrom>1</seatFrom>
+		<seatThru>2</seatThru>
+		<section>335</section>
+		<splitType>ANY</splitType>
+		<stockType>HARD</stockType>
+		<ticketId>1</ticketId>
+		<unitTaxedCost>0.0</unitTaxedCost>
+	</brokerListing>
+</brokerListings>
