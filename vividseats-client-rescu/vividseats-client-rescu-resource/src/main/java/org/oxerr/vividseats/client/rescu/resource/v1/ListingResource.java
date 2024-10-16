@@ -10,15 +10,39 @@ import org.oxerr.vividseats.client.rescu.resource.VividSeatsException;
 
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.FormParam;
+import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 
 @Path("/listings/v1")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public interface ListingResource {
+
+	/**
+	 * Delete a listing.
+	 *
+	 * XML or JSON response.
+	 *
+	 * The deleteListing method allows you to delete a listing in real-time.
+	 *
+	 * Not rate limited
+	 *
+	 * @param apiToken The API token.
+	 * @param ticketId The ticket ID.
+	 * @return the response of the deletion request.
+	 * @throws IOException if an I/O error occurs.
+	 * @throws VividSeatsException if an error occurs.
+	 */
+	@GET
+	@Path("/deleteListing")
+	Response deleteListing(
+		@QueryParam("apiToken") String apiToken,
+		@QueryParam("ticketId") String ticketId
+	) throws IOException, VividSeatsException;
 
 	/**
 	 * Updates a listing.
@@ -31,6 +55,7 @@ public interface ListingResource {
 	 *
 	 * Not rate limited
 	 *
+	 * @param apiToken The API token.
 	 * @param ticketId The ticket ID.
 	 * @param quantity The quantity of tickets.
 	 * @param section The section.
@@ -54,6 +79,7 @@ public interface ListingResource {
 	@POST
 	@Path("/updateListing")
 	Response updateListing(
+		@FormParam("apiToken") String apiToken,
 		@FormParam("ticketId") String ticketId,
 		@FormParam("quantity") Integer quantity,
 		@FormParam("section") String section,
