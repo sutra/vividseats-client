@@ -11,11 +11,11 @@ import javax.annotation.Nullable;
 import org.oxerr.ticket.inventory.support.cached.redisson.ListingConfiguration;
 import org.oxerr.ticket.inventory.support.cached.redisson.RedissonCachedListingServiceSupport;
 import org.oxerr.ticket.inventory.support.cached.redisson.Status;
-import org.oxerr.vividseats.client.ListingService;
 import org.oxerr.vividseats.client.cached.inventory.VividSeatsCachedListingService;
 import org.oxerr.vividseats.client.cached.inventory.VividSeatsEvent;
 import org.oxerr.vividseats.client.cached.inventory.VividSeatsListing;
-import org.oxerr.vividseats.client.model.BrokerListing;
+import org.oxerr.vividseats.client.inventory.ListingService;
+import org.oxerr.vividseats.client.model.inventory.BrokerListing;
 import org.redisson.api.RedissonClient;
 
 public class RedissonCachedListingService

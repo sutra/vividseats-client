@@ -1,4 +1,4 @@
-package org.oxerr.vividseats.client.rescu.resource;
+package org.oxerr.vividseats.client.rescu.resource.inventory;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -8,8 +8,8 @@ import java.io.IOException;
 import java.math.BigDecimal;
 
 import org.junit.jupiter.api.Test;
-import org.oxerr.vividseats.client.model.SplitType;
-import org.oxerr.vividseats.client.model.StockType;
+import org.oxerr.vividseats.client.model.inventory.SplitType;
+import org.oxerr.vividseats.client.model.inventory.StockType;
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.DeserializationFeature;

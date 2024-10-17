@@ -1,4 +1,4 @@
-package org.oxerr.vividseats.client.model;
+package org.oxerr.vividseats.client.model.inventory;
 
 import java.io.Serializable;
 import java.math.BigDecimal;

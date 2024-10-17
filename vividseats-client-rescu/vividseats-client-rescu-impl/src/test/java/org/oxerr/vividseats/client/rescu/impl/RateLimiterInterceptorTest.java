@@ -10,8 +10,8 @@ import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.oxerr.rescu.ext.singleton.RestProxyFactorySingletonImpl;
-import org.oxerr.vividseats.client.rescu.resource.ListingsResponse;
 import org.oxerr.vividseats.client.rescu.resource.VividSeatsException;
+import org.oxerr.vividseats.client.rescu.resource.inventory.ListingsResponse;
 
 import io.github.poshjosh.ratelimiter.annotations.Rate;
 import io.github.poshjosh.ratelimiter.store.BandwidthsStore;

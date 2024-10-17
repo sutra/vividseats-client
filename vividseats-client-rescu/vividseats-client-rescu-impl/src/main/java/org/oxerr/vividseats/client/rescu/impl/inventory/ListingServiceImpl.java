@@ -1,25 +1,25 @@
-package org.oxerr.vividseats.client.rescu.impl;
+package org.oxerr.vividseats.client.rescu.impl.inventory;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.function.Supplier;
 
-import org.oxerr.vividseats.client.ListingService;
-import org.oxerr.vividseats.client.model.BrokerListing;
-import org.oxerr.vividseats.client.model.v1.Update;
-import org.oxerr.vividseats.client.rescu.resource.ListingResource;
+import org.oxerr.vividseats.client.inventory.ListingService;
+import org.oxerr.vividseats.client.model.inventory.BrokerListing;
+import org.oxerr.vividseats.client.model.v1.inventory.Update;
+import org.oxerr.vividseats.client.rescu.resource.inventory.ListingResource;
 
 public class ListingServiceImpl implements ListingService {
 
 	private final Supplier<String> tokenSupplier;
 
-	private final org.oxerr.vividseats.client.rescu.resource.v1.ListingResource listingResourceV1;
+	private final org.oxerr.vividseats.client.rescu.resource.v1.inventory.ListingResource listingResourceV1;
 
 	private final ListingResource listingResource;
 
 	public ListingServiceImpl(
 		Supplier<String> tokenSupplier,
-		org.oxerr.vividseats.client.rescu.resource.v1.ListingResource listingResourceV1,
+		org.oxerr.vividseats.client.rescu.resource.v1.inventory.ListingResource listingResourceV1,
 		ListingResource listingResource
 	) {
 		this.tokenSupplier = tokenSupplier;

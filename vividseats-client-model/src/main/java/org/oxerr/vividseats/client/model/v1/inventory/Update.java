@@ -1,10 +1,10 @@
-package org.oxerr.vividseats.client.model.v1;
+package org.oxerr.vividseats.client.model.v1.inventory;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
 
-import org.oxerr.vividseats.client.model.SplitType;
+import org.oxerr.vividseats.client.model.inventory.SplitType;
 
 /**
  * Request to update a listing.

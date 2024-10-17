@@ -12,8 +12,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.oxerr.vividseats.client.model.BrokerListing;
-import org.oxerr.vividseats.client.model.SplitType;
+import org.oxerr.vividseats.client.model.inventory.BrokerListing;
+import org.oxerr.vividseats.client.model.inventory.SplitType;
 
 @Disabled("Token is required")
 class ListingServiceImplTest {

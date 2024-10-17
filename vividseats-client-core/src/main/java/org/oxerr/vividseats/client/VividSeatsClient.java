@@ -1,5 +1,7 @@
 package org.oxerr.vividseats.client;
 
+import org.oxerr.vividseats.client.inventory.ListingService;
+
 public interface VividSeatsClient {
 
 	/**

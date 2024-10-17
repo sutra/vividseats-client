@@ -1,8 +1,10 @@
-package org.oxerr.vividseats.client.rescu.resource;
+package org.oxerr.vividseats.client.rescu.resource.inventory;
 
 import java.io.IOException;
 
-import org.oxerr.vividseats.client.model.BrokerListing;
+import org.oxerr.vividseats.client.model.inventory.BrokerListing;
+import org.oxerr.vividseats.client.rescu.resource.Response;
+import org.oxerr.vividseats.client.rescu.resource.VividSeatsException;
 
 import io.github.poshjosh.ratelimiter.annotations.Rate;
 import jakarta.ws.rs.Consumes;

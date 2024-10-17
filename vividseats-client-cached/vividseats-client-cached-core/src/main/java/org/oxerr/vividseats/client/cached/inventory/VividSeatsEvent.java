@@ -7,7 +7,7 @@ import java.util.List;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.oxerr.ticket.inventory.support.Event;
-import org.oxerr.vividseats.client.model.BrokerListing;
+import org.oxerr.vividseats.client.model.inventory.BrokerListing;
 
 public class VividSeatsEvent extends Event<String, String, BrokerListing, VividSeatsListing> {
 

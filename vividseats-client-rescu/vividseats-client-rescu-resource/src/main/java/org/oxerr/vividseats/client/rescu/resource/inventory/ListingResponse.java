@@ -1,6 +1,7 @@
-package org.oxerr.vividseats.client.rescu.resource;
+package org.oxerr.vividseats.client.rescu.resource.inventory;
 
-import org.oxerr.vividseats.client.model.BrokerListing;
+import org.oxerr.vividseats.client.model.inventory.BrokerListing;
+import org.oxerr.vividseats.client.rescu.resource.Response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

@@ -1,10 +1,10 @@
-package org.oxerr.vividseats.client.rescu.resource.v1;
+package org.oxerr.vividseats.client.rescu.resource.v1.inventory;
 
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
 
-import org.oxerr.vividseats.client.model.SplitType;
+import org.oxerr.vividseats.client.model.inventory.SplitType;
 import org.oxerr.vividseats.client.rescu.resource.Response;
 import org.oxerr.vividseats.client.rescu.resource.VividSeatsException;
 

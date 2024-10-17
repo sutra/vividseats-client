@@ -3,7 +3,7 @@ package org.oxerr.vividseats.client.cached.inventory;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.oxerr.ticket.inventory.support.Listing;
-import org.oxerr.vividseats.client.model.BrokerListing;
+import org.oxerr.vividseats.client.model.inventory.BrokerListing;
 
 public class VividSeatsListing extends Listing<String, BrokerListing> {
 

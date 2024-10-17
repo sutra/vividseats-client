@@ -4,9 +4,10 @@ import java.util.function.Supplier;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.oxerr.rescu.ext.singleton.RestProxyFactorySingletonImpl;
-import org.oxerr.vividseats.client.ListingService;
 import org.oxerr.vividseats.client.VividSeatsClient;
-import org.oxerr.vividseats.client.rescu.resource.ListingResource;
+import org.oxerr.vividseats.client.inventory.ListingService;
+import org.oxerr.vividseats.client.rescu.impl.inventory.ListingServiceImpl;
+import org.oxerr.vividseats.client.rescu.resource.inventory.ListingResource;
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -91,7 +92,7 @@ public class ResCUVividSeatsClient implements VividSeatsClient {
 		this.restProxyFactory = new RestProxyFactorySingletonImpl(new RestProxyFactoryImpl());
 		this.listingService = new ListingServiceImpl(
 			tokenSupplier,
-			this.restProxyFactory.createProxy(org.oxerr.vividseats.client.rescu.resource.v1.ListingResource.class, baseUrl, clientConfigV1, interceptors),
+			this.restProxyFactory.createProxy(org.oxerr.vividseats.client.rescu.resource.v1.inventory.ListingResource.class, baseUrl, clientConfigV1, interceptors),
 			createProxy(ListingResource.class, clientConfig, bandwidthsStore, interceptors)
 		);
 	}

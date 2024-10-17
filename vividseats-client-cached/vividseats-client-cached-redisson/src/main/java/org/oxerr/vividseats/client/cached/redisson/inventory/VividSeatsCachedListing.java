@@ -6,7 +6,7 @@ import org.oxerr.ticket.inventory.support.cached.redisson.CachedListing;
 import org.oxerr.ticket.inventory.support.cached.redisson.Status;
 import org.oxerr.vividseats.client.cached.inventory.VividSeatsEvent;
 import org.oxerr.vividseats.client.cached.inventory.VividSeatsListing;
-import org.oxerr.vividseats.client.model.BrokerListing;
+import org.oxerr.vividseats.client.model.inventory.BrokerListing;
 
 public class VividSeatsCachedListing extends CachedListing<BrokerListing> {
 

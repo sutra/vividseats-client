@@ -1,10 +1,10 @@
-package org.oxerr.vividseats.client;
+package org.oxerr.vividseats.client.inventory;
 
 import java.io.IOException;
 import java.util.List;
 
-import org.oxerr.vividseats.client.model.BrokerListing;
-import org.oxerr.vividseats.client.model.v1.Update;
+import org.oxerr.vividseats.client.model.inventory.BrokerListing;
+import org.oxerr.vividseats.client.model.v1.inventory.Update;
 
 public interface ListingService {
 
