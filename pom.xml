@@ -31,6 +31,7 @@
 	<modules>
 		<module>vividseats-client-model</module>
 		<module>vividseats-client-core</module>
+		<module>vividseats-client-cached</module>
 		<module>vividseats-client-rescu</module>
 		<module>vividseats-client-coverage</module>
 	</modules>
