@@ -45,6 +45,16 @@ public class ResCUVividSeatsClient implements VividSeatsClient {
 	}
 
 	/**
+	 * Constructs a client with the specified token.
+	 *
+	 * @param token the token to access the API.
+	 * @param interceptors the interceptors to intercept the requests.
+	 */
+	public ResCUVividSeatsClient(Supplier<String> token, Interceptor... interceptors) {
+		this(DEFAULT_BASE_URL, token, interceptors);
+	}
+
+	/**
 	 * Constructs a client with the specified base URL and token.
 	 *
 	 * @param baseUrl the base URL of the API.
@@ -53,16 +63,6 @@ public class ResCUVividSeatsClient implements VividSeatsClient {
 	 */
 	public ResCUVividSeatsClient(String baseUrl, String token, Interceptor... interceptors) {
 		this(baseUrl, () -> token, interceptors);
-	}
-
-	/**
-	 * Constructs a client with the specified token.
-	 *
-	 * @param token the token to access the API.
-	 * @param interceptors the interceptors to intercept the requests.
-	 */
-	public ResCUVividSeatsClient(Supplier<String> token, Interceptor... interceptors) {
-		this(DEFAULT_BASE_URL, token, interceptors);
 	}
 
 	/**
