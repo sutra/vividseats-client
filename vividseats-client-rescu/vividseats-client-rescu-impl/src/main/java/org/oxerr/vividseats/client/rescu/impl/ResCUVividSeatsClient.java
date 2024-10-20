@@ -44,14 +44,29 @@ public class ResCUVividSeatsClient implements VividSeatsClient {
 		this(DEFAULT_BASE_URL, token, interceptors);
 	}
 
+	public ResCUVividSeatsClient(String token, BandwidthsStore<String> bandwidthsStore, Interceptor... interceptors) {
+		this(DEFAULT_BASE_URL, token, bandwidthsStore, interceptors);
+	}
+
 	/**
 	 * Constructs a client with the specified token.
 	 *
 	 * @param token the token to access the API.
 	 * @param interceptors the interceptors to intercept the requests.
 	 */
-	public ResCUVividSeatsClient(Supplier<String> token, Interceptor... interceptors) {
-		this(DEFAULT_BASE_URL, token, interceptors);
+	public ResCUVividSeatsClient(Supplier<String> tokenSupplier, Interceptor... interceptors) {
+		this(DEFAULT_BASE_URL, tokenSupplier, interceptors);
+	}
+
+	/**
+	 * Constructs a client with the specified token.
+	 *
+	 * @param tokenSupplier the token supplier to access the API.
+	 * @param bandwidthsStore the bandwidths store to store the bandwidth.
+	 * @param interceptors the interceptors to intercept the requests.
+	 */
+	public ResCUVividSeatsClient(Supplier<String> tokenSupplier, BandwidthsStore<String> bandwidthsStore, Interceptor... interceptors) {
+		this(DEFAULT_BASE_URL, tokenSupplier, bandwidthsStore, interceptors);
 	}
 
 	/**
@@ -74,6 +89,18 @@ public class ResCUVividSeatsClient implements VividSeatsClient {
 	 */
 	public ResCUVividSeatsClient(String baseUrl, Supplier<String> tokenSupplier, Interceptor... interceptors) {
 		this(baseUrl, tokenSupplier, BandwidthsStore.ofDefaults(), interceptors);
+	}
+
+	/**
+	 * Constructs a client with the specified base URL, token and bandwidths store.
+	 *
+	 * @param baseUrl the base URL of the API.
+	 * @param token the token to access the API.
+	 * @param bandwidthsStore the bandwidths store to store the bandwidth.
+	 * @param interceptors the interceptors to intercept the requests.
+	 */
+	public ResCUVividSeatsClient(String baseUrl, String token, BandwidthsStore<String> bandwidthsStore, Interceptor... interceptors) {
+		this(baseUrl, () -> token, bandwidthsStore, interceptors);
 	}
 
 	/**
