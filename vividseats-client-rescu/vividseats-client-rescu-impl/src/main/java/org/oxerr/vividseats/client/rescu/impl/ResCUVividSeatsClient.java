@@ -44,6 +44,13 @@ public class ResCUVividSeatsClient implements VividSeatsClient {
 		this(DEFAULT_BASE_URL, token, interceptors);
 	}
 
+	/**
+	 * Constructs a client with the specified token.
+	 *
+	 * @param token the token to access the API.
+	 * @param bandwidthsStore the bandwidths store to store the bandwidth.
+	 * @param interceptors the interceptors to intercept the requests.
+	 */
 	public ResCUVividSeatsClient(String token, BandwidthsStore<String> bandwidthsStore, Interceptor... interceptors) {
 		this(DEFAULT_BASE_URL, token, bandwidthsStore, interceptors);
 	}
