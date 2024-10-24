@@ -49,8 +49,6 @@ public class RedissonCachedListingService
 	 * @param keyPrefix the key prefix for the cache.
 	 * @param executor the executor.
 	 * @param listingConfiguration the listing configuration.
-	 * @param pageSize the page size when do check.
-	 * @param retryConfiguration the retry configuration.
 	 */
 	public RedissonCachedListingService(
 		ListingService listingService,
