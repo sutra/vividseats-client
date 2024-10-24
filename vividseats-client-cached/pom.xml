@@ -11,13 +11,12 @@
 		<artifactId>vividseats-client</artifactId>
 		<version>0.0.0</version>
 	</parent>
-	<artifactId>vividseats-client-core</artifactId>
-	<name>Vivid Seats Client - Core</name>
-	<dependencies>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>vividseats-client-model</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-	</dependencies>
+	<groupId>org.oxerr.vividseats.client.cached</groupId>
+	<artifactId>vividseats-client-cached</artifactId>
+	<name>Vivid Seats Client - Cached</name>
+	<packaging>pom</packaging>
+	<modules>
+		<module>vividseats-client-cached-core</module>
+		<module>vividseats-client-cached-redisson</module>
+	</modules>
 </project>

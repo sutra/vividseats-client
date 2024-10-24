@@ -2,3 +2,4 @@ target/
 .project
 .classpath
 .settings/
+/vividseats-client-rescu/vividseats-client-rescu-impl/src/test/resources/vividseats.properties

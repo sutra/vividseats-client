@@ -1,0 +1,60 @@
+{
+  "success": true,
+  "message": "string",
+  "listings": [
+    {
+      "id": -9007199254740991,
+      "productionId": -2147483648,
+      "quantity": -2147483648,
+      "section": "string",
+      "row": "string",
+      "seatFrom": "string",
+      "seatThru": "string",
+      "notes": "string",
+      "price": 0,
+      "ticketId": "string",
+      "electronic": true,
+      "electronicTransfer": true,
+      "inHandDate": "2019-08-24T14:15:22Z",
+      "listDate": "2019-08-24T14:15:22Z",
+      "splitType": "DEFAULT",
+      "splitValue": "string",
+      "spec": true,
+      "instantDownload": true,
+      "passThrough": "string",
+      "stockType": "HARD",
+      "seatNumbers": [
+        -2147483648
+      ],
+      "faceValue": 0,
+      "unitTaxedCost": 0,
+      "instantTransfer": true,
+      "attributes": [
+        "ADA"
+      ],
+      "tickets": [
+        {
+          "id": -2147483648,
+          "seatNumber": -2147483648,
+          "fileName": "string",
+          "barCode": "string",
+          "ticketToken": "string",
+          "listingId": -9007199254740991,
+          "fileData": "string"
+        }
+      ],
+      "internalNotes": "string",
+      "eventName": "string",
+      "venue": "string",
+      "city": "string",
+      "state": "string",
+      "eventDate": "2019-08-24T14:15:22Z",
+      "shipDate": "string",
+      "cost": 0,
+      "hasFiles": true,
+      "hasBarcodes": true,
+      "lastUpdate": "2019-08-24T14:15:22Z"
+    }
+  ],
+  "attribute": "ADA"
+}

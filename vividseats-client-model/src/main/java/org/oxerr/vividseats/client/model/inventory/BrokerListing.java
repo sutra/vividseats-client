@@ -1,10 +1,15 @@
-package org.oxerr.vividseats.client.model;
+package org.oxerr.vividseats.client.model.inventory;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * A listing from a broker.
+ *
+ * <a href="https://vividseats.stoplight.io/docs/broker-portal/decf5dae8afe5-broker-listing">Broker Listing</a>.
+ */
 public class BrokerListing implements Serializable {
 
 	private static final long serialVersionUID = 2024092601L;
@@ -33,9 +38,9 @@ public class BrokerListing implements Serializable {
 
 	private Boolean electronicTransfer;
 
-	private Instant inHandDate;
+	private LocalDateTime inHandDate;
 
-	private Instant listDate;
+	private LocalDateTime listDate;
 
 	private SplitType splitType;
 
@@ -71,7 +76,7 @@ public class BrokerListing implements Serializable {
 
 	private String state;
 
-	private Instant eventDate;
+	private LocalDateTime eventDate;
 
 	private String shipDate;
 
@@ -81,7 +86,7 @@ public class BrokerListing implements Serializable {
 
 	private Boolean hasBarcodes;
 
-	private Instant lastUpdate;
+	private LocalDateTime lastUpdate;
 
 	public Long getId() {
 		return id;
@@ -179,19 +184,19 @@ public class BrokerListing implements Serializable {
 		this.electronicTransfer = electronicTransfer;
 	}
 
-	public Instant getInHandDate() {
+	public LocalDateTime getInHandDate() {
 		return inHandDate;
 	}
 
-	public void setInHandDate(Instant inHandDate) {
+	public void setInHandDate(LocalDateTime inHandDate) {
 		this.inHandDate = inHandDate;
 	}
 
-	public Instant getListDate() {
+	public LocalDateTime getListDate() {
 		return listDate;
 	}
 
-	public void setListDate(Instant listDate) {
+	public void setListDate(LocalDateTime listDate) {
 		this.listDate = listDate;
 	}
 
@@ -331,11 +336,11 @@ public class BrokerListing implements Serializable {
 		this.state = state;
 	}
 
-	public Instant getEventDate() {
+	public LocalDateTime getEventDate() {
 		return eventDate;
 	}
 
-	public void setEventDate(Instant eventDate) {
+	public void setEventDate(LocalDateTime eventDate) {
 		this.eventDate = eventDate;
 	}
 
@@ -371,11 +376,11 @@ public class BrokerListing implements Serializable {
 		this.hasBarcodes = hasBarcodes;
 	}
 
-	public Instant getLastUpdate() {
+	public LocalDateTime getLastUpdate() {
 		return lastUpdate;
 	}
 
-	public void setLastUpdate(Instant lastUpdate) {
+	public void setLastUpdate(LocalDateTime lastUpdate) {
 		this.lastUpdate = lastUpdate;
 	}
 
