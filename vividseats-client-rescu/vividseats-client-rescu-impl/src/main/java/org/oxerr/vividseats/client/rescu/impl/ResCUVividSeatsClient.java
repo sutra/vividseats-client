@@ -58,7 +58,7 @@ public class ResCUVividSeatsClient implements VividSeatsClient {
 	/**
 	 * Constructs a client with the specified token.
 	 *
-	 * @param token the token to access the API.
+	 * @param tokenSupplier the token supplier to access the API.
 	 * @param interceptors the interceptors to intercept the requests.
 	 */
 	public ResCUVividSeatsClient(Supplier<String> tokenSupplier, Interceptor... interceptors) {

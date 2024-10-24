@@ -86,6 +86,7 @@ public interface ListingResource {
 	 * Rate limit: 50 requests per second.
 	 *
 	 * @param brokerListing The broker listing to update.
+	 * @return the response.
 	 * @throws IOException if an I/O error occurs.
 	 * @throws VividSeatsException if an error response is returned.
 	 */
