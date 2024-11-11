@@ -114,7 +114,7 @@ public class RedissonCachedListingService
 		@Nonnull VividSeatsCachedListing cachedListing
 	) {
 		return super.shouldDelete(event, inventoryListingIds, listingId, cachedListing)
-			|| !event.getVividSeatsEventId().equals(cachedListing.getVividSeatsEventId());
+			|| !Objects.equals(event.getVividSeatsEventId(), cachedListing.getVividSeatsEventId());
 	}
 
 	@Override
