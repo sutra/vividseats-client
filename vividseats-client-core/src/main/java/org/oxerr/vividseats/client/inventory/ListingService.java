@@ -24,8 +24,21 @@ public interface ListingService {
 
 	void update(BrokerListing brokerListing) throws IOException;
 
+	/**
+	 * Delete the listing.
+	 *
+	 * @param ticketId the internal ticket ID.
+	 * @throws IOException indicates I/O exception.
+	 */
 	void deleteListing(String ticketId) throws IOException;
 
+	/**
+	 * Delete the listing.
+	 *
+	 * @param listingId the vivid ticket ID.
+	 * @param internalTicketId the internal ticket ID.
+	 * @throws IOException indicates I/O exception.
+	 */
 	void delete(Long listingId, String internalTicketId) throws IOException;
 
 }

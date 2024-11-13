@@ -68,7 +68,7 @@ public class RedissonCachedListingService
 		@Nullable VividSeatsCachedListing cachedListing
 	) {
 		boolean shouldCreate = super.shouldCreate(event, listing, cachedListing);
-		return shouldCreate || (cachedListing != null && !listing.getVividSeatsEventId().equals(cachedListing.getVividSeatsEventId()));
+		return shouldCreate || (cachedListing != null && !Objects.equals(listing.getVividSeatsEventId(), cachedListing.getVividSeatsEventId()));
 	}
 
 	@Override
@@ -78,7 +78,7 @@ public class RedissonCachedListingService
 		@Nullable VividSeatsCachedListing cachedListing
 	) {
 		boolean shouldUpdate = super.shouldUpdate(event, listing, cachedListing);
-		return shouldUpdate || (cachedListing != null && !listing.getVividSeatsEventId().equals(cachedListing.getVividSeatsEventId()));
+		return shouldUpdate || (cachedListing != null && !Objects.equals(listing.getVividSeatsEventId(), cachedListing.getVividSeatsEventId()));
 	}
 
 	@Override
@@ -114,7 +114,7 @@ public class RedissonCachedListingService
 		@Nonnull VividSeatsCachedListing cachedListing
 	) {
 		return super.shouldDelete(event, inventoryListingIds, listingId, cachedListing)
-			|| !event.getVividSeatsEventId().equals(cachedListing.getVividSeatsEventId());
+			|| !Objects.equals(event.getVividSeatsEventId(), cachedListing.getVividSeatsEventId());
 	}
 
 	@Override
