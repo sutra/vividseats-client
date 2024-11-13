@@ -74,4 +74,12 @@ class ListingServiceImplTest {
 		assertTrue(client.getListingService().get(10845010354L, null, null, null, null, null, null).isEmpty());
 	}
 
+	@Disabled("Delete listing.")
+	@Test
+	void testDeleteListing() throws IOException {
+		String ticketId = "1"; // Internal ID
+		client.getListingService().deleteListing(ticketId);
+		assertTrue(client.getListingService().get(null, ticketId, null, null, null, null, null).isEmpty());
+	}
+
 }
