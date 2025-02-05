@@ -10,6 +10,8 @@ public class VividSeatsException extends HttpStatusExceptionSupport {
 
 	private static final long serialVersionUID = 2024101201L;
 
+	private final String message;
+
 	private final List<String> errors;
 
 	public VividSeatsException(
@@ -18,11 +20,17 @@ public class VividSeatsException extends HttpStatusExceptionSupport {
 		@JsonProperty("errors") List<String> errors
 	) {
 		super(message);
+		this.message = message;
 		this.errors = errors;
 	}
 
 	public List<String> getErrors() {
 		return errors;
+	}
+
+	@Override
+	public String getMessage() {
+		return message;
 	}
 
 }
