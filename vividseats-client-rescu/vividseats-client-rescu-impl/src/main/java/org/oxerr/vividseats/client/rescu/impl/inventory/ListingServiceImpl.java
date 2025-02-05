@@ -2,11 +2,13 @@ package org.oxerr.vividseats.client.rescu.impl.inventory;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Supplier;
 
 import org.oxerr.vividseats.client.inventory.ListingService;
 import org.oxerr.vividseats.client.model.inventory.BrokerListing;
 import org.oxerr.vividseats.client.model.v1.inventory.Update;
+import org.oxerr.vividseats.client.rescu.resource.VividSeatsException;
 import org.oxerr.vividseats.client.rescu.resource.inventory.ListingResource;
 
 public class ListingServiceImpl implements ListingService {
@@ -74,7 +76,15 @@ public class ListingServiceImpl implements ListingService {
 
 	@Override
 	public void deleteListing(String ticketId) throws IOException {
-		this.listingResourceV1.deleteListing(this.tokenSupplier.get(), ticketId);
+		try {
+			this.listingResourceV1.deleteListing(this.tokenSupplier.get(), ticketId);
+		} catch (VividSeatsException e) {
+			if (Objects.equals(e.getMessage(), "Listing not found.")) {
+				// Listing not found.
+			} else {
+				throw e;
+			}
+		}
 	}
 
 	@Override
