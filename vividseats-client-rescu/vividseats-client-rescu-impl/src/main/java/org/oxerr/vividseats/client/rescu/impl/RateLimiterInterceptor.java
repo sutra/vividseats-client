@@ -36,10 +36,7 @@ public class RateLimiterInterceptor implements Interceptor {
 
 	public RateLimiter getRateLimiter(Method method) {
 		var context = RateLimiterContext.builder().classes(method.getDeclaringClass()).store(store).build();
-		var limiter =  RateLimiterRegistries.of(context).getMethodRateLimiter(method);
-		var bandwidth = limiter.getBandwidth();
-		log.trace("Got bandwidth for {}: {}", method, bandwidth);
-		return limiter;
+		return RateLimiterRegistries.of(context).getMethodRateLimiter(method);
 	}
 
 }
