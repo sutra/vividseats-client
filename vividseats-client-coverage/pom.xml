@@ -40,11 +40,6 @@
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>vividseats-client-core</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
 			<groupId>org.oxerr.vividseats.client.rescu</groupId>
 			<artifactId>vividseats-client-rescu-resource</artifactId>
 			<version>${project.version}</version>
