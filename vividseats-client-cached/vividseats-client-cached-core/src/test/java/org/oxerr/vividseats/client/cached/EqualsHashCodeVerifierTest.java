@@ -1,4 +1,4 @@
-package org.oxerr.vividseats.client.model;
+package org.oxerr.vividseats.client.cached;
 
 import java.lang.reflect.Method;
 import java.util.Set;

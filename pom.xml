@@ -10,6 +10,7 @@
 		<groupId>org.oxerr</groupId>
 		<artifactId>oxerr-parent</artifactId>
 		<version>2.2.1</version>
+		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>org.oxerr.vividseats.client</groupId>
 	<artifactId>vividseats-client</artifactId>
@@ -18,7 +19,7 @@
 		Vivid Seats Client - Vivid Seats Broker API Client Library for Java.
 	</description>
 	<packaging>pom</packaging>
-	<version>0.0.4</version>
+	<version>0.0.5</version>
 	<url>https://www.oxerr.org/vividseats-client</url>
 	<inceptionYear>2024</inceptionYear>
 	<properties>
@@ -103,7 +104,7 @@
 			<dependency>
 				<groupId>org.junit.jupiter</groupId>
 				<artifactId>junit-jupiter-api</artifactId>
-				<version>5.11.3</version>
+				<version>5.12.0-M1</version>
 			</dependency>
 			<dependency>
 				<groupId>org.oxerr.rescu.ext</groupId>
@@ -128,7 +129,7 @@
 			<dependency>
 				<groupId>org.redisson</groupId>
 				<artifactId>redisson</artifactId>
-				<version>3.39.0</version>
+				<version>3.44.0</version>
 			</dependency>
 			<dependency>
 				<groupId>com.evanlennick</groupId>
@@ -138,14 +139,14 @@
 			<dependency>
 				<groupId>com.fasterxml.jackson.core</groupId>
 				<artifactId>jackson-databind</artifactId>
-				<version>2.18.1</version>
+				<version>2.18.2</version>
 			</dependency>
 
 			<!-- Java 8 Date/time -->
 			<dependency>
 				<groupId>com.fasterxml.jackson.datatype</groupId>
 				<artifactId>jackson-datatype-jsr310</artifactId>
-				<version>2.18.1</version>
+				<version>2.18.2</version>
 			</dependency>
 
 			<dependency>
@@ -167,7 +168,7 @@
 			<dependency>
 				<groupId>nl.jqno.equalsverifier</groupId>
 				<artifactId>equalsverifier</artifactId>
-				<version>3.17.3</version>
+				<version>3.18.2</version>
 			</dependency>
 
 		</dependencies>
@@ -187,4 +188,19 @@
 			<url>scp://oxerr.org/usr/local/www/vividseats-client/</url>
 		</site>
 	</distributionManagement>
+	<profiles>
+		<profile>
+			<id>test</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<dependencies>
+				<dependency>
+					<groupId>org.junit.jupiter</groupId>
+					<artifactId>junit-jupiter-api</artifactId>
+					<scope>test</scope>
+				</dependency>
+			</dependencies>
+		</profile>
+	</profiles>
 </project>

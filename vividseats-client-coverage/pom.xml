@@ -9,7 +9,7 @@
 	<parent>
 		<groupId>org.oxerr.vividseats.client</groupId>
 		<artifactId>vividseats-client</artifactId>
-		<version>0.0.4</version>
+		<version>0.0.5</version>
 	</parent>
 	<artifactId>vividseats-client-coverage</artifactId>
 	<name>Vivid Seats Client - Coverage</name>
@@ -37,11 +37,6 @@
 		<dependency>
 			<groupId>org.oxerr.vividseats.client.cached</groupId>
 			<artifactId>vividseats-client-cached-redisson</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>vividseats-client-core</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
