@@ -3,6 +3,9 @@ package org.oxerr.vividseats.client.cached.redisson;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ForkJoinPool;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.oxerr.vividseats.client.VividSeatsClient;
 import org.oxerr.vividseats.client.cached.CachedVividSeatsClient;
 import org.oxerr.vividseats.client.cached.redisson.inventory.RedissonCachedListingService;
@@ -55,6 +58,28 @@ public class RedissonCachedVividSeatsClient implements CachedVividSeatsClient {
 	@Override
 	public RedissonCachedListingService getCachedListingService() {
 		return cachedSellerListingService;
+	}
+
+	@Override
+	public int hashCode() {
+		return HashCodeBuilder.reflectionHashCode(this);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (!(obj instanceof RedissonCachedVividSeatsClient)) {
+			return false;
+		}
+		RedissonCachedVividSeatsClient rhs = (RedissonCachedVividSeatsClient) obj;
+		return EqualsBuilder.reflectionEquals(this, rhs);
+	}
+
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this);
 	}
 
 }
