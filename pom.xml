@@ -33,6 +33,7 @@
 		<module>vividseats-client-model</module>
 		<module>vividseats-client-core</module>
 		<module>vividseats-client-cached</module>
+		<module>vividseats-client-cxf</module>
 		<module>vividseats-client-rescu</module>
 		<module>vividseats-client-coverage</module>
 	</modules>
@@ -189,6 +190,21 @@
 		</site>
 	</distributionManagement>
 	<profiles>
+		<profile>
+			<id>cxf</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<dependencyManagement>
+				<dependencies>
+					<dependency>
+						<groupId>org.apache.cxf</groupId>
+						<artifactId>cxf-rt-rs-client</artifactId>
+						<version>4.0.7</version>
+					</dependency>
+				</dependencies>
+			</dependencyManagement>
+		</profile>
 		<profile>
 			<id>test</id>
 			<activation>

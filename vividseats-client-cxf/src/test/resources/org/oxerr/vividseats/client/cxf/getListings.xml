@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<brokerListings>
+	<brokerListing>
+		<electronic>false</electronic>
+		<electronicTransfer>false</electronicTransfer>
+		<faceValue>0.0</faceValue>
+		<id>11875106179</id>
+		<inHandDate>2025-08-11T00:00:00-05:00</inHandDate>
+		<instantDownload>false</instantDownload>
+		<instantTransfer>false</instantTransfer>
+		<notes></notes>
+		<passThrough></passThrough>
+		<price>30.00</price>
+		<productionId>5567486</productionId>
+		<quantity>10</quantity>
+		<row>3</row>
+		<seatFrom>1</seatFrom>
+		<seatThru>10</seatThru>
+		<section>BLOCKA</section>
+		<splitType>DEFAULT</splitType>
+		<stockType>MOBILE_SCREENCAP</stockType>
+		<ticketId>1884859232784748547</ticketId>
+		<unitTaxedCost>0.0</unitTaxedCost>
+	</brokerListing>
+</brokerListings>
