@@ -4,12 +4,14 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 class CXFVividSeatsClientTest {
 
 	private final Logger log = LogManager.getLogger();
 
+	@Disabled("Need to provide a valid token.")
 	@Test
 	void testGetBrokerListings() {
 		/*
