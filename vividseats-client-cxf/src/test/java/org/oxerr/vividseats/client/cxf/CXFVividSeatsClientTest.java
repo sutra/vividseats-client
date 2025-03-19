@@ -12,10 +12,19 @@ class CXFVividSeatsClientTest {
 
 	@Test
 	void testGetBrokerListings() {
+		/*
+		 * -Djava.util.logging.manager=org.apache.logging.log4j.jul.LogManager
+		 * -Dcom.sun.xml.ws.transport.http.client.HttpTransportPipe.dump=true
+		 * -Dcom.sun.xml.internal.ws.transport.http.client.HttpTransportPipe.dump=true
+		 * -Dcom.sun.xml.ws.transport.http.HttpAdapter.dump=true
+		 * -Dcom.sun.xml.internal.ws.transport.http.HttpAdapter.dump=true
+		 * -Dvividseats.token=xxx
+		 */
 		String token = System.getProperty("vividseats.token");
 		log.info("token: {}", token);
 		BrokerListings brokerListings = new CXFVividSeatsClient(token).getListings(null);
 		assertNotNull(brokerListings);
+		log.info("brokerListings: {}", brokerListings.getBrokerListings().size());
 	}
 
 }
