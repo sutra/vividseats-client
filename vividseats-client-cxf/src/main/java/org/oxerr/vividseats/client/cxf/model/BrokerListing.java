@@ -1,10 +1,11 @@
-package org.oxerr.vividseats.client.cxf;
+package org.oxerr.vividseats.client.cxf.model;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
+
 @XmlRootElement(name = "brokerListing")
 public class BrokerListing {
 	private Long id;

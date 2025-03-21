@@ -18,11 +18,11 @@
 		</RollingRandomAccessFile>
 	</Appenders>
 	<Loggers>
-		<Logger name="org.apache.cxf" level="ALL" additivity="false">
+		<Logger name="org.apache.cxf" level="INFO" additivity="false">
 			<AppenderRef ref="console" />
 			<AppenderRef ref="file" />
 		</Logger>
-		<Logger name="org.oxerr.vividseats" level="ALL" additivity="false">
+		<Logger name="org.oxerr.vividseats.client.cxf" level="ALL" additivity="false">
 			<AppenderRef ref="console" />
 			<AppenderRef ref="file" />
 		</Logger>

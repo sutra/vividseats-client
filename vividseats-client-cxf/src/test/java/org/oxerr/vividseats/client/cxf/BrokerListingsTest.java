@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import org.junit.jupiter.api.Test;
+import org.oxerr.vividseats.client.cxf.model.BrokerListing;
+import org.oxerr.vividseats.client.cxf.model.BrokerListings;
 
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;

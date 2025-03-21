@@ -6,6 +6,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.oxerr.vividseats.client.cxf.model.BrokerListings;
+
+import io.github.poshjosh.ratelimiter.store.BandwidthsStore;
 
 class CXFVividSeatsClientTest {
 
@@ -24,9 +27,14 @@ class CXFVividSeatsClientTest {
 		 */
 		String token = System.getProperty("vividseats.token");
 		log.info("token: {}", token);
-		BrokerListings brokerListings = new CXFVividSeatsClient(token).getListings(null);
-		assertNotNull(brokerListings);
-		log.info("brokerListings: {}", brokerListings.getBrokerListings().size());
+
+		BandwidthsStore<String> bandwidthsStore = BandwidthsStore.ofDefaults();
+
+		for (int i = 0; i < 5; i++) {
+			BrokerListings brokerListings = new CXFVividSeatsClient(token, bandwidthsStore).getListings(null);
+			assertNotNull(brokerListings);
+			log.info("brokerListings: {}", brokerListings.getBrokerListings().size());
+		}
 	}
 
 }

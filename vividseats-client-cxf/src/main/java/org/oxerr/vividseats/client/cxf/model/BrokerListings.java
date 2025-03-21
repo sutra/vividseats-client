@@ -1,4 +1,4 @@
-package org.oxerr.vividseats.client.cxf;
+package org.oxerr.vividseats.client.cxf.model;
 
 import java.util.List;
 
