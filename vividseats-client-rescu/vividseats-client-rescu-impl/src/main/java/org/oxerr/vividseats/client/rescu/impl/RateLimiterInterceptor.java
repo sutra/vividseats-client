@@ -39,7 +39,7 @@ public class RateLimiterInterceptor implements Interceptor {
 		return invocationHandler.invoke(proxy, method, args);
 	}
 
-	public RateLimiter getRateLimiter(Method method) {
+	private RateLimiter getRateLimiter(Method method) {
 		var context = RateLimiterContext.builder().classes(method.getDeclaringClass()).store(store).build();
 		return RateLimiterRegistries.of(context).getMethodRateLimiter(method);
 	}
