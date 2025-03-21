@@ -2,6 +2,8 @@ package org.oxerr.vividseats.client.rescu.impl;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +18,9 @@ public class RateLimiterInterceptor implements Interceptor {
 
 	private final Logger log = LoggerFactory.getLogger(RateLimiterInterceptor.class);
 
+	// Store rate limits for each API method
+	private final ConcurrentMap<Method, RateLimiter> limiters = new ConcurrentHashMap<>();
+
 	private final BandwidthsStore<String> store;
 
 	public RateLimiterInterceptor(BandwidthsStore<String> store) {
@@ -25,7 +30,7 @@ public class RateLimiterInterceptor implements Interceptor {
 	@Override
 	public Object aroundInvoke(InvocationHandler invocationHandler, Object proxy, Method method, Object[] args)
 			throws Throwable {
-		var limiter = getRateLimiter(method);
+		var limiter = limiters.computeIfAbsent(method, this::getRateLimiter);
 
 		log.trace("Acquiring permit for {}...", method);
 		var timeSpent = limiter.acquire();
