@@ -1,6 +1,7 @@
 package org.oxerr.vividseats.client.rescu.resource.inventory;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 import org.oxerr.vividseats.client.model.inventory.BrokerListing;
 import org.oxerr.vividseats.client.rescu.resource.Response;
@@ -27,12 +28,12 @@ public interface ListingResource {
 	 *
 	 * Rate limit: 10 requests per second.
 	 *
-	 * @param fromEventDate The start date of the event.
-	 * @param toEventDate The end date of the event.
 	 * @param listingId The listing id.
 	 * @param internalTicketId The internal ticket id.
 	 * @param productionId The production id.
 	 * @param headlinerId The headliner id.
+	 * @param fromEventDate The start date of the event.
+	 * @param toEventDate The end date of the event.
 	 * @param includeFiles Whether to include files.
 	 * @return listings.
 	 * @throws IOException if an I/O error occurs.
@@ -42,12 +43,12 @@ public interface ListingResource {
 	@Path("/get")
 	@Rate(10)
 	ListingsResponse get(
-		@QueryParam("fromEventDate") String fromEventDate,
-		@QueryParam("toEventDate") String toEventDate,
 		@QueryParam("listingId") Long listingId,
 		@QueryParam("internalTicketId") String internalTicketId,
 		@QueryParam("productionId") Integer productionId,
 		@QueryParam("headlinerId") Integer headlinerId,
+		@QueryParam("fromEventDate") LocalDateTime fromEventDate,
+		@QueryParam("toEventDate") LocalDateTime toEventDate,
 		@QueryParam("includeFiles") Boolean includeFiles
 	) throws IOException, VividSeatsException;
 

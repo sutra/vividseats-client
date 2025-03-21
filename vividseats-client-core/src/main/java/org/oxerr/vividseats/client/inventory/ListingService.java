@@ -8,15 +8,7 @@ import org.oxerr.vividseats.client.model.v1.inventory.Update;
 
 public interface ListingService {
 
-	List<BrokerListing> get(
-		Long listingId,
-		String internalTicketId,
-		Integer productionId,
-		String fromEventDate,
-		String toEventDate,
-		Integer headlinerId,
-		Boolean includeFiles
-	) throws IOException;
+	List<BrokerListing> get(BrokerListingQuery query) throws IOException;
 
 	BrokerListing create(BrokerListing brokerListing) throws IOException;
 
