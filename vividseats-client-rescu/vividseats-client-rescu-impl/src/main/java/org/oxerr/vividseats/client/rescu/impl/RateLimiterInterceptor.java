@@ -21,10 +21,10 @@ public class RateLimiterInterceptor implements Interceptor {
 	// Store rate limits for each API method
 	private final ConcurrentMap<Method, RateLimiter> limiters = new ConcurrentHashMap<>();
 
-	private final BandwidthsStore<String> store;
+	private final BandwidthsStore<String> bandwidthsStore;
 
-	public RateLimiterInterceptor(BandwidthsStore<String> store) {
-		this.store = store;
+	public RateLimiterInterceptor(BandwidthsStore<String> bandwidthsStore) {
+		this.bandwidthsStore = bandwidthsStore;
 	}
 
 	@Override
@@ -40,7 +40,7 @@ public class RateLimiterInterceptor implements Interceptor {
 	}
 
 	private RateLimiter getRateLimiter(Method method) {
-		var context = RateLimiterContext.builder().classes(method.getDeclaringClass()).store(store).build();
+		var context = RateLimiterContext.builder().classes(method.getDeclaringClass()).store(bandwidthsStore).build();
 		return RateLimiterRegistries.of(context).getMethodRateLimiter(method);
 	}
 
