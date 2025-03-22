@@ -225,10 +225,9 @@ public class RedissonCachedListingService
 	}
 
 	private boolean isSame(BrokerListing listing, BrokerListing request) {
-		var equals = Objects.equals(listing, request);
+		boolean equals = Listings.isSame(listing, request);
 		log.debug("[isSame] listing: {}, request: {}, equals: {}", listing, request, equals);
-		// TODO: Compare other fields.
-		return true;
+		return equals;
 	}
 
 }
