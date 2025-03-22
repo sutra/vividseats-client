@@ -27,6 +27,18 @@ final class Listings {
 		).allMatch(Boolean::booleanValue);
 	}
 
+	public static String toString(BrokerListing l) {
+		return new ToStringBuilder(l)
+			.append("section", l.getSection())
+			.append("row", l.getRow())
+			.append("seatFrom", l.getSeatFrom())
+			.append("seatThru", l.getSeatThru())
+			.append("quantity", l.getQuantity())
+			.append("price", l.getPrice())
+			.append("notes", l.getNotes())
+			.toString();
+	}
+
 	@Override
 	public int hashCode() {
 		return HashCodeBuilder.reflectionHashCode(this);

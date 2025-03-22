@@ -226,7 +226,8 @@ public class RedissonCachedListingService
 
 	private boolean isSame(BrokerListing listing, BrokerListing request) {
 		boolean equals = Listings.isSame(listing, request);
-		log.debug("[isSame] listing: {}, request: {}, equals: {}", listing, request, equals);
+		log.debug("[isSame] listing: {}, request: {}, equals: {}",
+			() -> Listings.toString(listing), () -> Listings.toString(request), () -> equals);
 		return equals;
 	}
 
