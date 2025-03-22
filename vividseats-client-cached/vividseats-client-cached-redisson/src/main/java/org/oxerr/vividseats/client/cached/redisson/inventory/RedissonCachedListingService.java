@@ -183,22 +183,17 @@ public class RedissonCachedListingService
 				if (cachedListing == null) {
 					// Double check the listing if it is not in cache.
 					// If the listing is not in cache, delete the listing from marketplace.
-					var task = this.<Void>callAsync(() -> {
+					CompletableFuture<Void> task = this.callAsync(() -> {
 						this.listingService.deleteListing(listing.getTicketId());
 						return null;
 					});
 					tasks.add(task);
 				} else if (!isSame(listing, cachedListing.getRequest())) {
-					var task = this.<Void>callAsync(() -> {
+					CompletableFuture<Void> task = this.callAsync(() -> {
 						var e = cachedListing.getEvent().toVividSeatsEvent();
 						var l = cachedListing.toVividSeatsListing();
 						var p = getPriority(e, l, cachedListing);
-
-						if (e.getVividSeatsEventId().equals(listing.getProductionId())) {
-							this.updateListing(e, l, cachedListing, p);
-						} else {
-							this.deleteListing(e, l.getId());
-						}
+						this.updateListing(e, l, cachedListing, p);
 						return null;
 					});
 					tasks.add(task);
