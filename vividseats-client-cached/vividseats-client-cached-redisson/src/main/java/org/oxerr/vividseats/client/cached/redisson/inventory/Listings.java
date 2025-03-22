@@ -29,6 +29,8 @@ final class Listings {
 
 	public static String toString(BrokerListing l) {
 		return new ToStringBuilder(l)
+			.append("id", l.getId())
+			.append("ticketId", l.getTicketId())
 			.append("section", l.getSection())
 			.append("row", l.getRow())
 			.append("seatFrom", l.getSeatFrom())
