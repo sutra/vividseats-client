@@ -206,9 +206,14 @@ public class RedissonCachedListingService
 			.map(entry -> this.<Void>callAsync(() -> {
 				var cacheName = entry.getValue();
 				var cachedListing = this.getCache(cacheName).get(entry.getKey());
-				var e = cachedListing.getEvent().toVividSeatsEvent();
-				var l = cachedListing.toVividSeatsListing();
-				this.createListing(e, l);
+
+				if (cachedListing != null) {
+					// Double check if the cached listing still exists.
+					var e = cachedListing.getEvent().toVividSeatsEvent();
+					var l = cachedListing.toVividSeatsListing();
+					this.createListing(e, l);
+				}
+
 				return null;
 			})).collect(Collectors.toUnmodifiableList());
 
