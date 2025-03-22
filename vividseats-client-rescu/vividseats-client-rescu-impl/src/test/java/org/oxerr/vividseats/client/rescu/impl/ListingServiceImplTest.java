@@ -17,14 +17,14 @@ import org.oxerr.vividseats.client.inventory.BrokerListingQuery;
 import org.oxerr.vividseats.client.model.inventory.BrokerListing;
 import org.oxerr.vividseats.client.model.inventory.SplitType;
 
-//@Disabled("Token is required")
+@Disabled("Token is required")
 class ListingServiceImplTest {
 
 	private static final ResCUVividSeatsClient client = ResCUVividSeatsClientTest.getClient();
 
 	private final Logger log = LogManager.getLogger();
 
-	// @Disabled("Token is required.")
+	@Disabled("Token is required.")
 	@Test
 	void testGet() throws IOException {
 		var brokerListingQuery = new BrokerListingQuery();
