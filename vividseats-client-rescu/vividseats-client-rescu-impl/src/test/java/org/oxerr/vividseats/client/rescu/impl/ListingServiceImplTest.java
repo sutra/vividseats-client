@@ -17,7 +17,7 @@ import org.oxerr.vividseats.client.inventory.BrokerListingQuery;
 import org.oxerr.vividseats.client.model.inventory.BrokerListing;
 import org.oxerr.vividseats.client.model.inventory.SplitType;
 
-// @Disabled("Token is required")
+@Disabled("Token is required")
 class ListingServiceImplTest {
 
 	private static final ResCUVividSeatsClient client = ResCUVividSeatsClientTest.getClient();
@@ -83,7 +83,7 @@ class ListingServiceImplTest {
 		assertTrue(client.getListingService().get(brokerListingQuery).isEmpty());
 	}
 
-	// @Disabled("Delete listing.")
+	@Disabled("Delete listing.")
 	@Test
 	void testDeleteListing() throws IOException {
 		String ticketId = "1"; // Internal ID
