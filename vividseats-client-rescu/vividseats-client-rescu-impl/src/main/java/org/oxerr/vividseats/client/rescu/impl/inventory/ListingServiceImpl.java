@@ -14,14 +14,14 @@ import org.oxerr.vividseats.client.rescu.resource.inventory.ListingResource;
 
 public class ListingServiceImpl implements ListingService {
 
-	private final Supplier<?> tokenSupplier;
+	private final Supplier<CharSequence> tokenSupplier;
 
 	private final org.oxerr.vividseats.client.rescu.resource.v1.inventory.ListingResource listingResourceV1;
 
 	private final ListingResource listingResource;
 
 	public ListingServiceImpl(
-		Supplier<?> tokenSupplier,
+		Supplier<CharSequence> tokenSupplier,
 		org.oxerr.vividseats.client.rescu.resource.v1.inventory.ListingResource listingResourceV1,
 		ListingResource listingResource
 	) {
@@ -51,7 +51,7 @@ public class ListingServiceImpl implements ListingService {
 	@Override
 	public void updateListing(Update update) throws IOException {
 		listingResourceV1.updateListing(
-			this.tokenSupplier.get().toString(),
+			this.tokenSupplier.get(),
 			update.getTicketId(),
 			update.getQuantity(),
 			update.getSection(),

@@ -40,7 +40,7 @@ public interface ListingResource {
 	@GET
 	@Path("/deleteListing")
 	Response deleteListing(
-		@QueryParam("apiToken") String apiToken,
+		@QueryParam("apiToken") CharSequence apiToken,
 		@QueryParam("ticketId") String ticketId
 	) throws IOException, VividSeatsException;
 
@@ -79,7 +79,7 @@ public interface ListingResource {
 	@POST
 	@Path("/updateListing")
 	Response updateListing(
-		@FormParam("apiToken") String apiToken,
+		@FormParam("apiToken") CharSequence apiToken,
 		@FormParam("ticketId") String ticketId,
 		@FormParam("quantity") Integer quantity,
 		@FormParam("section") String section,
