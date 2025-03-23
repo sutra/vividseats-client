@@ -21,9 +21,9 @@ public class RateLimiterInterceptor implements Interceptor {
 	// Store rate limits for each API method
 	private final ConcurrentMap<Method, RateLimiter> limiters = new ConcurrentHashMap<>();
 
-	private final BandwidthsStore<String> bandwidthsStore;
+	private final BandwidthsStore<?> bandwidthsStore;
 
-	public RateLimiterInterceptor(BandwidthsStore<String> bandwidthsStore) {
+	public RateLimiterInterceptor(BandwidthsStore<?> bandwidthsStore) {
 		this.bandwidthsStore = bandwidthsStore;
 	}
 

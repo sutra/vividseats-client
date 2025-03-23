@@ -51,7 +51,7 @@ public class ResCUVividSeatsClient implements VividSeatsClient {
 	 * @param bandwidthsStore the bandwidths store to store the bandwidth.
 	 * @param interceptors the interceptors to intercept the requests.
 	 */
-	public ResCUVividSeatsClient(CharSequence token, BandwidthsStore<String> bandwidthsStore, Interceptor... interceptors) {
+	public ResCUVividSeatsClient(CharSequence token, BandwidthsStore<?> bandwidthsStore, Interceptor... interceptors) {
 		this(DEFAULT_BASE_URL, token, bandwidthsStore, interceptors);
 	}
 
@@ -72,7 +72,7 @@ public class ResCUVividSeatsClient implements VividSeatsClient {
 	 * @param bandwidthsStore the bandwidths store to store the bandwidth.
 	 * @param interceptors the interceptors to intercept the requests.
 	 */
-	public ResCUVividSeatsClient(Supplier<CharSequence> tokenSupplier, BandwidthsStore<String> bandwidthsStore, Interceptor... interceptors) {
+	public ResCUVividSeatsClient(Supplier<CharSequence> tokenSupplier, BandwidthsStore<?> bandwidthsStore, Interceptor... interceptors) {
 		this(DEFAULT_BASE_URL, tokenSupplier, bandwidthsStore, interceptors);
 	}
 
@@ -106,7 +106,7 @@ public class ResCUVividSeatsClient implements VividSeatsClient {
 	 * @param bandwidthsStore the bandwidths store to store the bandwidth.
 	 * @param interceptors the interceptors to intercept the requests.
 	 */
-	public ResCUVividSeatsClient(String baseUrl, CharSequence token, BandwidthsStore<String> bandwidthsStore, Interceptor... interceptors) {
+	public ResCUVividSeatsClient(String baseUrl, CharSequence token, BandwidthsStore<?> bandwidthsStore, Interceptor... interceptors) {
 		this(baseUrl, () -> token, bandwidthsStore, interceptors);
 	}
 
@@ -118,7 +118,7 @@ public class ResCUVividSeatsClient implements VividSeatsClient {
 	 * @param bandwidthsStore the bandwidths store to store the bandwidth.
 	 * @param interceptors the interceptors to intercept the requests.
 	 */
-	public ResCUVividSeatsClient(String baseUrl, Supplier<CharSequence> tokenSupplier, BandwidthsStore<String> bandwidthsStore, Interceptor... interceptors) {
+	public ResCUVividSeatsClient(String baseUrl, Supplier<CharSequence> tokenSupplier, BandwidthsStore<?> bandwidthsStore, Interceptor... interceptors) {
 		this.baseUrl = baseUrl;
 
 		JacksonObjectMapperFactory jacksonObjectMapperFactory = createJacksonObjectMapperFactory();
