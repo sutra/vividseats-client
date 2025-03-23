@@ -129,8 +129,10 @@ public class ResCUVividSeatsClient implements VividSeatsClient {
 
 		this.restProxyFactory = new RestProxyFactorySingletonImpl(new RestProxyFactoryImpl());
 
-		var rateLimiterInterceptor = Optional.ofNullable(bandwidthsStore).map(RateLimiterInterceptor::new);
-		var allInterceptors = rateLimiterInterceptor.map(t -> ArrayUtils.addFirst(interceptors, t)).orElse(interceptors);
+		var allInterceptors = Optional.ofNullable(bandwidthsStore)
+			.map(RateLimiterInterceptor::new)
+			.map(t -> ArrayUtils.addFirst(interceptors, t))
+			.orElse(interceptors);
 
 		this.listingService = new ListingServiceImpl(
 			tokenSupplier,
