@@ -14,14 +14,14 @@ import org.oxerr.vividseats.client.rescu.resource.inventory.ListingResource;
 
 public class ListingServiceImpl implements ListingService {
 
-	private final Supplier<String> tokenSupplier;
+	private final Supplier<?> tokenSupplier;
 
 	private final org.oxerr.vividseats.client.rescu.resource.v1.inventory.ListingResource listingResourceV1;
 
 	private final ListingResource listingResource;
 
 	public ListingServiceImpl(
-		Supplier<String> tokenSupplier,
+		Supplier<?> tokenSupplier,
 		org.oxerr.vividseats.client.rescu.resource.v1.inventory.ListingResource listingResourceV1,
 		ListingResource listingResource
 	) {
@@ -51,7 +51,7 @@ public class ListingServiceImpl implements ListingService {
 	@Override
 	public void updateListing(Update update) throws IOException {
 		listingResourceV1.updateListing(
-			this.tokenSupplier.get(),
+			this.tokenSupplier.get().toString(),
 			update.getTicketId(),
 			update.getQuantity(),
 			update.getSection(),
@@ -78,7 +78,7 @@ public class ListingServiceImpl implements ListingService {
 	@Override
 	public void deleteListing(String ticketId) throws IOException {
 		try {
-			this.listingResourceV1.deleteListing(this.tokenSupplier.get(), ticketId);
+			this.listingResourceV1.deleteListing(this.tokenSupplier.get().toString(), ticketId);
 		} catch (VividSeatsException e) {
 			if (Objects.equals(e.getMessage(), "Listing not found.")) {
 				// Listing not found.
