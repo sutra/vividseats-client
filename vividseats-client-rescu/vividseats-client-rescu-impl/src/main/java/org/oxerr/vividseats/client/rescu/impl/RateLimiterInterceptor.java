@@ -2,6 +2,8 @@ package org.oxerr.vividseats.client.rescu.impl;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,16 +18,19 @@ public class RateLimiterInterceptor implements Interceptor {
 
 	private final Logger log = LoggerFactory.getLogger(RateLimiterInterceptor.class);
 
-	private final BandwidthsStore<String> store;
+	// Store rate limits for each API method
+	private final ConcurrentMap<Method, RateLimiter> limiters = new ConcurrentHashMap<>();
 
-	public RateLimiterInterceptor(BandwidthsStore<String> store) {
-		this.store = store;
+	private final BandwidthsStore<?> bandwidthsStore;
+
+	public RateLimiterInterceptor(BandwidthsStore<?> bandwidthsStore) {
+		this.bandwidthsStore = bandwidthsStore;
 	}
 
 	@Override
 	public Object aroundInvoke(InvocationHandler invocationHandler, Object proxy, Method method, Object[] args)
 			throws Throwable {
-		var limiter = getRateLimiter(method);
+		var limiter = limiters.computeIfAbsent(method, this::getRateLimiter);
 
 		log.trace("Acquiring permit for {}...", method);
 		var timeSpent = limiter.acquire();
@@ -34,8 +39,8 @@ public class RateLimiterInterceptor implements Interceptor {
 		return invocationHandler.invoke(proxy, method, args);
 	}
 
-	public RateLimiter getRateLimiter(Method method) {
-		var context = RateLimiterContext.builder().classes(method.getDeclaringClass()).store(store).build();
+	private RateLimiter getRateLimiter(Method method) {
+		var context = RateLimiterContext.builder().classes(method.getDeclaringClass()).store(bandwidthsStore).build();
 		return RateLimiterRegistries.of(context).getMethodRateLimiter(method);
 	}
 

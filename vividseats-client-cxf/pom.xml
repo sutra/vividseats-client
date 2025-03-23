@@ -7,29 +7,17 @@
 		https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>org.oxerr.vividseats.client.rescu</groupId>
-		<artifactId>vividseats-client-rescu</artifactId>
+		<groupId>org.oxerr.vividseats.client</groupId>
+		<artifactId>vividseats-client</artifactId>
 		<version>0.0.6</version>
 	</parent>
-	<artifactId>vividseats-client-rescu-resource</artifactId>
-	<name>Vivid Seats Client - ResCU - Resource</name>
+	<groupId>org.oxerr.vividseats.client.cxf</groupId>
+	<artifactId>vividseats-client-cxf</artifactId>
+	<name>Vivid Seats Client - Apache CXF</name>
 	<dependencies>
 		<dependency>
-			<groupId>jakarta.ws.rs</groupId>
-			<artifactId>jakarta.ws.rs-api</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.oxerr.rescu.ext</groupId>
-			<artifactId>rescu-ext-rate-limiter-core</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.oxerr.vividseats.client</groupId>
-			<artifactId>vividseats-client-model</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.github.mmazi</groupId>
-			<artifactId>rescu</artifactId>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-rs-client</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>io.github.poshjosh</groupId>
@@ -44,6 +32,11 @@
 			</activation>
 			<dependencies>
 				<dependency>
+					<groupId>org.apache.cxf</groupId>
+					<artifactId>cxf-rt-features-logging</artifactId>
+					<scope>test</scope>
+				</dependency>
+				<dependency>
 					<groupId>org.apache.logging.log4j</groupId>
 					<artifactId>log4j-api</artifactId>
 					<scope>test</scope>
@@ -55,19 +48,12 @@
 				</dependency>
 				<dependency>
 					<groupId>org.apache.logging.log4j</groupId>
+					<artifactId>log4j-jul</artifactId>
+					<scope>test</scope>
+				</dependency>
+				<dependency>
+					<groupId>org.apache.logging.log4j</groupId>
 					<artifactId>log4j-slf4j2-impl</artifactId>
-					<scope>test</scope>
-				</dependency>
-				<dependency>
-					<groupId>org.junit.jupiter</groupId>
-					<artifactId>junit-jupiter-api</artifactId>
-					<scope>test</scope>
-				</dependency>
-
-				<!-- Java 8 Date/time -->
-				<dependency>
-					<groupId>com.fasterxml.jackson.datatype</groupId>
-					<artifactId>jackson-datatype-jsr310</artifactId>
 					<scope>test</scope>
 				</dependency>
 			</dependencies>

@@ -19,13 +19,13 @@
 		Vivid Seats Client - Vivid Seats Broker API Client Library for Java.
 	</description>
 	<packaging>pom</packaging>
-	<version>0.0.5</version>
+	<version>0.0.6</version>
 	<url>https://www.oxerr.org/vividseats-client</url>
 	<inceptionYear>2024</inceptionYear>
 	<properties>
 		<maven.compiler.source>11</maven.compiler.source>
 		<maven.compiler.target>11</maven.compiler.target>
-		<log4j.version>2.20.0</log4j.version>
+		<log4j.version>2.24.3</log4j.version>
 		<rescu-ext.version>1.0.3</rescu-ext.version>
 		<ticket-inventory-support.version>[5.3.3,)</ticket-inventory-support.version>
 	</properties>
@@ -33,6 +33,7 @@
 		<module>vividseats-client-model</module>
 		<module>vividseats-client-core</module>
 		<module>vividseats-client-cached</module>
+		<module>vividseats-client-cxf</module>
 		<module>vividseats-client-rescu</module>
 		<module>vividseats-client-coverage</module>
 	</modules>
@@ -93,6 +94,11 @@
 			</dependency>
 			<dependency>
 				<groupId>org.apache.logging.log4j</groupId>
+				<artifactId>log4j-jul</artifactId>
+				<version>${log4j.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.logging.log4j</groupId>
 				<artifactId>log4j-slf4j2-impl</artifactId>
 				<version>${log4j.version}</version>
 			</dependency>
@@ -130,6 +136,11 @@
 				<groupId>org.redisson</groupId>
 				<artifactId>redisson</artifactId>
 				<version>3.44.0</version>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-api</artifactId>
+				<version>2.0.17</version>
 			</dependency>
 			<dependency>
 				<groupId>com.evanlennick</groupId>
@@ -189,6 +200,26 @@
 		</site>
 	</distributionManagement>
 	<profiles>
+		<profile>
+			<id>cxf</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<dependencyManagement>
+				<dependencies>
+					<dependency>
+						<groupId>org.apache.cxf</groupId>
+						<artifactId>cxf-rt-rs-client</artifactId>
+						<version>4.0.7</version>
+					</dependency>
+					<dependency>
+						<groupId>org.apache.cxf</groupId>
+						<artifactId>cxf-rt-features-logging</artifactId>
+						<version>4.0.7</version>
+					</dependency>
+				</dependencies>
+			</dependencyManagement>
+		</profile>
 		<profile>
 			<id>test</id>
 			<activation>

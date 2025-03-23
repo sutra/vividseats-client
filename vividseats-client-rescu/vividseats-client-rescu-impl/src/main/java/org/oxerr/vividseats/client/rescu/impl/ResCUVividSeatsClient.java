@@ -1,5 +1,6 @@
 package org.oxerr.vividseats.client.rescu.impl;
 
+import java.util.Optional;
 import java.util.function.Supplier;
 
 import org.apache.commons.lang3.ArrayUtils;
@@ -40,7 +41,7 @@ public class ResCUVividSeatsClient implements VividSeatsClient {
 	 * @param token the token to access the API.
 	 * @param interceptors the interceptors to intercept the requests.
 	 */
-	public ResCUVividSeatsClient(String token, Interceptor... interceptors) {
+	public ResCUVividSeatsClient(CharSequence token, Interceptor... interceptors) {
 		this(DEFAULT_BASE_URL, token, interceptors);
 	}
 
@@ -51,7 +52,7 @@ public class ResCUVividSeatsClient implements VividSeatsClient {
 	 * @param bandwidthsStore the bandwidths store to store the bandwidth.
 	 * @param interceptors the interceptors to intercept the requests.
 	 */
-	public ResCUVividSeatsClient(String token, BandwidthsStore<String> bandwidthsStore, Interceptor... interceptors) {
+	public ResCUVividSeatsClient(CharSequence token, BandwidthsStore<?> bandwidthsStore, Interceptor... interceptors) {
 		this(DEFAULT_BASE_URL, token, bandwidthsStore, interceptors);
 	}
 
@@ -61,7 +62,7 @@ public class ResCUVividSeatsClient implements VividSeatsClient {
 	 * @param tokenSupplier the token supplier to access the API.
 	 * @param interceptors the interceptors to intercept the requests.
 	 */
-	public ResCUVividSeatsClient(Supplier<String> tokenSupplier, Interceptor... interceptors) {
+	public ResCUVividSeatsClient(Supplier<CharSequence> tokenSupplier, Interceptor... interceptors) {
 		this(DEFAULT_BASE_URL, tokenSupplier, interceptors);
 	}
 
@@ -72,7 +73,7 @@ public class ResCUVividSeatsClient implements VividSeatsClient {
 	 * @param bandwidthsStore the bandwidths store to store the bandwidth.
 	 * @param interceptors the interceptors to intercept the requests.
 	 */
-	public ResCUVividSeatsClient(Supplier<String> tokenSupplier, BandwidthsStore<String> bandwidthsStore, Interceptor... interceptors) {
+	public ResCUVividSeatsClient(Supplier<CharSequence> tokenSupplier, BandwidthsStore<?> bandwidthsStore, Interceptor... interceptors) {
 		this(DEFAULT_BASE_URL, tokenSupplier, bandwidthsStore, interceptors);
 	}
 
@@ -83,7 +84,7 @@ public class ResCUVividSeatsClient implements VividSeatsClient {
 	 * @param token the token to access the API.
 	 * @param interceptors the interceptors to intercept the requests.
 	 */
-	public ResCUVividSeatsClient(String baseUrl, String token, Interceptor... interceptors) {
+	public ResCUVividSeatsClient(String baseUrl, CharSequence token, Interceptor... interceptors) {
 		this(baseUrl, () -> token, interceptors);
 	}
 
@@ -94,7 +95,7 @@ public class ResCUVividSeatsClient implements VividSeatsClient {
 	 * @param tokenSupplier the token supplier to access the API.
 	 * @param interceptors the interceptors to intercept the requests.
 	 */
-	public ResCUVividSeatsClient(String baseUrl, Supplier<String> tokenSupplier, Interceptor... interceptors) {
+	public ResCUVividSeatsClient(String baseUrl, Supplier<CharSequence> tokenSupplier, Interceptor... interceptors) {
 		this(baseUrl, tokenSupplier, BandwidthsStore.ofDefaults(), interceptors);
 	}
 
@@ -106,7 +107,7 @@ public class ResCUVividSeatsClient implements VividSeatsClient {
 	 * @param bandwidthsStore the bandwidths store to store the bandwidth.
 	 * @param interceptors the interceptors to intercept the requests.
 	 */
-	public ResCUVividSeatsClient(String baseUrl, String token, BandwidthsStore<String> bandwidthsStore, Interceptor... interceptors) {
+	public ResCUVividSeatsClient(String baseUrl, CharSequence token, BandwidthsStore<?> bandwidthsStore, Interceptor... interceptors) {
 		this(baseUrl, () -> token, bandwidthsStore, interceptors);
 	}
 
@@ -118,27 +119,31 @@ public class ResCUVividSeatsClient implements VividSeatsClient {
 	 * @param bandwidthsStore the bandwidths store to store the bandwidth.
 	 * @param interceptors the interceptors to intercept the requests.
 	 */
-	public ResCUVividSeatsClient(String baseUrl, Supplier<String> tokenSupplier, BandwidthsStore<String> bandwidthsStore, Interceptor... interceptors) {
+	public ResCUVividSeatsClient(String baseUrl, Supplier<CharSequence> tokenSupplier, BandwidthsStore<?> bandwidthsStore, Interceptor... interceptors) {
 		this.baseUrl = baseUrl;
+
 		JacksonObjectMapperFactory jacksonObjectMapperFactory = createJacksonObjectMapperFactory();
+
 		var clientConfigV1 = createClientConfigV1(jacksonObjectMapperFactory);
 		var clientConfig = createClientConfig(jacksonObjectMapperFactory, tokenSupplier);
+
 		this.restProxyFactory = new RestProxyFactorySingletonImpl(new RestProxyFactoryImpl());
+
+		var allInterceptors = Optional.ofNullable(bandwidthsStore)
+			.map(RateLimiterInterceptor::new)
+			.map(t -> ArrayUtils.addFirst(interceptors, t))
+			.orElse(interceptors);
+
 		this.listingService = new ListingServiceImpl(
 			tokenSupplier,
 			this.restProxyFactory.createProxy(org.oxerr.vividseats.client.rescu.resource.v1.inventory.ListingResource.class, baseUrl, clientConfigV1, interceptors),
-			createProxy(ListingResource.class, clientConfig, bandwidthsStore, interceptors)
+			createProxy(ListingResource.class, clientConfig, allInterceptors)
 		);
 	}
 
 	@Override
 	public ListingService getListingService() {
 		return this.listingService;
-	}
-
-	protected <I> I createProxy(Class<I> restInterface, ClientConfig clientConfig, BandwidthsStore<String> bandwidthsStore, Interceptor... interceptors) {
-		var rateLimiterInterceptor = new RateLimiterInterceptor(bandwidthsStore);
-		return createProxy(restInterface, clientConfig, ArrayUtils.add(interceptors, rateLimiterInterceptor));
 	}
 
 	protected <I> I createProxy(Class<I> restInterface, ClientConfig clientConfig, Interceptor... interceptors) {
@@ -151,13 +156,13 @@ public class ResCUVividSeatsClient implements VividSeatsClient {
 		return clientConfig;
 	}
 
-	protected ClientConfig createClientConfig(JacksonObjectMapperFactory jacksonObjectMapperFactory, Supplier<String> tokenSupplier) {
+	protected ClientConfig createClientConfig(JacksonObjectMapperFactory jacksonObjectMapperFactory, Supplier<?> tokenSupplier) {
 		var clientConfig = new ClientConfig();
 		clientConfig.addDefaultParam(HeaderParam.class, "Api-token", new Object() {
 
 			@Override
 			public String toString() {
-				return tokenSupplier.get();
+				return tokenSupplier.get().toString();
 			}
 
 		});
