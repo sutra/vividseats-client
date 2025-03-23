@@ -1,5 +1,6 @@
 package org.oxerr.vividseats.client.rescu.impl;
 
+import java.util.Optional;
 import java.util.function.Supplier;
 
 import org.apache.commons.lang3.ArrayUtils;
@@ -128,11 +129,13 @@ public class ResCUVividSeatsClient implements VividSeatsClient {
 
 		this.restProxyFactory = new RestProxyFactorySingletonImpl(new RestProxyFactoryImpl());
 
-		var rateLimiterInterceptor = new RateLimiterInterceptor(bandwidthsStore);
+		var rateLimiterInterceptor = Optional.ofNullable(bandwidthsStore).map(RateLimiterInterceptor::new);
+		var allInterceptors = rateLimiterInterceptor.map(t -> ArrayUtils.addFirst(interceptors, t)).orElse(interceptors);
+
 		this.listingService = new ListingServiceImpl(
 			tokenSupplier,
 			this.restProxyFactory.createProxy(org.oxerr.vividseats.client.rescu.resource.v1.inventory.ListingResource.class, baseUrl, clientConfigV1, interceptors),
-			createProxy(ListingResource.class, clientConfig, ArrayUtils.add(interceptors, rateLimiterInterceptor))
+			createProxy(ListingResource.class, clientConfig, allInterceptors)
 		);
 	}
 
