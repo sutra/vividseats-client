@@ -120,25 +120,25 @@ public class ResCUVividSeatsClient implements VividSeatsClient {
 	 */
 	public ResCUVividSeatsClient(String baseUrl, Supplier<CharSequence> tokenSupplier, BandwidthsStore<String> bandwidthsStore, Interceptor... interceptors) {
 		this.baseUrl = baseUrl;
+
 		JacksonObjectMapperFactory jacksonObjectMapperFactory = createJacksonObjectMapperFactory();
+
 		var clientConfigV1 = createClientConfigV1(jacksonObjectMapperFactory);
 		var clientConfig = createClientConfig(jacksonObjectMapperFactory, tokenSupplier);
+
 		this.restProxyFactory = new RestProxyFactorySingletonImpl(new RestProxyFactoryImpl());
+
+		var rateLimiterInterceptor = new RateLimiterInterceptor(bandwidthsStore);
 		this.listingService = new ListingServiceImpl(
 			tokenSupplier,
 			this.restProxyFactory.createProxy(org.oxerr.vividseats.client.rescu.resource.v1.inventory.ListingResource.class, baseUrl, clientConfigV1, interceptors),
-			createProxy(ListingResource.class, clientConfig, bandwidthsStore, interceptors)
+			createProxy(ListingResource.class, clientConfig, ArrayUtils.add(interceptors, rateLimiterInterceptor))
 		);
 	}
 
 	@Override
 	public ListingService getListingService() {
 		return this.listingService;
-	}
-
-	protected <I> I createProxy(Class<I> restInterface, ClientConfig clientConfig, BandwidthsStore<String> bandwidthsStore, Interceptor... interceptors) {
-		var rateLimiterInterceptor = new RateLimiterInterceptor(bandwidthsStore);
-		return createProxy(restInterface, clientConfig, ArrayUtils.add(interceptors, rateLimiterInterceptor));
 	}
 
 	protected <I> I createProxy(Class<I> restInterface, ClientConfig clientConfig, Interceptor... interceptors) {
