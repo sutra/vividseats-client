@@ -80,7 +80,7 @@ public class RedissonCachedListingService
 		@Nullable VividSeatsCachedListing cachedListing
 	) {
 		boolean shouldCreate = super.shouldCreate(event, listing, cachedListing);
-		return shouldCreate || (cachedListing != null && !Objects.equals(listing.getVividSeatsEventId(), cachedListing.getEvent().getMarketplaceEventId()));
+		return shouldCreate || (cachedListing != null && !Objects.equals(listing.getMarketplaceEventId(), cachedListing.getEvent().getMarketplaceEventId()));
 	}
 
 	@Override
@@ -90,7 +90,7 @@ public class RedissonCachedListingService
 		@Nullable VividSeatsCachedListing cachedListing
 	) {
 		boolean shouldUpdate = super.shouldUpdate(event, listing, cachedListing);
-		return shouldUpdate || (cachedListing != null && !Objects.equals(listing.getVividSeatsEventId(), cachedListing.getEvent().getMarketplaceEventId()));
+		return shouldUpdate || (cachedListing != null && !Objects.equals(listing.getMarketplaceEventId(), cachedListing.getEvent().getMarketplaceEventId()));
 	}
 
 	@Override
