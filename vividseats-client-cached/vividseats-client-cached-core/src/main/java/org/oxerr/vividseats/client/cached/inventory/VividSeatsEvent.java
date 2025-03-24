@@ -12,29 +12,29 @@ import org.oxerr.vividseats.client.model.inventory.BrokerListing;
 
 public class VividSeatsEvent extends Event<String, String, BrokerListing, VividSeatsListing> {
 
-	private static final long serialVersionUID = 2023031901L;
+	private static final long serialVersionUID = 2025032401L;
 
-	private Integer vividSeatsEventId;
+	private Integer marketplaceEventId;
 
 	public VividSeatsEvent() {
 		this(null, null, null, Collections.emptyList());
 	}
 
-	public VividSeatsEvent(String id, OffsetDateTime startDate, Integer vividSeatsEventId) {
-		this(id, startDate, vividSeatsEventId, Collections.emptyList());
+	public VividSeatsEvent(String id, OffsetDateTime startDate, Integer marketplaceEventId) {
+		this(id, startDate, marketplaceEventId, Collections.emptyList());
 	}
 
-	public VividSeatsEvent(String id, OffsetDateTime startDate, Integer vividSeatsEventId, List<VividSeatsListing> listings) {
+	public VividSeatsEvent(String id, OffsetDateTime startDate, Integer marketplaceEventId, List<VividSeatsListing> listings) {
 		super(id, startDate, listings);
-		this.vividSeatsEventId = vividSeatsEventId;
+		this.marketplaceEventId = marketplaceEventId;
 	}
 
-	public Integer getVividSeatsEventId() {
-		return vividSeatsEventId;
+	public Integer getMarketplaceEventId() {
+		return marketplaceEventId;
 	}
 
-	public void setVividSeatsEventId(Integer vividSeatsEventId) {
-		this.vividSeatsEventId = vividSeatsEventId;
+	public void setMarketplaceEventId(Integer marketplaceEventId) {
+		this.marketplaceEventId = marketplaceEventId;
 	}
 
 	@Override

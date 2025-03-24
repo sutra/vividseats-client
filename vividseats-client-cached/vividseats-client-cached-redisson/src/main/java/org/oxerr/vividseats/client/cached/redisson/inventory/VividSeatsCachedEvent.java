@@ -14,21 +14,21 @@ public class VividSeatsCachedEvent implements Serializable {
 
 	private String id;
 
-	private Integer vividSeatsEventId;
+	private Integer marketplaceEventId;
 
 	private OffsetDateTime startDate;
 
 	public VividSeatsCachedEvent() {
 	}
 
-	public VividSeatsCachedEvent(String id, Integer vividSeatsEventId, OffsetDateTime startDate) {
+	public VividSeatsCachedEvent(String id, Integer marketplaceEventId, OffsetDateTime startDate) {
 		this.id = id;
-		this.vividSeatsEventId = vividSeatsEventId;
+		this.marketplaceEventId = marketplaceEventId;
 		this.startDate = startDate;
 	}
 
 	public VividSeatsCachedEvent(VividSeatsEvent event) {
-		this(event.getId(), event.getVividSeatsEventId(), event.getStartDate());
+		this(event.getId(), event.getMarketplaceEventId(), event.getStartDate());
 	}
 
 	public String getId() {
@@ -39,12 +39,12 @@ public class VividSeatsCachedEvent implements Serializable {
 		this.id = id;
 	}
 
-	public Integer getVividSeatsEventId() {
-		return vividSeatsEventId;
+	public Integer getMarketplaceEventId() {
+		return marketplaceEventId;
 	}
 
-	public void setVividSeatsEventId(Integer vividSeatsEventId) {
-		this.vividSeatsEventId = vividSeatsEventId;
+	public void setMarketplaceEventId(Integer marketplaceEventId) {
+		this.marketplaceEventId = marketplaceEventId;
 	}
 
 	public OffsetDateTime getStartDate() {
@@ -56,7 +56,7 @@ public class VividSeatsCachedEvent implements Serializable {
 	}
 
 	public VividSeatsEvent toVividSeatsEvent() {
-		return new VividSeatsEvent(id, startDate, vividSeatsEventId);
+		return new VividSeatsEvent(id, startDate, marketplaceEventId);
 	}
 
 	@Override
