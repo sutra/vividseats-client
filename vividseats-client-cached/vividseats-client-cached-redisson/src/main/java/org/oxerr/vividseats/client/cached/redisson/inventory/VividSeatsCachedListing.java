@@ -15,8 +15,6 @@ public class VividSeatsCachedListing extends CachedListing<BrokerListing> {
 
 	private VividSeatsCachedEvent event;
 
-	private Integer vividSeatsEventId;
-
 	public VividSeatsCachedListing() {
 	}
 
@@ -31,7 +29,6 @@ public class VividSeatsCachedListing extends CachedListing<BrokerListing> {
 	public VividSeatsCachedListing(VividSeatsCachedEvent event, BrokerListing request, Status status) {
 		super(request, status);
 		this.event = event;
-		this.vividSeatsEventId = event.getVividSeatsEventId();
 	}
 
 	public VividSeatsCachedEvent getEvent() {
@@ -42,16 +39,8 @@ public class VividSeatsCachedListing extends CachedListing<BrokerListing> {
 		this.event = event;
 	}
 
-	public Integer getVividSeatsEventId() {
-		return vividSeatsEventId;
-	}
-
-	public void setVividSeatsEventId(Integer vividSeatsEventId) {
-		this.vividSeatsEventId = vividSeatsEventId;
-	}
-
 	public VividSeatsListing toVividSeatsListing() {
-		return new VividSeatsListing(this.getRequest().getTicketId(), this.event.getVividSeatsEventId(), this.getRequest());
+		return new VividSeatsListing(this.getRequest().getTicketId(), this.event.getMarketplaceEventId(), this.getRequest());
 	}
 
 	@Override
