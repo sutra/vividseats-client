@@ -10,22 +10,22 @@ public class VividSeatsListing extends Listing<String, BrokerListing> {
 
 	private static final long serialVersionUID = 2024101701L;
 
-	private Integer vividSeatsEventId;
+	private Integer marketplaceEventId;
 
 	public VividSeatsListing() {
 	}
 
-	public VividSeatsListing(String id, Integer vividSeatsEventId, BrokerListing request) {
+	public VividSeatsListing(String id, Integer marketplaceEventId, BrokerListing request) {
 		super(id, request);
-		this.vividSeatsEventId = vividSeatsEventId;
+		this.marketplaceEventId = marketplaceEventId;
 	}
 
-	public Integer getVividSeatsEventId() {
-		return vividSeatsEventId;
+	public Integer getMarketplaceEventId() {
+		return marketplaceEventId;
 	}
 
-	public void setVividSeatsEventId(Integer vividSeatsEventId) {
-		this.vividSeatsEventId = vividSeatsEventId;
+	public void setMarketplaceEventId(Integer marketplaceEventId) {
+		this.marketplaceEventId = marketplaceEventId;
 	}
 
 	@Override
