@@ -193,7 +193,7 @@ public class RedissonCachedListingService
 						var e = cachedListing.getEvent().toVividSeatsEvent();
 						var l = cachedListing.toVividSeatsListing();
 						var p = getPriority(e, l, cachedListing);
-						this.updateListing(e, l, cachedListing, p);
+						this.updateListing(e, l, (VividSeatsListing) null, p);
 						return null;
 					});
 					tasks.add(task);
