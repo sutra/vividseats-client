@@ -31,15 +31,15 @@ public class ListingServiceImpl implements ListingService {
 	}
 
 	@Override
-	public List<BrokerListing> get(BrokerListingQuery brokerListingQuery) throws IOException {
+	public List<BrokerListing> get(BrokerListingQuery q) throws IOException {
 		return listingResource.get(
-			brokerListingQuery.getListingId(),
-			brokerListingQuery.getInternalTicketId(),
-			brokerListingQuery.getProductionId(),
-			brokerListingQuery.getHeadlinerId(),
-			brokerListingQuery.getFromEventDate(),
-			brokerListingQuery.getToEventDate(),
-			brokerListingQuery.getIncludeFiles()
+			q.getListingId(),
+			q.getInternalTicketId(),
+			q.getProductionId(),
+			q.getHeadlinerId(),
+			q.getFromEventDate(),
+			q.getToEventDate(),
+			q.getIncludeFiles()
 		).getListings();
 	}
 

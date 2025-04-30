@@ -156,7 +156,7 @@ public class ResCUVividSeatsClient implements VividSeatsClient {
 		return clientConfig;
 	}
 
-	protected ClientConfig createClientConfig(JacksonObjectMapperFactory jacksonObjectMapperFactory, Supplier<?> tokenSupplier) {
+	protected ClientConfig createClientConfig(JacksonObjectMapperFactory jacksonObjectMapperFactory, Supplier<CharSequence> tokenSupplier) {
 		var clientConfig = new ClientConfig();
 		clientConfig.addDefaultParam(HeaderParam.class, "Api-token", new Object() {
 

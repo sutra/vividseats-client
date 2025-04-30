@@ -1,6 +1,7 @@
 package org.oxerr.vividseats.client.cached.redisson.inventory;
 
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -145,12 +146,12 @@ public class RedissonCachedListingService
 	}
 
 	@Override
-	public void check() throws IOException {
+	public void check() throws UncheckedIOException {
 		check(CheckOptions.defaults());
 	}
 
 	@Override
-	public void check(CheckOptions options) throws IOException {
+	public void check(CheckOptions options) throws UncheckedIOException {
 		List<CompletableFuture<Void>> tasks = Collections.synchronizedList(new ArrayList<CompletableFuture<Void>>());
 
 		// Ticket ID to cache name.
@@ -162,7 +163,12 @@ public class RedissonCachedListingService
 			.collect(Collectors.toUnmodifiableMap(Map.Entry::getKey, Map.Entry::getValue));
 
 		// All listings on the marketplace.
-		List<BrokerListing> listings = this.listingService.get(new BrokerListingQuery());
+		List<BrokerListing> listings;
+		try {
+			listings = this.listingService.get(new BrokerListingQuery());
+		} catch (IOException e) {
+			throw new UncheckedIOException(e);
+		}
 
 		// Delete listings which not in cache.
 		var deleteTasks = listings.stream()
@@ -193,7 +199,7 @@ public class RedissonCachedListingService
 						var e = cachedListing.getEvent().toVividSeatsEvent();
 						var l = cachedListing.toVividSeatsListing();
 						var p = getPriority(e, l, cachedListing);
-						this.updateListing(e, l, cachedListing, p);
+						this.updateListing(e, l, (VividSeatsListing) null, p);
 						return null;
 					});
 					tasks.add(task);
