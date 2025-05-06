@@ -1,6 +1,9 @@
 package org.oxerr.vividseats.client.rescu.resource;
 
 import java.util.List;
+import java.util.Optional;
+
+import javax.annotation.Nullable;
 
 import si.mazi.rescu.ExceptionalReturnContentException;
 
@@ -8,6 +11,7 @@ public class VividSeatsExceptionalReturnContentException extends ExceptionalRetu
 
 	private static final long serialVersionUID = 2025050701L;
 
+	@Nullable
 	private final List<String> errors;
 
 	public VividSeatsExceptionalReturnContentException(String message, List<String> errors) {
@@ -21,7 +25,12 @@ public class VividSeatsExceptionalReturnContentException extends ExceptionalRetu
 
 	@Override
 	public String toString() {
-		return String.format("%s: %s, errors: [%s]", getClass().getName(), getMessage(), String.join(", ", errors));
+		return String.format(
+			"%s: %s, errors: [%s]",
+			getClass().getName(),
+			getMessage(),
+			String.join(", ", Optional.ofNullable(errors).orElseGet(List::of))
+		);
 	}
 
 }
