@@ -23,9 +23,9 @@ class VividSeatsExceptionalReturnContentExceptionTest {
 		var exception = new VividSeatsExceptionalReturnContentException("message", List.of("content"));
 		assert exception.getMessage().equals("message");
 		assertEquals(
-				"org.oxerr.vividseats.client.rescu.resource.VividSeatsExceptionalReturnContentException: message, errors: [content]",
-				exception.toString()
-				);
+			"org.oxerr.vividseats.client.rescu.resource.VividSeatsExceptionalReturnContentException: message, errors: [content]",
+			exception.toString()
+		);
 	}
 
 }
