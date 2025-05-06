@@ -28,7 +28,7 @@ class ListingsResponseTest {
 		objectMapper.configure(DeserializationFeature.READ_DATE_TIMESTAMPS_AS_NANOSECONDS, false);
 		objectMapper.configure(DeserializationFeature.ADJUST_DATES_TO_CONTEXT_TIME_ZONE, false);
 
-		var listingsResponse = objectMapper.readValue(this.getClass().getResource("listings-response.json"), ListingsResponse.class);
+		var listingsResponse = objectMapper.readValue(this.getClass().getResource("ListingsResponse-response.json"), ListingsResponse.class);
 		assertNotNull(listingsResponse);
 		var listing = listingsResponse.getListings().get(0);
 		assertEquals(-9007199254740991L, listing.getId());
