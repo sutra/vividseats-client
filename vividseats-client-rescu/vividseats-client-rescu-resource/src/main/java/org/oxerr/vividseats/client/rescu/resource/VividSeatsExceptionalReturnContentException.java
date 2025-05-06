@@ -26,10 +26,10 @@ public class VividSeatsExceptionalReturnContentException extends ExceptionalRetu
 	@Override
 	public String toString() {
 		return String.format(
-			"%s: %s, errors: [%s]",
+			"%s: %s, errors: %s",
 			getClass().getName(),
 			getMessage(),
-			String.join(", ", Optional.ofNullable(errors).orElseGet(List::of))
+			Optional.ofNullable(errors).map(e -> "[" + String.join(", ", e) + "]").orElse("null")
 		);
 	}
 

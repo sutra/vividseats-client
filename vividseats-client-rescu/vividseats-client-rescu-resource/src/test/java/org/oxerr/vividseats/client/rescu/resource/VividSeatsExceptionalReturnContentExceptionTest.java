@@ -9,13 +9,23 @@ import org.junit.jupiter.api.Test;
 class VividSeatsExceptionalReturnContentExceptionTest {
 
 	@Test
-	void test() {
+	void testNoErrors() {
+		var exception = new VividSeatsExceptionalReturnContentException("message", null);
+		assert exception.getMessage().equals("message");
+		assertEquals(
+			"org.oxerr.vividseats.client.rescu.resource.VividSeatsExceptionalReturnContentException: message, errors: null",
+			exception.toString()
+		);
+	}
+
+	@Test
+	void testWithErrors() {
 		var exception = new VividSeatsExceptionalReturnContentException("message", List.of("content"));
 		assert exception.getMessage().equals("message");
 		assertEquals(
-			"org.oxerr.vividseats.client.rescu.resource.VividSeatsExceptionalReturnContentException: message, errors: [content]",
-			exception.toString()
-		);
+				"org.oxerr.vividseats.client.rescu.resource.VividSeatsExceptionalReturnContentException: message, errors: [content]",
+				exception.toString()
+				);
 	}
 
 }
