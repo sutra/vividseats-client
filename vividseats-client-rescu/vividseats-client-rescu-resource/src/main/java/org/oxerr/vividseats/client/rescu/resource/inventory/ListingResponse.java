@@ -1,5 +1,7 @@
 package org.oxerr.vividseats.client.rescu.resource.inventory;
 
+import java.util.List;
+
 import org.oxerr.vividseats.client.model.inventory.BrokerListing;
 import org.oxerr.vividseats.client.rescu.resource.Response;
 
@@ -13,9 +15,10 @@ public class ListingResponse extends Response {
 
 	public ListingResponse(
 		@JsonProperty("success") Boolean success,
-		@JsonProperty("message") String message
+		@JsonProperty("message") String message,
+		@JsonProperty("errors") List<String> errors
 	) {
-		super(success, message);
+		super(success, message, errors);
 	}
 
 	public BrokerListing getListing() {

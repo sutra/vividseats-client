@@ -1,10 +1,9 @@
 package org.oxerr.vividseats.client.rescu.resource;
 
 import java.io.Serializable;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-
-import si.mazi.rescu.ExceptionalReturnContentException;
 
 /**
  * <a href="https://vividseats.stoplight.io/docs/broker-portal/b064ad41fe925-response">Response</a>.
@@ -19,10 +18,11 @@ public class Response implements Serializable {
 
 	public Response(
 		@JsonProperty("success") Boolean success,
-		@JsonProperty("message") String message
+		@JsonProperty("message") String message,
+		@JsonProperty("errors") List<String> errors
 	) {
 		if (!success.booleanValue()) {
-			throw new ExceptionalReturnContentException(message);
+			throw new VividSeatsExceptionalReturnContentException(message, errors);
 		}
 	}
 
