@@ -11,22 +11,13 @@ import org.junit.jupiter.api.Test;
 import org.oxerr.vividseats.client.model.inventory.SplitType;
 import org.oxerr.vividseats.client.model.inventory.StockType;
 
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 class ListingsResponseTest {
 
 	@Test
 	void test() throws IOException {
-		ObjectMapper objectMapper = new ObjectMapper();
-		objectMapper.registerModule(new JavaTimeModule());
-		objectMapper.setSerializationInclusion(Include.NON_ABSENT);
-		objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
-		objectMapper.configure(DeserializationFeature.READ_DATE_TIMESTAMPS_AS_NANOSECONDS, false);
-		objectMapper.configure(DeserializationFeature.ADJUST_DATES_TO_CONTEXT_TIME_ZONE, false);
+		ObjectMapper objectMapper = ObjectMappers.objectMapper();
 
 		var listingsResponse = objectMapper.readValue(this.getClass().getResource("ListingsResponse-response.json"), ListingsResponse.class);
 		assertNotNull(listingsResponse);
