@@ -19,6 +19,7 @@ public class VividSeatsExceptionalReturnContentException extends ExceptionalRetu
 		this.errors = errors;
 	}
 
+	@Nullable
 	public List<String> getErrors() {
 		return errors;
 	}
