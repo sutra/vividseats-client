@@ -9,6 +9,7 @@ import org.oxerr.vividseats.client.inventory.BrokerListingQuery;
 import org.oxerr.vividseats.client.inventory.ListingService;
 import org.oxerr.vividseats.client.model.inventory.BrokerListing;
 import org.oxerr.vividseats.client.model.v1.inventory.Update;
+import org.oxerr.vividseats.client.rescu.resource.VividSeatsException;
 import org.oxerr.vividseats.client.rescu.resource.VividSeatsExceptionalReturnContentException;
 import org.oxerr.vividseats.client.rescu.resource.inventory.ListingResource;
 import org.slf4j.Logger;
@@ -83,7 +84,7 @@ public class ListingServiceImpl implements ListingService {
 	public void deleteListing(String ticketId) throws IOException {
 		try {
 			this.listingResourceV1.deleteListing(this.tokenSupplier.get().toString(), ticketId);
-		} catch (VividSeatsExceptionalReturnContentException e) {
+		} catch (VividSeatsException e) {
 			log.debug("Delete listing failed: {}", e.getMessage());
 			if (Objects.equals(e.getMessage(), "Listing not found.")) {
 				// Listing not found.
