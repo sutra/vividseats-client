@@ -1,0 +1,7 @@
+{
+	"success": false,
+	"message": "Create parameters failed validation, see errors.",
+	"errors": [
+		"Invalid section. Cannot be longer than 45 characters."
+	]
+}

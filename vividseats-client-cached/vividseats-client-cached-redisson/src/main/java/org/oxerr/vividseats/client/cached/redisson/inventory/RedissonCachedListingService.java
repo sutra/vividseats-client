@@ -141,6 +141,11 @@ public class RedissonCachedListingService
 	}
 
 	@Override
+	protected void deleteListing(VividSeatsEvent event, String listingId, VividSeatsCachedListing cachedListing, int priority) throws IOException {
+		this.listingService.deleteListing(listingId);
+	}
+
+	@Override
 	protected VividSeatsCachedListing toCached(VividSeatsEvent event, VividSeatsListing listing, Status status) {
 		return new VividSeatsCachedListing(new VividSeatsCachedEvent(event), listing, status);
 	}

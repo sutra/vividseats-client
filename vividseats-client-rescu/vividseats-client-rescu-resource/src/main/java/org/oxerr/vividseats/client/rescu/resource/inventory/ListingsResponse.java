@@ -17,9 +17,10 @@ public class ListingsResponse extends Response {
 
 	public ListingsResponse(
 		@JsonProperty("success") Boolean success,
-		@JsonProperty("message") String message
+		@JsonProperty("message") String message,
+		@JsonProperty("errors") List<String> errors
 	) {
-		super(success, message);
+		super(success, message, errors);
 	}
 
 	public List<BrokerListing> getListings() {

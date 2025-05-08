@@ -5,37 +5,23 @@ import java.util.Optional;
 
 import javax.annotation.Nullable;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import si.mazi.rescu.ExceptionalReturnContentException;
 
-import si.mazi.rescu.HttpStatusExceptionSupport;
+public class VividSeatsExceptionalReturnContentException extends ExceptionalReturnContentException {
 
-public class VividSeatsException extends HttpStatusExceptionSupport {
-
-	private static final long serialVersionUID = 2024101201L;
-
-	private final String message;
+	private static final long serialVersionUID = 2025050701L;
 
 	@Nullable
 	private final List<String> errors;
 
-	public VividSeatsException(
-		@JsonProperty("success") Boolean success,
-		@JsonProperty("message") String message,
-		@JsonProperty("errors") List<String> errors
-	) {
+	public VividSeatsExceptionalReturnContentException(String message, List<String> errors) {
 		super(message);
-		this.message = message;
 		this.errors = errors;
 	}
 
 	@Nullable
 	public List<String> getErrors() {
 		return errors;
-	}
-
-	@Override
-	public String getMessage() {
-		return message;
 	}
 
 	@Override
