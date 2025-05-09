@@ -212,16 +212,20 @@ public class RedissonCachedListingService
 			});
 
 		// Create listings which in cache but not on the marketplace.
-		var createTasks = ticketIdToCacheName.entrySet().stream()
-			.filter(entry -> listings.stream().noneMatch(listing -> listing.getTicketId().equals(entry.getKey())))
+		Set<String> existingTicketIds = listings.stream()
+			.map(BrokerListing::getTicketId)
+			.collect(Collectors.toSet());
+
+		List<CompletableFuture<Void>> createTasks = ticketIdToCacheName.entrySet().stream()
+			.filter(entry -> !existingTicketIds.contains(entry.getKey()))
 			.map(entry -> this.<Void>callAsync(() -> {
-				var cacheName = entry.getValue();
-				var cachedListing = this.getCache(cacheName).get(entry.getKey());
+				String cacheName = entry.getValue();
+				VividSeatsCachedListing cachedListing = this.getCache(cacheName).get(entry.getKey());
 
 				if (cachedListing != null) {
 					// Double check if the cached listing still exists.
-					var e = cachedListing.getEvent().toVividSeatsEvent();
-					var l = cachedListing.toVividSeatsListing();
+					VividSeatsEvent e = cachedListing.getEvent().toVividSeatsEvent();
+					VividSeatsListing l = cachedListing.toVividSeatsListing();
 					this.createListing(e, l);
 				}
 
