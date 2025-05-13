@@ -29,7 +29,15 @@ public class CXFVividSeatsClient implements VividSeatsClient {
 
 	private final ListingServiceImpl listingService;
 
+	private final HTTPClientPolicy policy;
+
 	public CXFVividSeatsClient(String token, BandwidthsStore<String> bandwidthsStore) {
+		this(token, bandwidthsStore, new HTTPClientPolicy());
+	}
+
+	public CXFVividSeatsClient(String token, BandwidthsStore<String> bandwidthsStore, HTTPClientPolicy policy) {
+		this.policy = policy;
+
 		org.oxerr.vividseats.client.cxf.resource.v1.inventory.ListingResource listingResourceV1 = createProxy(
 			DEFAULT_BASE_URL,
 			org.oxerr.vividseats.client.cxf.resource.v1.inventory.ListingResource.class,
@@ -59,7 +67,7 @@ public class CXFVividSeatsClient implements VividSeatsClient {
 	protected <T> T createProxy(String baseAddress, Class<T> cls, List<?> providers) {
 		T client = JAXRSClientFactory.create(baseAddress, cls, providers);
 
-		configureTimeouts(client);
+		configureTimeouts(client, policy);
 
 		return (T) Proxy.newProxyInstance(
 			cls.getClassLoader(),
@@ -75,23 +83,12 @@ public class CXFVividSeatsClient implements VividSeatsClient {
 		);
 	}
 
-	/**
-	 * Configure connection and receive timeouts for the given CXF client.
-	 *
-	 * @param proxy           the JAX-RS proxy client
-	 * @param connectTimeout  connection timeout in milliseconds
-	 * @param receiveTimeout  receive timeout in milliseconds
-	 */
-	protected <T> void configureTimeouts(T client) {
+	protected <T> void configureTimeouts(T client, HTTPClientPolicy policy) {
 		// Get CXF-specific client configuration
 		ClientConfiguration config = WebClient.getConfig(client);
 
 		// Access HTTPConduit to set timeouts
 		HTTPConduit conduit = (HTTPConduit) config.getConduit();
-		HTTPClientPolicy policy = new HTTPClientPolicy();
-		policy.setConnectionTimeout(120_000); // TODO: configurable
-		policy.setReceiveTimeout(120_000); // TODO: configurable
-		policy.setAllowChunking(false);
 
 		conduit.setClient(policy);
 	}
