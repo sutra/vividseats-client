@@ -113,13 +113,6 @@
 				<artifactId>rate-limiter-annotation</artifactId>
 				<version>0.8.0</version>
 			</dependency>
-
-			<dependency>
-				<groupId>nl.jqno.equalsverifier</groupId>
-				<artifactId>equalsverifier</artifactId>
-				<version>3.18.2</version>
-			</dependency>
-
 		</dependencies>
 	</dependencyManagement>
 	<scm>
@@ -274,6 +267,11 @@
 						<groupId>org.reflections</groupId>
 						<artifactId>reflections</artifactId>
 						<version>0.10.2</version>
+					</dependency>
+					<dependency>
+						<groupId>nl.jqno.equalsverifier</groupId>
+						<artifactId>equalsverifier</artifactId>
+						<version>3.18.2</version>
 					</dependency>
 				</dependencies>
 			</dependencyManagement>
