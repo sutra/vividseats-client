@@ -35,6 +35,11 @@
 			<groupId>io.github.poshjosh</groupId>
 			<artifactId>rate-limiter-annotation</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>vividseats-client-rescu-model</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 	</dependencies>
 	<profiles>
 		<profile>

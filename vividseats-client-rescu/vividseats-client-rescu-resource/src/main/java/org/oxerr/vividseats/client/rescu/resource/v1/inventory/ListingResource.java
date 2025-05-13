@@ -5,8 +5,8 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import org.oxerr.vividseats.client.model.inventory.SplitType;
-import org.oxerr.vividseats.client.rescu.resource.Response;
-import org.oxerr.vividseats.client.rescu.resource.VividSeatsException;
+import org.oxerr.vividseats.client.rescu.model.Response;
+import org.oxerr.vividseats.client.rescu.model.VividSeatsException;
 
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.FormParam;

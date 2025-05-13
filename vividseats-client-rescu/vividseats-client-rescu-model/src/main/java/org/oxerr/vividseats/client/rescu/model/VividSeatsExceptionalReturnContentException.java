@@ -1,4 +1,4 @@
-package org.oxerr.vividseats.client.rescu.resource;
+package org.oxerr.vividseats.client.rescu.model;
 
 import java.util.List;
 import java.util.Optional;

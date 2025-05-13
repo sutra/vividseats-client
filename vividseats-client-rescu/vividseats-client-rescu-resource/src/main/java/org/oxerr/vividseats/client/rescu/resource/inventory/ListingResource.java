@@ -4,8 +4,10 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 
 import org.oxerr.vividseats.client.model.inventory.BrokerListing;
-import org.oxerr.vividseats.client.rescu.resource.Response;
-import org.oxerr.vividseats.client.rescu.resource.VividSeatsException;
+import org.oxerr.vividseats.client.rescu.model.Response;
+import org.oxerr.vividseats.client.rescu.model.VividSeatsException;
+import org.oxerr.vividseats.client.rescu.model.inventory.ListingResponse;
+import org.oxerr.vividseats.client.rescu.model.inventory.ListingsResponse;
 
 import io.github.poshjosh.ratelimiter.annotations.Rate;
 import jakarta.ws.rs.Consumes;

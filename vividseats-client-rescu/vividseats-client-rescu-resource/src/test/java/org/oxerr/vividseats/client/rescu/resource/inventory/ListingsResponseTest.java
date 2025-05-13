@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 import org.junit.jupiter.api.Test;
 import org.oxerr.vividseats.client.model.inventory.SplitType;
 import org.oxerr.vividseats.client.model.inventory.StockType;
+import org.oxerr.vividseats.client.rescu.model.inventory.ListingsResponse;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 

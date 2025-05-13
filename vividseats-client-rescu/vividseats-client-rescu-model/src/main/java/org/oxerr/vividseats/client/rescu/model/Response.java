@@ -1,4 +1,4 @@
-package org.oxerr.vividseats.client.rescu.resource;
+package org.oxerr.vividseats.client.rescu.model;
 
 import java.io.Serializable;
 import java.util.List;

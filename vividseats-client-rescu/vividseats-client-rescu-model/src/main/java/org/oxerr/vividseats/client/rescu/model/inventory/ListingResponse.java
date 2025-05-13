@@ -1,9 +1,9 @@
-package org.oxerr.vividseats.client.rescu.resource.inventory;
+package org.oxerr.vividseats.client.rescu.model.inventory;
 
 import java.util.List;
 
 import org.oxerr.vividseats.client.model.inventory.BrokerListing;
-import org.oxerr.vividseats.client.rescu.resource.Response;
+import org.oxerr.vividseats.client.rescu.model.Response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

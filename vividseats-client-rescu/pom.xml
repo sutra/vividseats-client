@@ -16,6 +16,7 @@
 	<name>Vivid Seats Client - ResCU</name>
 	<packaging>pom</packaging>
 	<modules>
+		<module>vividseats-client-rescu-model</module>
 		<module>vividseats-client-rescu-resource</module>
 		<module>vividseats-client-rescu-impl</module>
 	</modules>
