@@ -84,11 +84,6 @@
 				<version>3.17.0</version>
 			</dependency>
 			<dependency>
-				<groupId>org.reflections</groupId>
-				<artifactId>reflections</artifactId>
-				<version>0.10.2</version>
-			</dependency>
-			<dependency>
 				<groupId>org.oxerr.ticket.inventory.support.cached</groupId>
 				<artifactId>ticket-inventory-support-cached-core</artifactId>
 				<version>${ticket-inventory-support.version}</version>
@@ -274,6 +269,11 @@
 						<groupId>org.junit.jupiter</groupId>
 						<artifactId>junit-jupiter-api</artifactId>
 						<version>5.13.0-M3</version>
+					</dependency>
+					<dependency>
+						<groupId>org.reflections</groupId>
+						<artifactId>reflections</artifactId>
+						<version>0.10.2</version>
 					</dependency>
 				</dependencies>
 			</dependencyManagement>
