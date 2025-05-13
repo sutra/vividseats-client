@@ -5,9 +5,6 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -20,23 +17,11 @@ class ListingServiceImplTest {
 
 	private final Logger log = LogManager.getLogger(this.getClass());
 
-	private CXFVividSeatsClient vividSeatsClient;
-
-	@BeforeAll
-	static void setUpBeforeClass() throws Exception {
-	}
-
-	@AfterAll
-	static void tearDownAfterClass() throws Exception {
-	}
+	private CXFVividSeatsClient client;
 
 	@BeforeEach
-	void setUp() throws Exception {
-		vividSeatsClient = CXFVividSeatsClients.getClient();
-	}
-
-	@AfterEach
-	void tearDown() throws Exception {
+	void setUp() {
+		client = CXFVividSeatsClients.getClient();
 	}
 
 	@Disabled("Need to provide a valid token.")
@@ -51,7 +36,7 @@ class ListingServiceImplTest {
 		 */
 
 		for (int i = 0; i < 5; i++) {
-			BrokerListings brokerListings = vividSeatsClient.getListingService().getListings(null);
+			BrokerListings brokerListings = client.getListingService().getListings(null);
 			assertNotNull(brokerListings);
 			log.info("brokerListings: {}", brokerListings.getBrokerListings().size());
 		}
@@ -61,7 +46,8 @@ class ListingServiceImplTest {
 	@Test
 	void testGet() {
 		try {
-			vividSeatsClient.getListingService().get(new BrokerListingQuery());
+			var size = client.getListingService().get(new BrokerListingQuery()).size();
+			log.info("size: {}", size);
 		} catch (Exception e) {
 			log.error("Error: ", e);
 			fail(e.getMessage());

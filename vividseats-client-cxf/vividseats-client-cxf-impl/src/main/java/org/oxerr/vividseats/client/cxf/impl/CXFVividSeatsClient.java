@@ -9,6 +9,11 @@ import java.util.List;
 import org.apache.cxf.jaxrs.client.JAXRSClientFactory;
 import org.oxerr.vividseats.client.cxf.impl.inventory.ListingServiceImpl;
 
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.jakarta.rs.json.JacksonJsonProvider;
 
 import io.github.poshjosh.ratelimiter.store.BandwidthsStore;
@@ -26,8 +31,10 @@ public class CXFVividSeatsClient {
 			Collections.singletonList(new RateLimiterFilter(bandwidthsStore))
 		);
 
+		JacksonJsonProvider jacksonJsonProvider = new JacksonJsonProvider();
+		jacksonJsonProvider.setMapper(createObjectMapper());
 		var providers = List.of(
-			new JacksonJsonProvider(),
+			jacksonJsonProvider,
 			new RateLimiterFilter(bandwidthsStore),
 			new ApiTokenHeaderFilter(token)
 		);
@@ -60,6 +67,16 @@ public class CXFVividSeatsClient {
 				}
 			}
 		);
+	}
+
+	protected ObjectMapper createObjectMapper() {
+		return new ObjectMapper()
+			.registerModule(new JavaTimeModule())
+			.setSerializationInclusion(Include.NON_ABSENT)
+			.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
+			.configure(DeserializationFeature.READ_DATE_TIMESTAMPS_AS_NANOSECONDS, false)
+			.configure(DeserializationFeature.ADJUST_DATES_TO_CONTEXT_TIME_ZONE, false)
+			.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 	}
 
 }
