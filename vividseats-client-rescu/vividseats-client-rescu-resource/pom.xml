@@ -19,11 +19,6 @@
 			<artifactId>jakarta.ws.rs-api</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.oxerr.vividseats.client</groupId>
-			<artifactId>vividseats-client-model</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
 			<groupId>com.github.mmazi</groupId>
 			<artifactId>rescu</artifactId>
 		</dependency>
