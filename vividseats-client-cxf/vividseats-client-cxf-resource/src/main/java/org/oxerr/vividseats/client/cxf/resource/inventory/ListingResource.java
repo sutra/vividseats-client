@@ -2,9 +2,9 @@ package org.oxerr.vividseats.client.cxf.resource.inventory;
 
 import java.time.LocalDateTime;
 
-import org.oxerr.vividseats.client.model.inventory.ListingResponse;
-import org.oxerr.vividseats.client.model.inventory.ListingsResponse;
-import org.oxerr.vividseats.client.model.v1.inventory.BrokerListing;
+import org.oxerr.vividseats.client.cxf.model.inventory.ListingResponse;
+import org.oxerr.vividseats.client.cxf.model.inventory.ListingsResponse;
+import org.oxerr.vividseats.client.cxf.model.v1.inventory.BrokerListing;
 
 import io.github.poshjosh.ratelimiter.annotations.Rate;
 import jakarta.ws.rs.Consumes;

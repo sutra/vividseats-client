@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.oxerr.vividseats.client.cxf.impl.CXFVividSeatsClient;
 import org.oxerr.vividseats.client.cxf.impl.CXFVividSeatsClients;
-import org.oxerr.vividseats.client.model.v1.inventory.BrokerListings;
+import org.oxerr.vividseats.client.cxf.model.v1.inventory.BrokerListings;
 
 class ListingServiceImplTest {
 

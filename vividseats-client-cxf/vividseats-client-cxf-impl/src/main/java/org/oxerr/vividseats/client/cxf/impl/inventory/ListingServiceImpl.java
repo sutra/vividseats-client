@@ -3,10 +3,10 @@ package org.oxerr.vividseats.client.cxf.impl.inventory;
 import java.io.IOException;
 import java.util.List;
 
+import org.oxerr.vividseats.client.cxf.model.v1.inventory.BrokerListings;
 import org.oxerr.vividseats.client.inventory.BrokerListingQuery;
 import org.oxerr.vividseats.client.inventory.ListingService;
 import org.oxerr.vividseats.client.model.inventory.BrokerListing;
-import org.oxerr.vividseats.client.model.v1.inventory.BrokerListings;
 import org.oxerr.vividseats.client.model.v1.inventory.Update;
 
 import jakarta.annotation.Nullable;

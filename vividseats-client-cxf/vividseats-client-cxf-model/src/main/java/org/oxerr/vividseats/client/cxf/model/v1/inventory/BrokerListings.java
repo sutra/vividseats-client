@@ -1,4 +1,4 @@
-package org.oxerr.vividseats.client.model.v1.inventory;
+package org.oxerr.vividseats.client.cxf.model.v1.inventory;
 
 import java.util.List;
 

@@ -2,7 +2,7 @@ package org.oxerr.vividseats.client.cxf.resource.v1.inventory;
 
 import java.util.concurrent.TimeUnit;
 
-import org.oxerr.vividseats.client.model.v1.inventory.BrokerListings;
+import org.oxerr.vividseats.client.cxf.model.v1.inventory.BrokerListings;
 
 import io.github.poshjosh.ratelimiter.annotations.Rate;
 import jakarta.annotation.Nullable;
