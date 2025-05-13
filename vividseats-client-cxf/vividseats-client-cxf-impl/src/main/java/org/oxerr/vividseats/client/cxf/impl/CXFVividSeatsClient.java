@@ -9,6 +9,8 @@ import java.util.List;
 import org.apache.cxf.jaxrs.client.JAXRSClientFactory;
 import org.oxerr.vividseats.client.cxf.impl.inventory.ListingServiceImpl;
 
+import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
+
 import io.github.poshjosh.ratelimiter.store.BandwidthsStore;
 
 public class CXFVividSeatsClient {
@@ -23,10 +25,17 @@ public class CXFVividSeatsClient {
 			org.oxerr.vividseats.client.cxf.resource.v1.inventory.ListingResource.class,
 			Collections.singletonList(new RateLimiterFilter(bandwidthsStore))
 		);
+
+		var providers = List.of(
+			new JacksonJsonProvider(),
+			new RateLimiterFilter(bandwidthsStore),
+			new ApiTokenHeaderFilter(token)
+		);
+
 		org.oxerr.vividseats.client.cxf.resource.inventory.ListingResource listingResource = createProxy(
 			DEFAULT_BASE_URL,
 			org.oxerr.vividseats.client.cxf.resource.inventory.ListingResource.class,
-			Collections.singletonList(new RateLimiterFilter(bandwidthsStore))
+			providers
 		);
 		this.listingService = new ListingServiceImpl(listingResourceV1, listingResource, token);
 	}

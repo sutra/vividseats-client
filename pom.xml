@@ -159,6 +159,7 @@
 				<version>${jackson.version}</version>
 			</dependency>
 
+
 			<!-- Java 8 Date/time -->
 			<dependency>
 				<groupId>com.fasterxml.jackson.datatype</groupId>
@@ -166,6 +167,11 @@
 				<version>${jackson.version}</version>
 			</dependency>
 
+			<dependency>
+				<groupId>com.fasterxml.jackson.jaxrs</groupId>
+				<artifactId>jackson-jaxrs-json-provider</artifactId>
+				<version>${jackson.version}</version>
+			</dependency>
 			<dependency>
 				<groupId>com.github.mmazi</groupId>
 				<artifactId>rescu</artifactId>

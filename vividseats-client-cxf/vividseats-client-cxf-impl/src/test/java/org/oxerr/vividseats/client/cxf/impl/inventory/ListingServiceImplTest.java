@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.oxerr.vividseats.client.cxf.impl.CXFVividSeatsClient;
 import org.oxerr.vividseats.client.cxf.impl.CXFVividSeatsClients;
 import org.oxerr.vividseats.client.cxf.model.v1.inventory.BrokerListings;
+import org.oxerr.vividseats.client.inventory.BrokerListingQuery;
 
 class ListingServiceImplTest {
 
@@ -60,7 +61,7 @@ class ListingServiceImplTest {
 	@Test
 	void testGet() {
 		try {
-			vividSeatsClient.getListingService().get(null);
+			vividSeatsClient.getListingService().get(new BrokerListingQuery());
 		} catch (Exception e) {
 			log.error("Error: ", e);
 			fail(e.getMessage());
