@@ -47,27 +47,44 @@ public class ListingServiceImpl implements ListingService {
 
 	@Override
 	public BrokerListing create(BrokerListing brokerListing) {
-		throw new UnsupportedOperationException("Not implemented yet.");
+		return listingResource.create(brokerListing).getListing();
 	}
 
 	@Override
 	public void updateListing(Update update) {
-		throw new UnsupportedOperationException("Not implemented yet.");
+		listingResourceV1.updateListing(
+			token,
+			update.getTicketId(),
+			update.getQuantity(),
+			update.getSection(),
+			update.getRow(),
+			update.getSeatFrom(),
+			update.getSeatThru(),
+			update.getNotes(),
+			update.getPrice(),
+			update.getElectronic(),
+			update.getInHandDate(),
+			update.getSplitType(),
+			update.getSplitValue(),
+			update.getBarcode(),
+			update.getFaceValue(),
+			update.getUnitTaxedCost()
+		);
 	}
 
 	@Override
 	public void update(BrokerListing brokerListing) {
-		throw new UnsupportedOperationException("Not implemented yet.");
+		listingResource.update(brokerListing);
 	}
 
 	@Override
 	public void deleteListing(String ticketId) {
-		throw new UnsupportedOperationException("Not implemented yet.");
+		this.listingResourceV1.deleteListing(token, ticketId);
 	}
 
 	@Override
 	public void delete(Long listingId, String internalTicketId) {
-		throw new UnsupportedOperationException("Not implemented yet.");
+		listingResource.delete(listingId, internalTicketId);
 	}
 
 }

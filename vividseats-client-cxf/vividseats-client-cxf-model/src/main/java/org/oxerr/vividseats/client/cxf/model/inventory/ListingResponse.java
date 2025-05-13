@@ -3,7 +3,7 @@ package org.oxerr.vividseats.client.cxf.model.inventory;
 import java.util.List;
 
 import org.oxerr.vividseats.client.cxf.model.Response;
-import org.oxerr.vividseats.client.cxf.model.v1.inventory.BrokerListing;
+import org.oxerr.vividseats.client.model.inventory.BrokerListing;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
