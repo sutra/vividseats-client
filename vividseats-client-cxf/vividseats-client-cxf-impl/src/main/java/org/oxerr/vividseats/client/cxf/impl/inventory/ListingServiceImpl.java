@@ -1,6 +1,5 @@
 package org.oxerr.vividseats.client.cxf.impl.inventory;
 
-import java.io.IOException;
 import java.util.List;
 
 import org.oxerr.vividseats.client.cxf.model.v1.inventory.BrokerListings;
@@ -34,7 +33,7 @@ public class ListingServiceImpl implements ListingService {
 	}
 
 	@Override
-	public List<BrokerListing> get(BrokerListingQuery q) throws IOException {
+	public List<BrokerListing> get(BrokerListingQuery q) {
 		return listingResource.get(
 			q.getListingId(),
 			q.getInternalTicketId(),
@@ -47,28 +46,28 @@ public class ListingServiceImpl implements ListingService {
 	}
 
 	@Override
-	public BrokerListing create(BrokerListing brokerListing) throws IOException {
+	public BrokerListing create(BrokerListing brokerListing) {
 		throw new UnsupportedOperationException("Not implemented yet.");
 	}
 
 	@Override
-	public void updateListing(Update update) throws IOException {
+	public void updateListing(Update update) {
 		throw new UnsupportedOperationException("Not implemented yet.");
 	}
 
 	@Override
-	public void update(BrokerListing brokerListing) throws IOException {
-		throw new UnsupportedOperationException("Not implemented yet.");		
+	public void update(BrokerListing brokerListing) {
+		throw new UnsupportedOperationException("Not implemented yet.");
 	}
 
 	@Override
-	public void deleteListing(String ticketId) throws IOException {
-		throw new UnsupportedOperationException("Not implemented yet.");		
+	public void deleteListing(String ticketId) {
+		throw new UnsupportedOperationException("Not implemented yet.");
 	}
 
 	@Override
-	public void delete(Long listingId, String internalTicketId) throws IOException {
-		throw new UnsupportedOperationException("Not implemented yet.");		
+	public void delete(Long listingId, String internalTicketId) {
+		throw new UnsupportedOperationException("Not implemented yet.");
 	}
 
 }

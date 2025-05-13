@@ -1,6 +1,5 @@
 package org.oxerr.vividseats.client.rescu.resource.v1.inventory;
 
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -34,7 +33,6 @@ public interface ListingResource {
 	 * @param apiToken The API token.
 	 * @param ticketId The ticket ID.
 	 * @return the response of the deletion request.
-	 * @throws IOException if an I/O error occurs.
 	 * @throws VividSeatsException if an error occurs.
 	 */
 	@GET
@@ -42,7 +40,7 @@ public interface ListingResource {
 	Response deleteListing(
 		@QueryParam("apiToken") CharSequence apiToken,
 		@QueryParam("ticketId") String ticketId
-	) throws IOException, VividSeatsException;
+	) throws VividSeatsException;
 
 	/**
 	 * Updates a listing.
@@ -72,7 +70,6 @@ public interface ListingResource {
 	 * @param faceValue The face value.
 	 * @param unitTaxedCost The unit taxed cost.
 	 * @return the response.
-	 * @throws IOException if an I/O error occurs.
 	 * @throws VividSeatsException if an error occurs.
 	 * @see <a href="https://vividseats.stoplight.io/docs/broker-portal/ebf6bb237e97b-update-listing">Update Listing</a>
 	 */
@@ -95,6 +92,6 @@ public interface ListingResource {
 		@FormParam("barcode") List<String> barcode,
 		@FormParam("faceValue") BigDecimal faceValue,
 		@FormParam("unitTaxedCost") BigDecimal unitTaxedCost
-	) throws IOException, VividSeatsException;
+	) throws VividSeatsException;
 
 }

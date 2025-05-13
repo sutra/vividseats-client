@@ -168,12 +168,7 @@ public class RedissonCachedListingService
 			.collect(Collectors.toUnmodifiableMap(Map.Entry::getKey, Map.Entry::getValue));
 
 		// All listings on the marketplace.
-		List<BrokerListing> listings;
-		try {
-			listings = this.listingService.get(new BrokerListingQuery());
-		} catch (IOException e) {
-			throw new UncheckedIOException(e);
-		}
+		List<BrokerListing> listings = this.listingService.get(new BrokerListingQuery());
 
 		log.debug("[check] listings size: {}", listings::size);
 

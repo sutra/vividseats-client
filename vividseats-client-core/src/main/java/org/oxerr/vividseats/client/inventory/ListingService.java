@@ -8,13 +8,13 @@ import org.oxerr.vividseats.client.model.v1.inventory.Update;
 
 public interface ListingService {
 
-	List<BrokerListing> get(BrokerListingQuery q) throws IOException;
+	List<BrokerListing> get(BrokerListingQuery q);
 
-	BrokerListing create(BrokerListing brokerListing) throws IOException;
+	BrokerListing create(BrokerListing brokerListing);
 
-	void updateListing(Update update) throws IOException;
+	void updateListing(Update update) ;
 
-	void update(BrokerListing brokerListing) throws IOException;
+	void update(BrokerListing brokerListing);
 
 	/**
 	 * Delete the listing.
@@ -22,7 +22,7 @@ public interface ListingService {
 	 * @param ticketId the internal ticket ID.
 	 * @throws IOException indicates I/O exception.
 	 */
-	void deleteListing(String ticketId) throws IOException;
+	void deleteListing(String ticketId);
 
 	/**
 	 * Delete the listing.
@@ -31,6 +31,6 @@ public interface ListingService {
 	 * @param internalTicketId the internal ticket ID.
 	 * @throws IOException indicates I/O exception.
 	 */
-	void delete(Long listingId, String internalTicketId) throws IOException;
+	void delete(Long listingId, String internalTicketId);
 
 }

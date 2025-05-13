@@ -1,6 +1,5 @@
 package org.oxerr.vividseats.client.rescu.resource.inventory;
 
-import java.io.IOException;
 import java.time.LocalDateTime;
 
 import org.oxerr.vividseats.client.model.inventory.BrokerListing;
@@ -38,7 +37,6 @@ public interface ListingResource {
 	 * @param toEventDate The end date of the event.
 	 * @param includeFiles Whether to include files.
 	 * @return listings.
-	 * @throws IOException if an I/O error occurs.
 	 * @throws VividSeatsException if an error response is returned.
 	 */
 	@GET
@@ -52,7 +50,7 @@ public interface ListingResource {
 		@QueryParam("fromEventDate") LocalDateTime fromEventDate,
 		@QueryParam("toEventDate") LocalDateTime toEventDate,
 		@QueryParam("includeFiles") Boolean includeFiles
-	) throws IOException, VividSeatsException;
+	) throws VividSeatsException;
 
 	/**
 	 * Creates a listing.
@@ -68,13 +66,12 @@ public interface ListingResource {
 	 *
 	 * @param brokerListing The broker listing to create.
 	 * @return the created listing.
-	 * @throws IOException if an I/O error occurs.
 	 * @throws VividSeatsException if an error response is returned.
 	 */
 	@POST
 	@Path("/create")
 	@Rate(50)
-	ListingResponse create(BrokerListing brokerListing) throws IOException, VividSeatsException;
+	ListingResponse create(BrokerListing brokerListing) throws VividSeatsException;
 
 	/**
 	 * Updates a listing.
@@ -90,13 +87,12 @@ public interface ListingResource {
 	 *
 	 * @param brokerListing The broker listing to update.
 	 * @return the response.
-	 * @throws IOException if an I/O error occurs.
 	 * @throws VividSeatsException if an error response is returned.
 	 */
 	@PUT
 	@Path("/update")
 	@Rate(50)
-	Response update(BrokerListing brokerListing) throws IOException, VividSeatsException;
+	Response update(BrokerListing brokerListing) throws VividSeatsException;
 
 	/**
 	 * Deletes a listing.
@@ -108,7 +104,6 @@ public interface ListingResource {
 	 * @param listingId The listing id.
 	 * @param internalTicketId The internal ticket id.
 	 * @return the response.
-	 * @throws IOException if an I/O error occurs.
 	 * @throws VividSeatsException if an error response is returned.
 	 */
 	@DELETE
@@ -117,6 +112,6 @@ public interface ListingResource {
 	Response delete(
 		@QueryParam("listingId") Long listingId,
 		@QueryParam("internalTicketId") String internalTicketId
-	) throws IOException, VividSeatsException;
+	) throws VividSeatsException;
 
 }
