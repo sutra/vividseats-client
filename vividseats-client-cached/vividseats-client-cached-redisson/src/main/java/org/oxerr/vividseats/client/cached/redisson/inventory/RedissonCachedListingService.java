@@ -175,6 +175,8 @@ public class RedissonCachedListingService
 			throw new UncheckedIOException(e);
 		}
 
+		log.debug("[check] listings size: {}", listings::size);
+
 		// Delete listings which not in cache.
 		var deleteTasks = listings.stream()
 			.filter(listing -> !ticketIdToCacheName.containsKey(listing.getTicketId()))
