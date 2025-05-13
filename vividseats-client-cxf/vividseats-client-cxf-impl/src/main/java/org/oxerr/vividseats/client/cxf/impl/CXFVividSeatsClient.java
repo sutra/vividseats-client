@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.apache.cxf.jaxrs.client.JAXRSClientFactory;
+import org.oxerr.vividseats.client.VividSeatsClient;
 import org.oxerr.vividseats.client.cxf.impl.inventory.ListingServiceImpl;
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -18,7 +19,7 @@ import com.fasterxml.jackson.jakarta.rs.json.JacksonJsonProvider;
 
 import io.github.poshjosh.ratelimiter.store.BandwidthsStore;
 
-public class CXFVividSeatsClient {
+public class CXFVividSeatsClient implements VividSeatsClient {
 
 	private static final String DEFAULT_BASE_URL = "https://brokers.vividseats.com/webservices";
 
@@ -31,10 +32,8 @@ public class CXFVividSeatsClient {
 			Collections.singletonList(new RateLimiterFilter(bandwidthsStore))
 		);
 
-		JacksonJsonProvider jacksonJsonProvider = new JacksonJsonProvider();
-		jacksonJsonProvider.setMapper(createObjectMapper());
 		var providers = List.of(
-			jacksonJsonProvider,
+			createJacksonJsonProvider(),
 			new RateLimiterFilter(bandwidthsStore),
 			new ApiTokenHeaderFilter(token)
 		);
@@ -47,6 +46,7 @@ public class CXFVividSeatsClient {
 		this.listingService = new ListingServiceImpl(listingResourceV1, listingResource, token);
 	}
 
+	@Override
 	public ListingServiceImpl getListingService() {
 		return listingService;
 	}
@@ -67,6 +67,12 @@ public class CXFVividSeatsClient {
 				}
 			}
 		);
+	}
+
+	protected JacksonJsonProvider createJacksonJsonProvider() {
+		JacksonJsonProvider provider = new JacksonJsonProvider();
+		provider.setMapper(createObjectMapper());
+		return provider;
 	}
 
 	protected ObjectMapper createObjectMapper() {
