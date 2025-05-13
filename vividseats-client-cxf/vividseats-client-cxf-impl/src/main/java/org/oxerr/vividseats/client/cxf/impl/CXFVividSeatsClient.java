@@ -9,7 +9,7 @@ import java.util.List;
 import org.apache.cxf.jaxrs.client.JAXRSClientFactory;
 import org.oxerr.vividseats.client.cxf.impl.inventory.ListingServiceImpl;
 
-import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
+import com.fasterxml.jackson.jakarta.rs.json.JacksonJsonProvider;
 
 import io.github.poshjosh.ratelimiter.store.BandwidthsStore;
 
