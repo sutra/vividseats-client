@@ -6,7 +6,11 @@ import java.lang.reflect.Proxy;
 import java.util.Collections;
 import java.util.List;
 
+import org.apache.cxf.jaxrs.client.ClientConfiguration;
 import org.apache.cxf.jaxrs.client.JAXRSClientFactory;
+import org.apache.cxf.jaxrs.client.WebClient;
+import org.apache.cxf.transport.http.HTTPConduit;
+import org.apache.cxf.transports.http.configuration.HTTPClientPolicy;
 import org.oxerr.vividseats.client.VividSeatsClient;
 import org.oxerr.vividseats.client.cxf.impl.inventory.ListingServiceImpl;
 
@@ -52,8 +56,10 @@ public class CXFVividSeatsClient implements VividSeatsClient {
 	}
 
 	@SuppressWarnings("unchecked")
-	public static <T> T createProxy(String baseAddress, Class<T> cls, List<?> providers) {
+	protected <T> T createProxy(String baseAddress, Class<T> cls, List<?> providers) {
 		T client = JAXRSClientFactory.create(baseAddress, cls, providers);
+
+		configureTimeouts(client);
 
 		return (T) Proxy.newProxyInstance(
 			cls.getClassLoader(),
@@ -67,6 +73,27 @@ public class CXFVividSeatsClient implements VividSeatsClient {
 				}
 			}
 		);
+	}
+
+	/**
+	 * Configure connection and receive timeouts for the given CXF client.
+	 *
+	 * @param proxy           the JAX-RS proxy client
+	 * @param connectTimeout  connection timeout in milliseconds
+	 * @param receiveTimeout  receive timeout in milliseconds
+	 */
+	protected <T> void configureTimeouts(T client) {
+		// Get CXF-specific client configuration
+		ClientConfiguration config = WebClient.getConfig(client);
+
+		// Access HTTPConduit to set timeouts
+		HTTPConduit conduit = (HTTPConduit) config.getConduit();
+		HTTPClientPolicy policy = new HTTPClientPolicy();
+		policy.setConnectionTimeout(120_000); // TODO: configurable
+		policy.setReceiveTimeout(120_000); // TODO: configurable
+		policy.setAllowChunking(false);
+
+		conduit.setClient(policy);
 	}
 
 	protected JacksonJsonProvider createJacksonJsonProvider() {
