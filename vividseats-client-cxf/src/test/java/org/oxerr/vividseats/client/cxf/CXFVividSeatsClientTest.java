@@ -2,6 +2,10 @@ package org.oxerr.vividseats.client.cxf;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Disabled;
@@ -23,18 +27,38 @@ class CXFVividSeatsClientTest {
 		 * -Dcom.sun.xml.internal.ws.transport.http.client.HttpTransportPipe.dump=true
 		 * -Dcom.sun.xml.ws.transport.http.HttpAdapter.dump=true
 		 * -Dcom.sun.xml.internal.ws.transport.http.HttpAdapter.dump=true
-		 * -Dvividseats.token=xxx
 		 */
-		String token = System.getProperty("vividseats.token");
-		log.info("token: {}", token);
 
-		BandwidthsStore<String> bandwidthsStore = BandwidthsStore.ofDefaults();
+		CXFVividSeatsClient vividSeatsClient = getClient();
 
 		for (int i = 0; i < 5; i++) {
-			BrokerListings brokerListings = new CXFVividSeatsClient(token, bandwidthsStore).getListings(null);
+			BrokerListings brokerListings = vividSeatsClient.getListings(null);
 			assertNotNull(brokerListings);
 			log.info("brokerListings: {}", brokerListings.getBrokerListings().size());
 		}
+	}
+
+	public static CXFVividSeatsClient getClient() {
+		Properties props = getProps();
+		String token = props.getProperty("token");
+
+		BandwidthsStore<String> bandwidthsStore = BandwidthsStore.ofDefaults();
+		return new CXFVividSeatsClient(token, bandwidthsStore);
+	}
+
+	public static Properties getProps() {
+		Properties props = new Properties();
+		String name = "/vividseats.properties";
+		try (InputStream in = CXFVividSeatsClient.class.getResourceAsStream(name)) {
+			if (in != null) {
+				props.load(in);
+			} else {
+				throw new IllegalArgumentException(String.format("No resource found: %s", name));
+			}
+		} catch (IOException e) {
+			throw new IllegalArgumentException("Read " + name + " failed.");
+		}
+		return props;
 	}
 
 }
