@@ -11,6 +11,7 @@ import org.oxerr.vividseats.client.cxf.model.BrokerListings;
 import org.oxerr.vividseats.client.cxf.resource.ListingResource;
 
 import io.github.poshjosh.ratelimiter.store.BandwidthsStore;
+import jakarta.annotation.Nullable;
 
 public class CXFVividSeatsClient {
 
@@ -29,7 +30,7 @@ public class CXFVividSeatsClient {
 		);
 	}
 
-	public BrokerListings getListings(Integer ticketId) {
+	public BrokerListings getListings(@Nullable Integer ticketId) {
 		return listingResource.getListings(token, ticketId);
 	}
 
