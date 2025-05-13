@@ -10,7 +10,6 @@ import org.oxerr.vividseats.client.inventory.ListingService;
 import org.oxerr.vividseats.client.model.inventory.BrokerListing;
 import org.oxerr.vividseats.client.model.v1.inventory.Update;
 import org.oxerr.vividseats.client.rescu.resource.VividSeatsException;
-import org.oxerr.vividseats.client.rescu.resource.VividSeatsExceptionalReturnContentException;
 import org.oxerr.vividseats.client.rescu.resource.inventory.ListingResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
