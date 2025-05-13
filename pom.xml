@@ -114,16 +114,6 @@
 				<version>5.13.0-M3</version>
 			</dependency>
 			<dependency>
-				<groupId>org.oxerr.rescu.ext</groupId>
-				<artifactId>rescu-ext-singleton</artifactId>
-				<version>${rescu-ext.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.oxerr.rescu.ext</groupId>
-				<artifactId>rescu-ext-rate-limiter-core</artifactId>
-				<version>${rescu-ext.version}</version>
-			</dependency>
-			<dependency>
 				<groupId>org.oxerr.ticket.inventory.support.cached</groupId>
 				<artifactId>ticket-inventory-support-cached-core</artifactId>
 				<version>${ticket-inventory-support.version}</version>
@@ -147,11 +137,6 @@
 				<groupId>com.evanlennick</groupId>
 				<artifactId>retry4j</artifactId>
 				<version>0.15.0</version>
-			</dependency>
-			<dependency>
-				<groupId>com.github.mmazi</groupId>
-				<artifactId>rescu</artifactId>
-				<version>3.0</version>
 			</dependency>
 			<dependency>
 				<groupId>com.google.code.findbugs</groupId>
@@ -237,6 +222,31 @@
 						<groupId>org.apache.cxf</groupId>
 						<artifactId>cxf-rt-features-logging</artifactId>
 						<version>4.0.7</version>
+					</dependency>
+				</dependencies>
+			</dependencyManagement>
+		</profile>
+		<profile>
+			<id>rescu</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<dependencyManagement>
+				<dependencies>
+					<dependency>
+						<groupId>org.oxerr.rescu.ext</groupId>
+						<artifactId>rescu-ext-singleton</artifactId>
+						<version>${rescu-ext.version}</version>
+					</dependency>
+					<dependency>
+						<groupId>org.oxerr.rescu.ext</groupId>
+						<artifactId>rescu-ext-rate-limiter-core</artifactId>
+						<version>${rescu-ext.version}</version>
+					</dependency>
+					<dependency>
+						<groupId>com.github.mmazi</groupId>
+						<artifactId>rescu</artifactId>
+						<version>3.0</version>
 					</dependency>
 				</dependencies>
 			</dependencyManagement>
