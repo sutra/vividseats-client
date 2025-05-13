@@ -23,6 +23,11 @@
 			<artifactId>rate-limiter-annotation</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>org.oxerr.vividseats.client</groupId>
+			<artifactId>vividseats-client-core</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>vividseats-client-cxf-resource</artifactId>
 			<version>${project.version}</version>

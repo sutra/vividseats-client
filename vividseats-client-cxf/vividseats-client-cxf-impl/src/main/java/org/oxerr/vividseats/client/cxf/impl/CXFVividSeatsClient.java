@@ -8,7 +8,6 @@ import java.util.List;
 
 import org.apache.cxf.jaxrs.client.JAXRSClientFactory;
 import org.oxerr.vividseats.client.cxf.impl.inventory.ListingServiceImpl;
-import org.oxerr.vividseats.client.cxf.resource.v1.inventory.ListingResource;
 
 import io.github.poshjosh.ratelimiter.store.BandwidthsStore;
 
@@ -19,12 +18,17 @@ public class CXFVividSeatsClient {
 	private final ListingServiceImpl listingService;
 
 	public CXFVividSeatsClient(String token, BandwidthsStore<String> bandwidthsStore) {
-		ListingResource listingResource = createProxy(
+		org.oxerr.vividseats.client.cxf.resource.v1.inventory.ListingResource listingResourceV1 = createProxy(
 			DEFAULT_BASE_URL,
-			ListingResource.class,
+			org.oxerr.vividseats.client.cxf.resource.v1.inventory.ListingResource.class,
 			Collections.singletonList(new RateLimiterFilter(bandwidthsStore))
 		);
-		this.listingService = new ListingServiceImpl(listingResource, token);
+		org.oxerr.vividseats.client.cxf.resource.inventory.ListingResource listingResource = createProxy(
+			DEFAULT_BASE_URL,
+			org.oxerr.vividseats.client.cxf.resource.inventory.ListingResource.class,
+			Collections.singletonList(new RateLimiterFilter(bandwidthsStore))
+		);
+		this.listingService = new ListingServiceImpl(listingResourceV1, listingResource, token);
 	}
 
 	public ListingServiceImpl getListingService() {
