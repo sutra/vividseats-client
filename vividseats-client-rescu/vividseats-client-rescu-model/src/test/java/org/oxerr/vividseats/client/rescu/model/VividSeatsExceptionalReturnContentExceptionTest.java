@@ -1,11 +1,10 @@
-package org.oxerr.vividseats.client.rescu.resource;
+package org.oxerr.vividseats.client.rescu.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
-import org.oxerr.vividseats.client.rescu.model.VividSeatsExceptionalReturnContentException;
 
 class VividSeatsExceptionalReturnContentExceptionTest {
 
@@ -14,7 +13,7 @@ class VividSeatsExceptionalReturnContentExceptionTest {
 		var exception = new VividSeatsExceptionalReturnContentException("message", null);
 		assert exception.getMessage().equals("message");
 		assertEquals(
-			"org.oxerr.vividseats.client.rescu.resource.VividSeatsExceptionalReturnContentException: message, errors: null",
+			"org.oxerr.vividseats.client.rescu.model.VividSeatsExceptionalReturnContentException: message, errors: null",
 			exception.toString()
 		);
 	}
@@ -24,7 +23,7 @@ class VividSeatsExceptionalReturnContentExceptionTest {
 		var exception = new VividSeatsExceptionalReturnContentException("message", List.of("content"));
 		assert exception.getMessage().equals("message");
 		assertEquals(
-			"org.oxerr.vividseats.client.rescu.resource.VividSeatsExceptionalReturnContentException: message, errors: [content]",
+			"org.oxerr.vividseats.client.rescu.model.VividSeatsExceptionalReturnContentException: message, errors: [content]",
 			exception.toString()
 		);
 	}

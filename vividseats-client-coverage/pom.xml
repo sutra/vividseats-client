@@ -41,7 +41,22 @@
 		</dependency>
 		<dependency>
 			<groupId>org.oxerr.vividseats.client.cxf</groupId>
-			<artifactId>vividseats-client-cxf</artifactId>
+			<artifactId>vividseats-client-cxf-model</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.oxerr.vividseats.client.cxf</groupId>
+			<artifactId>vividseats-client-cxf-resource</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.oxerr.vividseats.client.cxf</groupId>
+			<artifactId>vividseats-client-cxf-impl</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.oxerr.vividseats.client.rescu</groupId>
+			<artifactId>vividseats-client-rescu-model</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
