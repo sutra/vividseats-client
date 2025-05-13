@@ -1,7 +1,6 @@
 package org.oxerr.vividseats.client.cxf.impl;
 
 import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.Collections;
 import java.util.List;
@@ -38,19 +37,22 @@ public class CXFVividSeatsClient implements VividSeatsClient {
 	public CXFVividSeatsClient(String token, BandwidthsStore<String> bandwidthsStore, HTTPClientPolicy policy) {
 		this.policy = policy;
 
-		org.oxerr.vividseats.client.cxf.resource.v1.inventory.ListingResource listingResourceV1 = createProxy(
+		var rateLimiterFilter = new RateLimiterFilter(bandwidthsStore);
+		var tokenFilter = new ApiTokenHeaderFilter(token);
+
+		var listingResourceV1 = createProxy(
 			DEFAULT_BASE_URL,
 			org.oxerr.vividseats.client.cxf.resource.v1.inventory.ListingResource.class,
-			Collections.singletonList(new RateLimiterFilter(bandwidthsStore))
+			Collections.singletonList(rateLimiterFilter)
 		);
 
 		var providers = List.of(
 			createJacksonJsonProvider(),
-			new RateLimiterFilter(bandwidthsStore),
-			new ApiTokenHeaderFilter(token)
+			rateLimiterFilter,
+			tokenFilter
 		);
 
-		org.oxerr.vividseats.client.cxf.resource.inventory.ListingResource listingResource = createProxy(
+		var listingResource = createProxy(
 			DEFAULT_BASE_URL,
 			org.oxerr.vividseats.client.cxf.resource.inventory.ListingResource.class,
 			providers
@@ -63,33 +65,29 @@ public class CXFVividSeatsClient implements VividSeatsClient {
 		return listingService;
 	}
 
-	@SuppressWarnings("unchecked")
 	protected <T> T createProxy(String baseAddress, Class<T> cls, List<?> providers) {
 		T client = JAXRSClientFactory.create(baseAddress, cls, providers);
+		configureClient(client, policy);
+		return createMethodTrackingProxy(cls, client);
+	}
 
-		configureTimeouts(client, policy);
+	@SuppressWarnings("unchecked")
+	private <T> T createMethodTrackingProxy(Class<T> cls, T delegate) {
+		InvocationHandler handler = (proxy, method, args) -> {
+			InvokedMethodHolder.set(method);
+			return method.invoke(delegate, args);
+		};
 
 		return (T) Proxy.newProxyInstance(
 			cls.getClassLoader(),
 			new Class<?>[] { cls },
-			new InvocationHandler() {
-				@Override
-				public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-					// Store method info in ThreadLocal
-					InvokedMethodHolder.set(method);
-					return method.invoke(client, args);
-				}
-			}
+			handler
 		);
 	}
 
-	protected <T> void configureTimeouts(T client, HTTPClientPolicy policy) {
-		// Get CXF-specific client configuration
+	protected <T> void configureClient(T client, HTTPClientPolicy policy) {
 		ClientConfiguration config = WebClient.getConfig(client);
-
-		// Access HTTPConduit to set timeouts
 		HTTPConduit conduit = (HTTPConduit) config.getConduit();
-
 		conduit.setClient(policy);
 	}
 
