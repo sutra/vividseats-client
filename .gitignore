@@ -2,5 +2,5 @@ target/
 .project
 .classpath
 .settings/
-/vividseats-client-cxf/src/test/resources/vividseats.properties
+/vividseats-client-cxf/vividseats-client-cxf-impl/src/test/resources/vividseats.properties
 /vividseats-client-rescu/vividseats-client-rescu-impl/src/test/resources/vividseats.properties
