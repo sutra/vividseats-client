@@ -25,6 +25,7 @@
 	<properties>
 		<maven.compiler.source>11</maven.compiler.source>
 		<maven.compiler.target>11</maven.compiler.target>
+		<cxf.version>4.0.7</cxf.version>
 		<jackson.version>2.19.0</jackson.version>
 		<log4j.version>2.24.3</log4j.version>
 		<rescu-ext.version>1.0.3</rescu-ext.version>
@@ -209,12 +210,12 @@
 					<dependency>
 						<groupId>org.apache.cxf</groupId>
 						<artifactId>cxf-rt-rs-client</artifactId>
-						<version>4.0.7</version>
+						<version>${cxf.version}</version>
 					</dependency>
 					<dependency>
 						<groupId>org.apache.cxf</groupId>
 						<artifactId>cxf-rt-features-logging</artifactId>
-						<version>4.0.7</version>
+						<version>${cxf.version}</version>
 					</dependency>
 				</dependencies>
 			</dependencyManagement>

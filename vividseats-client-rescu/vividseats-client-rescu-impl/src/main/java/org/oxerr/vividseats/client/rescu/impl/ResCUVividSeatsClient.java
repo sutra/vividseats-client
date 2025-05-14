@@ -6,7 +6,6 @@ import java.util.function.Supplier;
 import org.apache.commons.lang3.ArrayUtils;
 import org.oxerr.rescu.ext.singleton.RestProxyFactorySingletonImpl;
 import org.oxerr.vividseats.client.VividSeatsClient;
-import org.oxerr.vividseats.client.inventory.ListingService;
 import org.oxerr.vividseats.client.rescu.impl.inventory.ListingServiceImpl;
 import org.oxerr.vividseats.client.rescu.resource.inventory.ListingResource;
 
@@ -33,7 +32,7 @@ public class ResCUVividSeatsClient implements VividSeatsClient {
 
 	private final IRestProxyFactory restProxyFactory;
 
-	private final ListingService listingService;
+	private final ListingServiceImpl listingService;
 
 	/**
 	 * Constructs a client with the specified token.
@@ -142,7 +141,7 @@ public class ResCUVividSeatsClient implements VividSeatsClient {
 	}
 
 	@Override
-	public ListingService getListingService() {
+	public ListingServiceImpl getListingService() {
 		return this.listingService;
 	}
 

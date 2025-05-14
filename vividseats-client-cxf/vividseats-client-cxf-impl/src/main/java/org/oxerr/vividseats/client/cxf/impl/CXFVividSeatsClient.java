@@ -2,7 +2,6 @@ package org.oxerr.vividseats.client.cxf.impl;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
-import java.util.Collections;
 import java.util.List;
 
 import org.apache.cxf.jaxrs.client.ClientConfiguration;
@@ -37,17 +36,18 @@ public class CXFVividSeatsClient implements VividSeatsClient {
 	public CXFVividSeatsClient(String token, BandwidthsStore<String> bandwidthsStore, HTTPClientPolicy policy) {
 		this.policy = policy;
 
+		var jacksonJsonProvider = createJacksonJsonProvider();
 		var rateLimiterFilter = new RateLimiterFilter(bandwidthsStore);
 		var tokenFilter = new ApiTokenHeaderFilter(token);
 
 		var listingResourceV1 = createProxy(
 			DEFAULT_BASE_URL,
 			org.oxerr.vividseats.client.cxf.resource.v1.inventory.ListingResource.class,
-			Collections.singletonList(rateLimiterFilter)
+			List.of(jacksonJsonProvider, rateLimiterFilter)
 		);
 
 		var providers = List.of(
-			createJacksonJsonProvider(),
+			jacksonJsonProvider,
 			rateLimiterFilter,
 			tokenFilter
 		);
