@@ -184,7 +184,7 @@ public class RedissonCachedListingService
 
 		// Create or update listings in cache.
 		listings.stream()
-			.filter(listing -> ticketIdToCacheName.containsKey(listing.getTicketId()))
+			.filter(listing -> listing.getTicketId() != null && ticketIdToCacheName.containsKey(listing.getTicketId()))
 			.forEach(listing -> {
 				String cacheName = ticketIdToCacheName.get(listing.getTicketId());
 				VividSeatsCachedListing cachedListing = this.getCache(cacheName).get(listing.getTicketId());
