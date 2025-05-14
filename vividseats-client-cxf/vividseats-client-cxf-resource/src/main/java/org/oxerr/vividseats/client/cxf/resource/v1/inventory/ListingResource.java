@@ -54,7 +54,6 @@ public interface ListingResource {
 	 * @param apiToken The API token.
 	 * @param ticketId The ticket ID.
 	 * @return the response of the deletion request.
-	 * @throws VividSeatsException if an error occurs.
 	 */
 	@GET
 	@Path("/deleteListing")
