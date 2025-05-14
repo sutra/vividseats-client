@@ -1,6 +1,5 @@
 package org.oxerr.vividseats.client.inventory;
 
-import java.io.IOException;
 import java.util.List;
 
 import org.oxerr.vividseats.client.model.inventory.BrokerListing;
@@ -20,7 +19,6 @@ public interface ListingService {
 	 * Delete the listing.
 	 *
 	 * @param ticketId the internal ticket ID.
-	 * @throws IOException indicates I/O exception.
 	 */
 	void deleteListing(String ticketId);
 
@@ -29,7 +27,6 @@ public interface ListingService {
 	 *
 	 * @param listingId the vivid ticket ID.
 	 * @param internalTicketId the internal ticket ID.
-	 * @throws IOException indicates I/O exception.
 	 */
 	void delete(Long listingId, String internalTicketId);
 
