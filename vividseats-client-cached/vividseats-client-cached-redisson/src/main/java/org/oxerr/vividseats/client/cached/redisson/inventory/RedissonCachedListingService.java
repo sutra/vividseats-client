@@ -174,7 +174,7 @@ public class RedissonCachedListingService
 
 		// Delete listings which not in cache.
 		var deleteTasks = listings.stream()
-			.filter(listing -> !ticketIdToCacheName.containsKey(listing.getTicketId()))
+			.filter(listing -> listing.getTicketId() == null || !ticketIdToCacheName.containsKey(listing.getTicketId()))
 			.map(listing -> this.<Void>callAsync(() -> {
 				this.listingService.deleteListing(listing.getTicketId());
 				return null;
