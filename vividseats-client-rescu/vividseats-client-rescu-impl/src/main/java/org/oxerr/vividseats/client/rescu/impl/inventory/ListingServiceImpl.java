@@ -1,6 +1,5 @@
 package org.oxerr.vividseats.client.rescu.impl.inventory;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Supplier;
@@ -9,7 +8,7 @@ import org.oxerr.vividseats.client.inventory.BrokerListingQuery;
 import org.oxerr.vividseats.client.inventory.ListingService;
 import org.oxerr.vividseats.client.model.inventory.BrokerListing;
 import org.oxerr.vividseats.client.model.v1.inventory.Update;
-import org.oxerr.vividseats.client.rescu.resource.VividSeatsException;
+import org.oxerr.vividseats.client.rescu.model.VividSeatsException;
 import org.oxerr.vividseats.client.rescu.resource.inventory.ListingResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,7 +34,7 @@ public class ListingServiceImpl implements ListingService {
 	}
 
 	@Override
-	public List<BrokerListing> get(BrokerListingQuery q) throws IOException {
+	public List<BrokerListing> get(BrokerListingQuery q) {
 		return listingResource.get(
 			q.getListingId(),
 			q.getInternalTicketId(),
@@ -48,12 +47,12 @@ public class ListingServiceImpl implements ListingService {
 	}
 
 	@Override
-	public BrokerListing create(BrokerListing brokerListing) throws IOException {
+	public BrokerListing create(BrokerListing brokerListing) {
 		return listingResource.create(brokerListing).getListing();
 	}
 
 	@Override
-	public void updateListing(Update update) throws IOException {
+	public void updateListing(Update update) {
 		listingResourceV1.updateListing(
 			this.tokenSupplier.get(),
 			update.getTicketId(),
@@ -75,12 +74,12 @@ public class ListingServiceImpl implements ListingService {
 	}
 
 	@Override
-	public void update(BrokerListing brokerListing) throws IOException {
+	public void update(BrokerListing brokerListing) {
 		listingResource.update(brokerListing);
 	}
 
 	@Override
-	public void deleteListing(String ticketId) throws IOException {
+	public void deleteListing(String ticketId) {
 		try {
 			this.listingResourceV1.deleteListing(this.tokenSupplier.get().toString(), ticketId);
 		} catch (VividSeatsException e) {
@@ -94,7 +93,7 @@ public class ListingServiceImpl implements ListingService {
 	}
 
 	@Override
-	public void delete(Long listingId, String internalTicketId) throws IOException {
+	public void delete(Long listingId, String internalTicketId) {
 		listingResource.delete(listingId, internalTicketId);
 	}
 

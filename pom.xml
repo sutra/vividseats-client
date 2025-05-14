@@ -19,12 +19,14 @@
 		Vivid Seats Client - Vivid Seats Broker API Client Library for Java.
 	</description>
 	<packaging>pom</packaging>
-	<version>0.0.11</version>
+	<version>0.0.13</version>
 	<url>https://www.oxerr.org/vividseats-client</url>
 	<inceptionYear>2024</inceptionYear>
 	<properties>
 		<maven.compiler.source>11</maven.compiler.source>
 		<maven.compiler.target>11</maven.compiler.target>
+		<cxf.version>4.0.7</cxf.version>
+		<jackson.version>2.19.0</jackson.version>
 		<log4j.version>2.24.3</log4j.version>
 		<rescu-ext.version>1.0.3</rescu-ext.version>
 		<ticket-inventory-support.version>[5.3.3,)</ticket-inventory-support.version>
@@ -83,46 +85,6 @@
 				<version>3.17.0</version>
 			</dependency>
 			<dependency>
-				<groupId>org.apache.logging.log4j</groupId>
-				<artifactId>log4j-api</artifactId>
-				<version>${log4j.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.logging.log4j</groupId>
-				<artifactId>log4j-core</artifactId>
-				<version>${log4j.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.logging.log4j</groupId>
-				<artifactId>log4j-jul</artifactId>
-				<version>${log4j.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.logging.log4j</groupId>
-				<artifactId>log4j-slf4j2-impl</artifactId>
-				<version>${log4j.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.reflections</groupId>
-				<artifactId>reflections</artifactId>
-				<version>0.10.2</version>
-			</dependency>
-			<dependency>
-				<groupId>org.junit.jupiter</groupId>
-				<artifactId>junit-jupiter-api</artifactId>
-				<version>5.12.0-M1</version>
-			</dependency>
-			<dependency>
-				<groupId>org.oxerr.rescu.ext</groupId>
-				<artifactId>rescu-ext-singleton</artifactId>
-				<version>${rescu-ext.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.oxerr.rescu.ext</groupId>
-				<artifactId>rescu-ext-rate-limiter-core</artifactId>
-				<version>${rescu-ext.version}</version>
-			</dependency>
-			<dependency>
 				<groupId>org.oxerr.ticket.inventory.support.cached</groupId>
 				<artifactId>ticket-inventory-support-cached-core</artifactId>
 				<version>${ticket-inventory-support.version}</version>
@@ -135,35 +97,12 @@
 			<dependency>
 				<groupId>org.redisson</groupId>
 				<artifactId>redisson</artifactId>
-				<version>3.44.0</version>
-			</dependency>
-			<dependency>
-				<groupId>org.slf4j</groupId>
-				<artifactId>slf4j-api</artifactId>
-				<version>2.0.17</version>
+				<version>3.46.0</version>
 			</dependency>
 			<dependency>
 				<groupId>com.evanlennick</groupId>
 				<artifactId>retry4j</artifactId>
 				<version>0.15.0</version>
-			</dependency>
-			<dependency>
-				<groupId>com.fasterxml.jackson.core</groupId>
-				<artifactId>jackson-databind</artifactId>
-				<version>2.18.2</version>
-			</dependency>
-
-			<!-- Java 8 Date/time -->
-			<dependency>
-				<groupId>com.fasterxml.jackson.datatype</groupId>
-				<artifactId>jackson-datatype-jsr310</artifactId>
-				<version>2.18.2</version>
-			</dependency>
-
-			<dependency>
-				<groupId>com.github.mmazi</groupId>
-				<artifactId>rescu</artifactId>
-				<version>3.0</version>
 			</dependency>
 			<dependency>
 				<groupId>com.google.code.findbugs</groupId>
@@ -175,13 +114,6 @@
 				<artifactId>rate-limiter-annotation</artifactId>
 				<version>0.8.0</version>
 			</dependency>
-
-			<dependency>
-				<groupId>nl.jqno.equalsverifier</groupId>
-				<artifactId>equalsverifier</artifactId>
-				<version>3.18.2</version>
-			</dependency>
-
 		</dependencies>
 	</dependencyManagement>
 	<scm>
@@ -201,6 +133,74 @@
 	</distributionManagement>
 	<profiles>
 		<profile>
+			<id>logging</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<dependencyManagement>
+				<dependencies>
+					<dependency>
+						<groupId>org.apache.logging.log4j</groupId>
+						<artifactId>log4j-api</artifactId>
+						<version>${log4j.version}</version>
+					</dependency>
+					<dependency>
+						<groupId>org.apache.logging.log4j</groupId>
+						<artifactId>log4j-core</artifactId>
+						<version>${log4j.version}</version>
+					</dependency>
+					<dependency>
+						<groupId>org.apache.logging.log4j</groupId>
+						<artifactId>log4j-jul</artifactId>
+						<version>${log4j.version}</version>
+					</dependency>
+					<dependency>
+						<groupId>org.apache.logging.log4j</groupId>
+						<artifactId>log4j-slf4j2-impl</artifactId>
+						<version>${log4j.version}</version>
+					</dependency>
+					<dependency>
+						<groupId>org.slf4j</groupId>
+						<artifactId>slf4j-api</artifactId>
+						<version>2.1.0-alpha1</version>
+					</dependency>
+				</dependencies>
+			</dependencyManagement>
+		</profile>
+		<profile>
+			<id>jackson</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<dependencyManagement>
+				<dependencies>
+					<dependency>
+						<groupId>com.fasterxml.jackson.core</groupId>
+						<artifactId>jackson-annotations</artifactId>
+						<version>${jackson.version}</version>
+					</dependency>
+					<dependency>
+						<groupId>com.fasterxml.jackson.core</groupId>
+						<artifactId>jackson-databind</artifactId>
+						<version>${jackson.version}</version>
+					</dependency>
+
+					<!-- Java 8 Date/time -->
+					<dependency>
+						<groupId>com.fasterxml.jackson.datatype</groupId>
+						<artifactId>jackson-datatype-jsr310</artifactId>
+						<version>${jackson.version}</version>
+					</dependency>
+
+					<dependency>
+						<groupId>com.fasterxml.jackson.jakarta.rs</groupId>
+						<artifactId>jackson-jakarta-rs-json-provider</artifactId>
+						<version>${jackson.version}</version>
+					</dependency>
+				</dependencies>
+			</dependencyManagement>
+		</profile>
+		<profile>
 			<id>cxf</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
@@ -210,12 +210,37 @@
 					<dependency>
 						<groupId>org.apache.cxf</groupId>
 						<artifactId>cxf-rt-rs-client</artifactId>
-						<version>4.0.7</version>
+						<version>${cxf.version}</version>
 					</dependency>
 					<dependency>
 						<groupId>org.apache.cxf</groupId>
 						<artifactId>cxf-rt-features-logging</artifactId>
-						<version>4.0.7</version>
+						<version>${cxf.version}</version>
+					</dependency>
+				</dependencies>
+			</dependencyManagement>
+		</profile>
+		<profile>
+			<id>rescu</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<dependencyManagement>
+				<dependencies>
+					<dependency>
+						<groupId>org.oxerr.rescu.ext</groupId>
+						<artifactId>rescu-ext-singleton</artifactId>
+						<version>${rescu-ext.version}</version>
+					</dependency>
+					<dependency>
+						<groupId>org.oxerr.rescu.ext</groupId>
+						<artifactId>rescu-ext-rate-limiter-core</artifactId>
+						<version>${rescu-ext.version}</version>
+					</dependency>
+					<dependency>
+						<groupId>com.github.mmazi</groupId>
+						<artifactId>rescu</artifactId>
+						<version>3.0</version>
 					</dependency>
 				</dependencies>
 			</dependencyManagement>
@@ -232,6 +257,25 @@
 					<scope>test</scope>
 				</dependency>
 			</dependencies>
+			<dependencyManagement>
+				<dependencies>
+					<dependency>
+						<groupId>org.junit.jupiter</groupId>
+						<artifactId>junit-jupiter-api</artifactId>
+						<version>5.13.0-M3</version>
+					</dependency>
+					<dependency>
+						<groupId>org.reflections</groupId>
+						<artifactId>reflections</artifactId>
+						<version>0.10.2</version>
+					</dependency>
+					<dependency>
+						<groupId>nl.jqno.equalsverifier</groupId>
+						<artifactId>equalsverifier</artifactId>
+						<version>3.18.2</version>
+					</dependency>
+				</dependencies>
+			</dependencyManagement>
 		</profile>
 	</profiles>
 </project>

@@ -9,13 +9,14 @@
 	<parent>
 		<groupId>org.oxerr.vividseats.client</groupId>
 		<artifactId>vividseats-client</artifactId>
-		<version>0.0.11</version>
+		<version>0.0.13</version>
 	</parent>
 	<groupId>org.oxerr.vividseats.client.rescu</groupId>
 	<artifactId>vividseats-client-rescu</artifactId>
 	<name>Vivid Seats Client - ResCU</name>
 	<packaging>pom</packaging>
 	<modules>
+		<module>vividseats-client-rescu-model</module>
 		<module>vividseats-client-rescu-resource</module>
 		<module>vividseats-client-rescu-impl</module>
 	</modules>
