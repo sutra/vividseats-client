@@ -3,6 +3,7 @@ package org.oxerr.vividseats.client.cxf.impl;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
 import java.util.List;
+import java.util.function.Consumer;
 
 import org.apache.cxf.jaxrs.client.ClientConfiguration;
 import org.apache.cxf.jaxrs.client.JAXRSClientFactory;
@@ -27,14 +28,22 @@ public class CXFVividSeatsClient implements VividSeatsClient {
 
 	private final ListingServiceImpl listingService;
 
-	private final HTTPClientPolicy policy;
+	private final Consumer<ClientConfiguration> configurer;
 
 	public CXFVividSeatsClient(String token, BandwidthsStore<String> bandwidthsStore) {
-		this(token, bandwidthsStore, new HTTPClientPolicy());
+		this(token, bandwidthsStore, new HTTPClientPolicy(), config -> {});
 	}
 
 	public CXFVividSeatsClient(String token, BandwidthsStore<String> bandwidthsStore, HTTPClientPolicy policy) {
-		this.policy = policy;
+		this(token, bandwidthsStore, policy, config -> {});
+	}
+
+	public CXFVividSeatsClient(String token, BandwidthsStore<String> bandwidthsStore, HTTPClientPolicy policy, Consumer<ClientConfiguration> configurer) {
+		this.configurer = config -> {
+			HTTPConduit conduit = (HTTPConduit) config.getConduit();
+			conduit.setClient(policy);
+			configurer.accept(config);
+		};
 
 		var jacksonJsonProvider = createJacksonJsonProvider();
 		var rateLimiterFilter = new RateLimiterFilter(bandwidthsStore);
@@ -67,7 +76,7 @@ public class CXFVividSeatsClient implements VividSeatsClient {
 
 	protected <T> T createProxy(String baseAddress, Class<T> cls, List<?> providers) {
 		T client = JAXRSClientFactory.create(baseAddress, cls, providers);
-		configureClient(client, policy);
+		configurer.accept(WebClient.getConfig(client));
 		return createMethodTrackingProxy(cls, client);
 	}
 
@@ -83,12 +92,6 @@ public class CXFVividSeatsClient implements VividSeatsClient {
 			new Class<?>[] { cls },
 			handler
 		);
-	}
-
-	protected <T> void configureClient(T client, HTTPClientPolicy policy) {
-		ClientConfiguration config = WebClient.getConfig(client);
-		HTTPConduit conduit = (HTTPConduit) config.getConduit();
-		conduit.setClient(policy);
 	}
 
 	protected JacksonJsonProvider createJacksonJsonProvider() {
