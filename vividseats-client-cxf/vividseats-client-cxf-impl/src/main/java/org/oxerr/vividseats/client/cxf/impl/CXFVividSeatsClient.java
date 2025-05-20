@@ -3,7 +3,10 @@ package org.oxerr.vividseats.client.cxf.impl;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.apache.cxf.jaxrs.client.ClientConfiguration;
 import org.apache.cxf.jaxrs.client.JAXRSClientFactory;
@@ -21,6 +24,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.jakarta.rs.json.JacksonJsonProvider;
 
 import io.github.poshjosh.ratelimiter.store.BandwidthsStore;
+import jakarta.annotation.Nullable;
 
 public class CXFVividSeatsClient implements VividSeatsClient {
 
@@ -38,7 +42,7 @@ public class CXFVividSeatsClient implements VividSeatsClient {
 
 	public CXFVividSeatsClient(
 		String token,
-		BandwidthsStore<String> bandwidthsStore,
+		@Nullable BandwidthsStore<String> bandwidthsStore,
 		HTTPClientPolicy policy,
 		Consumer<ClientConfiguration> configurer
 	) {
@@ -49,7 +53,7 @@ public class CXFVividSeatsClient implements VividSeatsClient {
 		};
 
 		var jacksonJsonProvider = createJacksonJsonProvider();
-		var rateLimiterFilter = new RateLimiterFilter(bandwidthsStore);
+		Optional<RateLimiterFilter> rateLimiterFilter = Optional.ofNullable(bandwidthsStore).map(RateLimiterFilter::new);
 		var tokenFilter = new ApiTokenHeaderFilter(token);
 
 		var listingResourceV1 = createProxy(
@@ -59,11 +63,13 @@ public class CXFVividSeatsClient implements VividSeatsClient {
 			internalConfigurer
 		);
 
-		var providers = List.of(
-			jacksonJsonProvider,
-			rateLimiterFilter,
-			tokenFilter
-		);
+		var providers = Stream.of(
+				Optional.of(jacksonJsonProvider),
+				rateLimiterFilter,
+				Optional.of(tokenFilter)
+			)
+			.flatMap(Optional::stream)
+			.collect(Collectors.toList());
 
 		var listingResource = createProxy(
 			DEFAULT_BASE_URL,
