@@ -28,8 +28,6 @@ public class CXFVividSeatsClient implements VividSeatsClient {
 
 	private final ListingServiceImpl listingService;
 
-	private final Consumer<ClientConfiguration> configurer;
-
 	public CXFVividSeatsClient(String token, BandwidthsStore<String> bandwidthsStore) {
 		this(token, bandwidthsStore, new HTTPClientPolicy(), config -> {});
 	}
@@ -38,8 +36,13 @@ public class CXFVividSeatsClient implements VividSeatsClient {
 		this(token, bandwidthsStore, policy, config -> {});
 	}
 
-	public CXFVividSeatsClient(String token, BandwidthsStore<String> bandwidthsStore, HTTPClientPolicy policy, Consumer<ClientConfiguration> configurer) {
-		this.configurer = config -> {
+	public CXFVividSeatsClient(
+		String token,
+		BandwidthsStore<String> bandwidthsStore,
+		HTTPClientPolicy policy,
+		Consumer<ClientConfiguration> configurer
+	) {
+		Consumer<ClientConfiguration> internalConfigurer = config -> {
 			HTTPConduit conduit = (HTTPConduit) config.getConduit();
 			conduit.setClient(policy);
 			configurer.accept(config);
@@ -52,7 +55,8 @@ public class CXFVividSeatsClient implements VividSeatsClient {
 		var listingResourceV1 = createProxy(
 			DEFAULT_BASE_URL,
 			org.oxerr.vividseats.client.cxf.resource.v1.inventory.ListingResource.class,
-			List.of(jacksonJsonProvider, rateLimiterFilter)
+			List.of(jacksonJsonProvider, rateLimiterFilter),
+			internalConfigurer
 		);
 
 		var providers = List.of(
@@ -64,7 +68,8 @@ public class CXFVividSeatsClient implements VividSeatsClient {
 		var listingResource = createProxy(
 			DEFAULT_BASE_URL,
 			org.oxerr.vividseats.client.cxf.resource.inventory.ListingResource.class,
-			providers
+			providers,
+			internalConfigurer
 		);
 		this.listingService = new ListingServiceImpl(listingResourceV1, listingResource, token);
 	}
@@ -74,7 +79,12 @@ public class CXFVividSeatsClient implements VividSeatsClient {
 		return listingService;
 	}
 
-	protected <T> T createProxy(String baseAddress, Class<T> cls, List<?> providers) {
+	protected <T> T createProxy(
+		String baseAddress,
+		Class<T> cls,
+		List<?> providers,
+		Consumer<ClientConfiguration> configurer
+	) {
 		T client = JAXRSClientFactory.create(baseAddress, cls, providers);
 		configurer.accept(WebClient.getConfig(client));
 		return createMethodTrackingProxy(cls, client);
