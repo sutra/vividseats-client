@@ -35,22 +35,28 @@ public class RateLimiterFilter implements ClientRequestFilter {
 	@Override
 	public void filter(ClientRequestContext requestContext) throws IOException {
 		Method method = InvokedMethodHolder.get();
+		acquire(method);
+	}
+
+	private void acquire(Method method) {
 		log.trace("Invoked method: {}", method);
 
 		// Retrieve @Rate annotation
 		Rate rate = method.getAnnotation(Rate.class);
-		if (rate != null) {
-			// Get or create a rate limiter for this method
-			RateLimiter limiter = limiters.computeIfAbsent(method, this::getRateLimiter);
-
-			// Enforce rate limiting
-			log.trace("Acquiring permit for {}...", method);
-			double timeSpent = limiter.acquire();
-			log.trace("Acquired permit for {} in {} seconds.", method, timeSpent);
+		if (rate == null) {
+			return;
 		}
+
+		// Get or create a rate limiter for this method
+		RateLimiter limiter = limiters.computeIfAbsent(method, this::createRateLimiter);
+
+		// Enforce rate limiting
+		log.trace("Acquiring permit for {}...", method);
+		double timeSpent = limiter.acquire();
+		log.trace("Acquired permit for {} in {} seconds.", method, timeSpent);
 	}
 
-	private RateLimiter getRateLimiter(Method method) {
+	private RateLimiter createRateLimiter(Method method) {
 		RateLimiterContext<Object> context = RateLimiterContext.builder().classes(method.getDeclaringClass()).store(bandwidthsStore).build();
 		return RateLimiterRegistries.of(context).getMethodRateLimiter(method);
 	}
