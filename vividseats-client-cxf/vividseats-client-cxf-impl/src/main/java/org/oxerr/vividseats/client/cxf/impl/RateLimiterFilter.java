@@ -41,17 +41,17 @@ public class RateLimiterFilter implements ClientRequestFilter {
 		Rate rate = method.getAnnotation(Rate.class);
 		if (rate != null) {
 			// Get or create a rate limiter for this method
-			var limiter = limiters.computeIfAbsent(method, this::getRateLimiter);
+			RateLimiter limiter = limiters.computeIfAbsent(method, this::getRateLimiter);
 
 			// Enforce rate limiting
 			log.trace("Acquiring permit for {}...", method);
-			var timeSpent = limiter.acquire();
+			double timeSpent = limiter.acquire();
 			log.trace("Acquired permit for {} in {} seconds.", method, timeSpent);
 		}
 	}
 
 	private RateLimiter getRateLimiter(Method method) {
-		var context = RateLimiterContext.builder().classes(method.getDeclaringClass()).store(bandwidthsStore).build();
+		RateLimiterContext<Object> context = RateLimiterContext.builder().classes(method.getDeclaringClass()).store(bandwidthsStore).build();
 		return RateLimiterRegistries.of(context).getMethodRateLimiter(method);
 	}
 
