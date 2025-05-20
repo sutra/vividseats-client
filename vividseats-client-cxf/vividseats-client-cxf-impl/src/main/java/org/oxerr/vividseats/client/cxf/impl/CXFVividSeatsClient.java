@@ -34,14 +34,14 @@ public class CXFVividSeatsClient implements VividSeatsClient {
 
 	public CXFVividSeatsClient(
 		String token,
-		@Nullable BandwidthsStore<String> bandwidthsStore
+		@Nullable BandwidthsStore<?> bandwidthsStore
 	) {
 		this(token, bandwidthsStore, new HTTPClientPolicy());
 	}
 
 	public CXFVividSeatsClient(
 		String token,
-		@Nullable BandwidthsStore<String> bandwidthsStore,
+		@Nullable BandwidthsStore<?> bandwidthsStore,
 		HTTPClientPolicy policy
 	) {
 		this(token, bandwidthsStore, policy, List.of(), config -> {});
@@ -49,7 +49,7 @@ public class CXFVividSeatsClient implements VividSeatsClient {
 
 	public CXFVividSeatsClient(
 		String token,
-		@Nullable BandwidthsStore<String> bandwidthsStore,
+		@Nullable BandwidthsStore<?> bandwidthsStore,
 		HTTPClientPolicy policy,
 		List<?> additionalProviders,
 		Consumer<ClientConfiguration> configurer

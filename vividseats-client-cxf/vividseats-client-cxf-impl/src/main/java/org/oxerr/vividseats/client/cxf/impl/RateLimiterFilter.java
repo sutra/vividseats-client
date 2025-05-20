@@ -26,9 +26,9 @@ public class RateLimiterFilter implements ClientRequestFilter {
 	// Store rate limits for each API method
 	private final ConcurrentMap<Method, RateLimiter> limiters = new ConcurrentHashMap<>();
 
-	private final BandwidthsStore<String> bandwidthsStore;
+	private final BandwidthsStore<?> bandwidthsStore;
 
-	public RateLimiterFilter(BandwidthsStore<String> bandwidthsStore) {
+	public RateLimiterFilter(BandwidthsStore<?> bandwidthsStore) {
 		this.bandwidthsStore = bandwidthsStore;
 	}
 
