@@ -36,13 +36,13 @@ public class CXFVividSeatsClient implements VividSeatsClient {
 		String token,
 		@Nullable BandwidthsStore<?> bandwidthsStore
 	) {
-		this(token, bandwidthsStore, new HTTPClientPolicy());
+		this(token, bandwidthsStore, null);
 	}
 
 	public CXFVividSeatsClient(
 		String token,
 		@Nullable BandwidthsStore<?> bandwidthsStore,
-		HTTPClientPolicy policy
+		@Nullable HTTPClientPolicy policy
 	) {
 		this(token, bandwidthsStore, policy, List.of(), config -> {});
 	}
@@ -50,13 +50,15 @@ public class CXFVividSeatsClient implements VividSeatsClient {
 	public CXFVividSeatsClient(
 		String token,
 		@Nullable BandwidthsStore<?> bandwidthsStore,
-		HTTPClientPolicy policy,
+		@Nullable HTTPClientPolicy policy,
 		List<?> additionalProviders,
 		Consumer<ClientConfiguration> configurer
 	) {
 		Consumer<ClientConfiguration> internalConfigurer = config -> {
-			HTTPConduit conduit = (HTTPConduit) config.getConduit();
-			conduit.setClient(policy);
+			if (policy != null) {
+				HTTPConduit conduit = (HTTPConduit) config.getConduit();
+				conduit.setClient(policy);
+			}
 			configurer.accept(config);
 		};
 
@@ -92,6 +94,7 @@ public class CXFVividSeatsClient implements VividSeatsClient {
 			providers,
 			internalConfigurer
 		);
+
 		this.listingService = new ListingServiceImpl(listingResourceV1, listingResource, token);
 	}
 
