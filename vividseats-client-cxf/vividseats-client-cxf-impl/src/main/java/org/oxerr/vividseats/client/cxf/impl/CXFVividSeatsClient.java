@@ -32,18 +32,26 @@ public class CXFVividSeatsClient implements VividSeatsClient {
 
 	private final ListingServiceImpl listingService;
 
-	public CXFVividSeatsClient(String token, BandwidthsStore<String> bandwidthsStore) {
-		this(token, bandwidthsStore, new HTTPClientPolicy(), config -> {});
+	public CXFVividSeatsClient(
+		String token,
+		@Nullable BandwidthsStore<String> bandwidthsStore
+	) {
+		this(token, bandwidthsStore, new HTTPClientPolicy());
 	}
 
-	public CXFVividSeatsClient(String token, BandwidthsStore<String> bandwidthsStore, HTTPClientPolicy policy) {
-		this(token, bandwidthsStore, policy, config -> {});
+	public CXFVividSeatsClient(
+		String token,
+		@Nullable BandwidthsStore<String> bandwidthsStore,
+		HTTPClientPolicy policy
+	) {
+		this(token, bandwidthsStore, policy, List.of(), config -> {});
 	}
 
 	public CXFVividSeatsClient(
 		String token,
 		@Nullable BandwidthsStore<String> bandwidthsStore,
 		HTTPClientPolicy policy,
+		List<?> additionalProviders,
 		Consumer<ClientConfiguration> configurer
 	) {
 		Consumer<ClientConfiguration> internalConfigurer = config -> {
@@ -52,18 +60,18 @@ public class CXFVividSeatsClient implements VividSeatsClient {
 			configurer.accept(config);
 		};
 
-		var jacksonJsonProvider = createJacksonJsonProvider();
+		JacksonJsonProvider jacksonJsonProvider = createJacksonJsonProvider();
 		Optional<RateLimiterFilter> rateLimiterFilter = Optional.ofNullable(bandwidthsStore).map(RateLimiterFilter::new);
-		var tokenFilter = new ApiTokenHeaderFilter(token);
+		ApiTokenHeaderFilter tokenFilter = new ApiTokenHeaderFilter(token);
 
-		var listingResourceV1 = createProxy(
+		org.oxerr.vividseats.client.cxf.resource.v1.inventory.ListingResource listingResourceV1 = createProxy(
 			DEFAULT_BASE_URL,
 			org.oxerr.vividseats.client.cxf.resource.v1.inventory.ListingResource.class,
 			List.of(jacksonJsonProvider, rateLimiterFilter),
 			internalConfigurer
 		);
 
-		var providers = Stream.of(
+		List<?> builtInProviders = Stream.of(
 				Optional.of(jacksonJsonProvider),
 				rateLimiterFilter,
 				Optional.of(tokenFilter)
@@ -71,7 +79,14 @@ public class CXFVividSeatsClient implements VividSeatsClient {
 			.flatMap(Optional::stream)
 			.collect(Collectors.toList());
 
-		var listingResource = createProxy(
+
+		List<?> providers = Stream.concat(
+				builtInProviders.stream(),
+				additionalProviders.stream()
+			)
+			.collect(Collectors.toList());
+
+		org.oxerr.vividseats.client.cxf.resource.inventory.ListingResource listingResource = createProxy(
 			DEFAULT_BASE_URL,
 			org.oxerr.vividseats.client.cxf.resource.inventory.ListingResource.class,
 			providers,
