@@ -30,17 +30,20 @@ public class RateLimiterInterceptor implements Interceptor {
 	@Override
 	public Object aroundInvoke(InvocationHandler invocationHandler, Object proxy, Method method, Object[] args)
 			throws Throwable {
-		var limiter = limiters.computeIfAbsent(method, this::getRateLimiter);
-
-		log.trace("Acquiring permit for {}...", method);
-		var timeSpent = limiter.acquire();
-		log.trace("Acquired permit for {} in {} seconds.", method, timeSpent);
-
+		acquire(method);
 		return invocationHandler.invoke(proxy, method, args);
 	}
 
+	private void acquire(Method method) {
+		RateLimiter limiter = limiters.computeIfAbsent(method, this::getRateLimiter);
+
+		log.trace("Acquiring permit for {}...", method);
+		double timeSpent = limiter.acquire();
+		log.trace("Acquired permit for {} in {} seconds.", method, timeSpent);
+	}
+
 	private RateLimiter getRateLimiter(Method method) {
-		var context = RateLimiterContext.builder().classes(method.getDeclaringClass()).store(bandwidthsStore).build();
+		RateLimiterContext<Object> context = RateLimiterContext.builder().classes(method.getDeclaringClass()).store(bandwidthsStore).build();
 		return RateLimiterRegistries.of(context).getMethodRateLimiter(method);
 	}
 

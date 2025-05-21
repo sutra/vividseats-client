@@ -1,7 +1,5 @@
 package org.oxerr.vividseats.client.cached.redisson.inventory;
 
-import java.io.IOException;
-import java.io.UncheckedIOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -41,36 +39,36 @@ public class RedissonCachedListingService
 	 * Constructs with default {@link ListingConfiguration}.
 	 *
 	 * @param listingService the listing service.
-	 * @param redissonClient the redisson client.
+	 * @param redisson the redisson client.
 	 * @param keyPrefix the key prefix for the cache.
 	 * @param executor the executor.
 	 */
 	public RedissonCachedListingService(
 		ListingService listingService,
-		RedissonClient redissonClient,
+		RedissonClient redisson,
 		String keyPrefix,
 		Executor executor
 	) {
-		this(listingService, redissonClient, keyPrefix, executor, new ListingConfiguration());
+		this(listingService, redisson, keyPrefix, executor, new ListingConfiguration());
 	}
 
 	/**
 	 * Constructs with specified {@link ListingConfiguration}.
 	 *
 	 * @param listingService the listing service.
-	 * @param redissonClient the redisson client.
+	 * @param redisson the redisson client.
 	 * @param keyPrefix the key prefix for the cache.
 	 * @param executor the executor.
 	 * @param listingConfiguration the listing configuration.
 	 */
 	public RedissonCachedListingService(
 		ListingService listingService,
-		RedissonClient redissonClient,
+		RedissonClient redisson,
 		String keyPrefix,
 		Executor executor,
 		ListingConfiguration listingConfiguration
 	) {
-		super(redissonClient, keyPrefix, executor, listingConfiguration);
+		super(redisson, keyPrefix, executor, listingConfiguration);
 		this.listingService = listingService;
 	}
 
@@ -131,17 +129,17 @@ public class RedissonCachedListingService
 	}
 
 	@Override
-	protected void createListing(VividSeatsEvent event, VividSeatsListing listing) throws IOException {
+	protected void createListing(VividSeatsEvent event, VividSeatsListing listing) {
 		this.listingService.create(listing.getRequest());
 	}
 
 	@Override
-	protected void deleteListing(VividSeatsEvent event, String listingId) throws IOException {
+	protected void deleteListing(VividSeatsEvent event, String listingId) {
 		this.listingService.deleteListing(listingId);
 	}
 
 	@Override
-	protected void deleteListing(VividSeatsEvent event, String listingId, VividSeatsCachedListing cachedListing, int priority) throws IOException {
+	protected void deleteListing(VividSeatsEvent event, String listingId, VividSeatsCachedListing cachedListing, int priority) {
 		this.listingService.deleteListing(listingId);
 	}
 
@@ -151,12 +149,12 @@ public class RedissonCachedListingService
 	}
 
 	@Override
-	public void check() throws UncheckedIOException {
+	public void check() {
 		check(CheckOptions.defaults());
 	}
 
 	@Override
-	public void check(CheckOptions options) throws UncheckedIOException {
+	public void check(CheckOptions options) {
 		List<CompletableFuture<Void>> tasks = Collections.synchronizedList(new ArrayList<CompletableFuture<Void>>());
 
 		// Ticket ID to cache name.
@@ -174,7 +172,7 @@ public class RedissonCachedListingService
 
 		// Delete listings which not in cache.
 		var deleteTasks = listings.stream()
-			.filter(listing -> !ticketIdToCacheName.containsKey(listing.getTicketId()))
+			.filter(listing -> listing.getTicketId() == null || !ticketIdToCacheName.containsKey(listing.getTicketId()))
 			.map(listing -> this.<Void>callAsync(() -> {
 				this.listingService.deleteListing(listing.getTicketId());
 				return null;
@@ -184,7 +182,7 @@ public class RedissonCachedListingService
 
 		// Create or update listings in cache.
 		listings.stream()
-			.filter(listing -> ticketIdToCacheName.containsKey(listing.getTicketId()))
+			.filter(listing -> listing.getTicketId() != null && ticketIdToCacheName.containsKey(listing.getTicketId()))
 			.forEach(listing -> {
 				String cacheName = ticketIdToCacheName.get(listing.getTicketId());
 				VividSeatsCachedListing cachedListing = this.getCache(cacheName).get(listing.getTicketId());

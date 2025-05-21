@@ -44,10 +44,10 @@ public class RedissonCachedVividSeatsClient implements CachedVividSeatsClient {
 
 	public RedissonCachedVividSeatsClient(
 		VividSeatsClient vividSeatsClient,
-		RedissonCachedListingService cachedSellerListingService
+		RedissonCachedListingService cachedListingService
 	) {
 		this.vividSeatsClient = vividSeatsClient;
-		this.cachedSellerListingService = cachedSellerListingService;
+		this.cachedSellerListingService = cachedListingService;
 	}
 
 	@Override

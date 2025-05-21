@@ -26,32 +26,38 @@ public class RateLimiterFilter implements ClientRequestFilter {
 	// Store rate limits for each API method
 	private final ConcurrentMap<Method, RateLimiter> limiters = new ConcurrentHashMap<>();
 
-	private final BandwidthsStore<String> bandwidthsStore;
+	private final BandwidthsStore<?> bandwidthsStore;
 
-	public RateLimiterFilter(BandwidthsStore<String> bandwidthsStore) {
+	public RateLimiterFilter(BandwidthsStore<?> bandwidthsStore) {
 		this.bandwidthsStore = bandwidthsStore;
 	}
 
 	@Override
 	public void filter(ClientRequestContext requestContext) throws IOException {
 		Method method = InvokedMethodHolder.get();
+		acquire(method);
+	}
+
+	private void acquire(Method method) {
 		log.trace("Invoked method: {}", method);
 
 		// Retrieve @Rate annotation
 		Rate rate = method.getAnnotation(Rate.class);
-		if (rate != null) {
-			// Get or create a rate limiter for this method
-			var limiter = limiters.computeIfAbsent(method, this::getRateLimiter);
-
-			// Enforce rate limiting
-			log.trace("Acquiring permit for {}...", method);
-			var timeSpent = limiter.acquire();
-			log.trace("Acquired permit for {} in {} seconds.", method, timeSpent);
+		if (rate == null) {
+			return;
 		}
+
+		// Get or create a rate limiter for this method
+		RateLimiter limiter = limiters.computeIfAbsent(method, this::createRateLimiter);
+
+		// Enforce rate limiting
+		log.trace("Acquiring permit for {}...", method);
+		double timeSpent = limiter.acquire();
+		log.trace("Acquired permit for {} in {} seconds.", method, timeSpent);
 	}
 
-	private RateLimiter getRateLimiter(Method method) {
-		var context = RateLimiterContext.builder().classes(method.getDeclaringClass()).store(bandwidthsStore).build();
+	private RateLimiter createRateLimiter(Method method) {
+		RateLimiterContext<Object> context = RateLimiterContext.builder().classes(method.getDeclaringClass()).store(bandwidthsStore).build();
 		return RateLimiterRegistries.of(context).getMethodRateLimiter(method);
 	}
 

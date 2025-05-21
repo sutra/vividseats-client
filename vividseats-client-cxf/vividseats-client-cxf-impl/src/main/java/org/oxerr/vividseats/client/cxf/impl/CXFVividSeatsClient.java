@@ -3,6 +3,10 @@ package org.oxerr.vividseats.client.cxf.impl;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
 import java.util.List;
+import java.util.Optional;
+import java.util.function.Consumer;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.apache.cxf.jaxrs.client.ClientConfiguration;
 import org.apache.cxf.jaxrs.client.JAXRSClientFactory;
@@ -20,6 +24,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.jakarta.rs.json.JacksonJsonProvider;
 
 import io.github.poshjosh.ratelimiter.store.BandwidthsStore;
+import jakarta.annotation.Nullable;
 
 public class CXFVividSeatsClient implements VividSeatsClient {
 
@@ -27,36 +32,69 @@ public class CXFVividSeatsClient implements VividSeatsClient {
 
 	private final ListingServiceImpl listingService;
 
-	private final HTTPClientPolicy policy;
-
-	public CXFVividSeatsClient(String token, BandwidthsStore<String> bandwidthsStore) {
-		this(token, bandwidthsStore, new HTTPClientPolicy());
+	public CXFVividSeatsClient(
+		String token,
+		@Nullable BandwidthsStore<?> bandwidthsStore
+	) {
+		this(token, bandwidthsStore, null);
 	}
 
-	public CXFVividSeatsClient(String token, BandwidthsStore<String> bandwidthsStore, HTTPClientPolicy policy) {
-		this.policy = policy;
+	public CXFVividSeatsClient(
+		String token,
+		@Nullable BandwidthsStore<?> bandwidthsStore,
+		@Nullable HTTPClientPolicy policy
+	) {
+		this(token, bandwidthsStore, policy, List.of(), config -> {});
+	}
 
-		var jacksonJsonProvider = createJacksonJsonProvider();
-		var rateLimiterFilter = new RateLimiterFilter(bandwidthsStore);
-		var tokenFilter = new ApiTokenHeaderFilter(token);
+	public CXFVividSeatsClient(
+		String token,
+		@Nullable BandwidthsStore<?> bandwidthsStore,
+		@Nullable HTTPClientPolicy policy,
+		List<?> additionalProviders,
+		Consumer<ClientConfiguration> configurer
+	) {
+		Consumer<ClientConfiguration> internalConfigurer = config -> {
+			if (policy != null) {
+				HTTPConduit conduit = (HTTPConduit) config.getConduit();
+				conduit.setClient(policy);
+			}
+			configurer.accept(config);
+		};
 
-		var listingResourceV1 = createProxy(
+		JacksonJsonProvider jacksonJsonProvider = createJacksonJsonProvider();
+		Optional<RateLimiterFilter> rateLimiterFilter = Optional.ofNullable(bandwidthsStore).map(RateLimiterFilter::new);
+		ApiTokenHeaderFilter tokenFilter = new ApiTokenHeaderFilter(token);
+
+		org.oxerr.vividseats.client.cxf.resource.v1.inventory.ListingResource listingResourceV1 = createProxy(
 			DEFAULT_BASE_URL,
 			org.oxerr.vividseats.client.cxf.resource.v1.inventory.ListingResource.class,
-			List.of(jacksonJsonProvider, rateLimiterFilter)
+			List.of(jacksonJsonProvider, rateLimiterFilter),
+			internalConfigurer
 		);
 
-		var providers = List.of(
-			jacksonJsonProvider,
-			rateLimiterFilter,
-			tokenFilter
-		);
+		List<?> builtInProviders = Stream.of(
+				Optional.of(jacksonJsonProvider),
+				rateLimiterFilter,
+				Optional.of(tokenFilter)
+			)
+			.flatMap(Optional::stream)
+			.collect(Collectors.toList());
 
-		var listingResource = createProxy(
+
+		List<?> providers = Stream.concat(
+				builtInProviders.stream(),
+				additionalProviders.stream()
+			)
+			.collect(Collectors.toList());
+
+		org.oxerr.vividseats.client.cxf.resource.inventory.ListingResource listingResource = createProxy(
 			DEFAULT_BASE_URL,
 			org.oxerr.vividseats.client.cxf.resource.inventory.ListingResource.class,
-			providers
+			providers,
+			internalConfigurer
 		);
+
 		this.listingService = new ListingServiceImpl(listingResourceV1, listingResource, token);
 	}
 
@@ -65,9 +103,14 @@ public class CXFVividSeatsClient implements VividSeatsClient {
 		return listingService;
 	}
 
-	protected <T> T createProxy(String baseAddress, Class<T> cls, List<?> providers) {
+	protected <T> T createProxy(
+		String baseAddress,
+		Class<T> cls,
+		List<?> providers,
+		Consumer<ClientConfiguration> configurer
+	) {
 		T client = JAXRSClientFactory.create(baseAddress, cls, providers);
-		configureClient(client, policy);
+		configurer.accept(WebClient.getConfig(client));
 		return createMethodTrackingProxy(cls, client);
 	}
 
@@ -83,12 +126,6 @@ public class CXFVividSeatsClient implements VividSeatsClient {
 			new Class<?>[] { cls },
 			handler
 		);
-	}
-
-	protected <T> void configureClient(T client, HTTPClientPolicy policy) {
-		ClientConfiguration config = WebClient.getConfig(client);
-		HTTPConduit conduit = (HTTPConduit) config.getConduit();
-		conduit.setClient(policy);
 	}
 
 	protected JacksonJsonProvider createJacksonJsonProvider() {
