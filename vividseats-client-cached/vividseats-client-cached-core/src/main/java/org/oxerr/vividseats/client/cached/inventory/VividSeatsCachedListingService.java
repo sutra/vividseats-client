@@ -1,7 +1,5 @@
 package org.oxerr.vividseats.client.cached.inventory;
 
-import java.io.UncheckedIOException;
-
 import org.oxerr.ticket.inventory.support.cached.CachedListingService;
 import org.oxerr.vividseats.client.model.inventory.BrokerListing;
 
@@ -10,17 +8,14 @@ public interface VividSeatsCachedListingService
 
 	/**
 	 * Check all listings and delete which not in cache.
-	 *
-	 * @throws UncheckedIOException if an I/O error occurs.
 	 */
-	void check() throws UncheckedIOException;
+	void check();
 
 	/**
 	 * Check all listings and delete which not in cache.
 	 *
 	 * @param options the check options.
-	 * @throws UncheckedIOException if an I/O error occurs.
 	 */
-	void check(CheckOptions options) throws UncheckedIOException;
+	void check(CheckOptions options);
 
 }

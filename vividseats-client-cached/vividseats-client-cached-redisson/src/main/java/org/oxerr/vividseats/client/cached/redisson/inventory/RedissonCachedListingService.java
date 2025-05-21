@@ -1,6 +1,5 @@
 package org.oxerr.vividseats.client.cached.redisson.inventory;
 
-import java.io.UncheckedIOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -150,12 +149,12 @@ public class RedissonCachedListingService
 	}
 
 	@Override
-	public void check() throws UncheckedIOException {
+	public void check() {
 		check(CheckOptions.defaults());
 	}
 
 	@Override
-	public void check(CheckOptions options) throws UncheckedIOException {
+	public void check(CheckOptions options) {
 		List<CompletableFuture<Void>> tasks = Collections.synchronizedList(new ArrayList<CompletableFuture<Void>>());
 
 		// Ticket ID to cache name.
