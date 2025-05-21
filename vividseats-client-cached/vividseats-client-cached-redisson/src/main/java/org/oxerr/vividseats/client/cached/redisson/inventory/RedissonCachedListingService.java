@@ -1,6 +1,5 @@
 package org.oxerr.vividseats.client.cached.redisson.inventory;
 
-import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -131,17 +130,17 @@ public class RedissonCachedListingService
 	}
 
 	@Override
-	protected void createListing(VividSeatsEvent event, VividSeatsListing listing) throws IOException {
+	protected void createListing(VividSeatsEvent event, VividSeatsListing listing) {
 		this.listingService.create(listing.getRequest());
 	}
 
 	@Override
-	protected void deleteListing(VividSeatsEvent event, String listingId) throws IOException {
+	protected void deleteListing(VividSeatsEvent event, String listingId) {
 		this.listingService.deleteListing(listingId);
 	}
 
 	@Override
-	protected void deleteListing(VividSeatsEvent event, String listingId, VividSeatsCachedListing cachedListing, int priority) throws IOException {
+	protected void deleteListing(VividSeatsEvent event, String listingId, VividSeatsCachedListing cachedListing, int priority) {
 		this.listingService.deleteListing(listingId);
 	}
 
