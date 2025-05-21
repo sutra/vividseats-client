@@ -9,7 +9,7 @@
 	<parent>
 		<groupId>org.oxerr.vividseats.client.cxf</groupId>
 		<artifactId>vividseats-client-cxf</artifactId>
-		<version>0.0.14</version>
+		<version>0.0.15-SNAPSHOT</version>
 	</parent>
 	<artifactId>vividseats-client-cxf-resource</artifactId>
 	<name>Vivid Seats Client - Apache CXF - Resource</name>
