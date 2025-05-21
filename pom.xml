@@ -29,7 +29,7 @@
 		<jackson.version>2.19.0</jackson.version>
 		<log4j.version>2.24.3</log4j.version>
 		<rescu-ext.version>1.0.3</rescu-ext.version>
-		<ticket-inventory-support.version>[5.3.3,)</ticket-inventory-support.version>
+		<ticket-inventory-support.version>[6.0.0,)</ticket-inventory-support.version>
 	</properties>
 	<modules>
 		<module>vividseats-client-model</module>
@@ -97,7 +97,7 @@
 			<dependency>
 				<groupId>org.redisson</groupId>
 				<artifactId>redisson</artifactId>
-				<version>3.46.0</version>
+				<version>3.47.0</version>
 			</dependency>
 			<dependency>
 				<groupId>com.evanlennick</groupId>
@@ -262,7 +262,7 @@
 					<dependency>
 						<groupId>org.junit.jupiter</groupId>
 						<artifactId>junit-jupiter-api</artifactId>
-						<version>5.13.0-M3</version>
+						<version>5.13.0-RC1</version>
 					</dependency>
 					<dependency>
 						<groupId>org.reflections</groupId>
