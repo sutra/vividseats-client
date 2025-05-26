@@ -1,4 +1,4 @@
-package org.oxerr.vividseats.client.cxf.impl;
+package org.oxerr.vividseats.client.cxf.impl.filter;
 
 import java.io.IOException;
 import java.lang.reflect.Method;

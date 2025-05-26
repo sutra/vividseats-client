@@ -1,4 +1,4 @@
-package org.oxerr.vividseats.client.cxf.impl;
+package org.oxerr.vividseats.client.cxf.impl.filter;
 
 import jakarta.ws.rs.client.ClientRequestContext;
 import jakarta.ws.rs.client.ClientRequestFilter;
