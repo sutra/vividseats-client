@@ -24,6 +24,10 @@ import si.mazi.rescu.RestProxyFactoryImpl;
 import si.mazi.rescu.serialization.jackson.DefaultJacksonObjectMapperFactory;
 import si.mazi.rescu.serialization.jackson.JacksonObjectMapperFactory;
 
+/**
+ * @deprecated Use {@code org.oxerr.vividseats.client.cxf.impl.CXFVividSeatsClient} instead.
+ */
+@Deprecated(since = "0.0.15", forRemoval = true)
 public class ResCUVividSeatsClient implements VividSeatsClient {
 
 	private static final String DEFAULT_BASE_URL = "https://brokers.vividseats.com/webservices";
