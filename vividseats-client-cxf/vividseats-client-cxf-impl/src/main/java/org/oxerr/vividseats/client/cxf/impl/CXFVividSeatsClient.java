@@ -14,7 +14,10 @@ import org.apache.cxf.jaxrs.client.WebClient;
 import org.apache.cxf.transport.http.HTTPConduit;
 import org.apache.cxf.transports.http.configuration.HTTPClientPolicy;
 import org.oxerr.vividseats.client.VividSeatsClient;
+import org.oxerr.vividseats.client.cxf.impl.filter.ApiTokenHeaderFilter;
+import org.oxerr.vividseats.client.cxf.impl.filter.RateLimiterFilter;
 import org.oxerr.vividseats.client.cxf.impl.inventory.ListingServiceImpl;
+import org.oxerr.vividseats.client.cxf.impl.support.InvocationHolder;
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -117,7 +120,7 @@ public class CXFVividSeatsClient implements VividSeatsClient {
 	@SuppressWarnings("unchecked")
 	private <T> T createMethodTrackingProxy(Class<T> cls, T delegate) {
 		InvocationHandler handler = (proxy, method, args) -> {
-			InvokedMethodHolder.set(method);
+			InvocationHolder.set(method, args);
 			return method.invoke(delegate, args);
 		};
 

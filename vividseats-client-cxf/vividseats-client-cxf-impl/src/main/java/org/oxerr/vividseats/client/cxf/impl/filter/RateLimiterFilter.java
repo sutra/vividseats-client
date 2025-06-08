@@ -1,10 +1,11 @@
-package org.oxerr.vividseats.client.cxf.impl;
+package org.oxerr.vividseats.client.cxf.impl.filter;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
+import org.oxerr.vividseats.client.cxf.impl.support.InvocationHolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,7 +35,7 @@ public class RateLimiterFilter implements ClientRequestFilter {
 
 	@Override
 	public void filter(ClientRequestContext requestContext) throws IOException {
-		Method method = InvokedMethodHolder.get();
+		Method method = InvocationHolder.get().getMethod();
 		acquire(method);
 	}
 
