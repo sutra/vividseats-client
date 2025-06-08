@@ -9,7 +9,7 @@
 	<parent>
 		<groupId>org.oxerr.vividseats.client.cached</groupId>
 		<artifactId>vividseats-client-cached</artifactId>
-		<version>0.0.15</version>
+		<version>0.0.16-SNAPSHOT</version>
 	</parent>
 	<artifactId>vividseats-client-cached-core</artifactId>
 	<name>Vivid Seats Client - Cached - Core</name>

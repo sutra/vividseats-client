@@ -9,7 +9,7 @@
 	<parent>
 		<groupId>org.oxerr.vividseats.client</groupId>
 		<artifactId>vividseats-client</artifactId>
-		<version>0.0.15</version>
+		<version>0.0.16-SNAPSHOT</version>
 	</parent>
 	<artifactId>vividseats-client-model</artifactId>
 	<name>Vivid Seats Client - Model</name>

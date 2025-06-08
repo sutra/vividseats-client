@@ -9,7 +9,7 @@
 	<parent>
 		<groupId>org.oxerr.vividseats.client.rescu</groupId>
 		<artifactId>vividseats-client-rescu</artifactId>
-		<version>0.0.15</version>
+		<version>0.0.16-SNAPSHOT</version>
 	</parent>
 	<artifactId>vividseats-client-rescu-model</artifactId>
 	<name>Vivid Seats Client - ResCU - Model</name>
